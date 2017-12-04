@@ -1,0 +1,2006 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Jump to Python - 파이썬 프로그래밍의 기초(자료형)</title>
+  <meta name="description" content="숫자형">
+  
+  <meta name="author" content="KyeongHan Yoon">
+  <meta name="copyright" content="&copy; KyeongHan Yoon 2017">
+  
+
+  <!-- External libraries -->
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/monokai-sublime.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css">
+
+  <!-- Favicon and other icons (made with http://www.favicon-generator.org/) -->
+  <link rel="shortcut icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" sizes="57x57" href="/assets/icons/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/assets/icons/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/assets/icons/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/icons/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/assets/icons/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/icons/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/assets/icons/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/icons/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/assets/icons/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/icons/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+  <link rel="manifest" href="/assets/icons/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/assets/icons/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <!-- Facebook OGP cards -->
+  <meta property="og:description" content="숫자형" />
+  <meta property="og:url" content="http://yoonkh.github.io" />
+  <meta property="og:site_name" content="yoonkh blog" />
+  <meta property="og:title" content="Jump to Python - 파이썬 프로그래밍의 기초(자료형)" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="http://yoonkh.github.io/assets/logo.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="612" />
+  <meta property="og:image:height" content="605" />
+  
+
+  
+  <!-- Twitter: card tags -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Jump to Python - 파이썬 프로그래밍의 기초(자료형)">
+  <meta name="twitter:description" content="숫자형">
+  <meta name="twitter:image" content="http://yoonkh.github.io/assets/logo.png">
+  <meta name="twitter:url" content="http://yoonkh.github.io">
+  
+
+  
+
+  <!-- Site styles -->
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://yoonkh.github.io/python/2017/11/29/jump1.html">
+  <link rel="alternate" type="application/rss+xml" title="yoonkh blog" href="http://yoonkh.github.io/feed.xml" />
+</head>
+
+
+  <body>
+
+    <header class="navigation" role="banner">
+  <div class="navigation-wrapper">
+    <a href="/" class="logo">
+      
+      <img src="/assets/logo.png" alt="yoonkh blog">
+      
+    </a>
+    <a href="javascript:void(0)" class="navigation-menu-button" id="js-mobile-menu">
+      <i class="fa fa-bars"></i>
+    </a>
+    <nav role="navigation">
+      <ul id="js-navigation-menu" class="navigation-menu show">
+        
+          
+          <li class="nav-link"><a href="/about/">About</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+          <li class="nav-link"><a href="/posts/">Posts</a>
+          
+        
+          
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <div class="page-content">
+        <div class="post">
+
+<div class="post-header-container " >
+  <div class="scrim ">
+    <header class="post-header">
+      <h1 class="title">Jump to Python - 파이썬 프로그래밍의 기초(자료형)</h1>
+      <p class="info">by <strong>Yoonkh</strong></p>
+    </header>
+  </div>
+</div>
+
+<div class="wrapper">
+
+ <span class="page-divider">
+  <span class="one"></span>
+  <span class="two"></span>
+</span>
+ 
+
+<section class="post-meta">
+  <div class="post-date">November 29, 2017</div>
+  <div class="post-categories">
+  in 
+    
+    <a href="/category/Python">Python</a>
+    
+  
+  </div>
+</section>
+
+<article class="post-content">
+  <h2 id="section">숫자형</h2>
+
+<p>숫자형(Number)이란 숫자 형태로 이루어진 자료형이다!</p>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>항목</strong></th>
+      <th><strong>사용 예</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>정수</td>
+      <td>123, -345, 0</td>
+    </tr>
+    <tr>
+      <td>실수</td>
+      <td>123.45, -1234.5, 3.4e10</td>
+    </tr>
+    <tr>
+      <td>8진수</td>
+      <td>0o34, 0o25</td>
+    </tr>
+    <tr>
+      <td>16진수</td>
+      <td>0x2A, 0xFF</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="section-1">숫자형은 어떻게 만들고 사용할까?</h3>
+
+<h4 id="section-2">정수형</h4>
+
+<p>정수형(integer)란 말 그대로 정수를 뜻하는 자료형을 말한다. 다음은 양의 정수와 음의 정수, 숫자0을 변수 a에 대입하는 예이다.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = 123
+&gt;&gt;&gt; a = -178
+&gt;&gt;&gt; a = 0
+</code></pre>
+</div>
+
+<h4 id="section-3">실수형</h4>
+
+<p>파이썬에서 실수형(Floating-point)은 소수점이 포함된 숫자를 말한다. 다음 예는 실수를 변수 a에 대입하는 예이다</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = 1.2
+&gt;&gt;&gt; a = -3.45
+</code></pre>
+</div>
+
+<p>위의 방식은 우리가 일반적으로 볼 수 있는 실수형의 소수점 표현 방식이다.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = 4.24E10
+&gt;&gt;&gt; a = 4.24e-10
+</code></pre>
+</div>
+
+<ul>
+  <li>위의 방식은 “컴퓨터식 지수 표현 방식”으로 파이썬에서는 4.24e10 또는 4.24E10처럼 표현한다.</li>
+</ul>
+
+<h4 id="section-4">8진수와 16진수</h4>
+
+<ul>
+  <li>8진수(Octal)를 만들기 위해서는 숫자가 0o 또는 0O(숫자 0 + 알파벳 소문자 o또는 대문자 O)로 시작하면 된다.</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = 0o177
+</code></pre>
+</div>
+
+<ul>
+  <li>16진수를 만들기 위해서는 0x로 시작하면 된다.</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = 0x8ff
+&gt;&gt;&gt; b = 0xABC
+</code></pre>
+</div>
+
+<h2 id="section-5">숫자형을 활용하기 위한 연산자</h2>
+
+<h4 id="section-6">사칙연산</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = 3
+&gt;&gt;&gt; b = 4
+&gt;&gt;&gt; a + b
+7
+&gt;&gt;&gt; a * b
+12
+&gt;&gt;&gt; a / b
+0.75
+</code></pre>
+</div>
+
+<h4 id="x-y--">x의 y제곱을 나타내는 	<code class="highlighter-rouge">**</code>연산자</h4>
+
+<p>이 연산자는 <code class="highlighter-rouge">x ** y</code>처럼 사용되었을 때 x의 y제곱(xy)값을 리턴한다.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = 3
+&gt;&gt;&gt; b = 4
+&gt;&gt;&gt; a ** b
+81
+</code></pre>
+</div>
+
+<h4 id="section-7">나눗셈 후 나머지를 반환하는 <code class="highlighter-rouge">%</code>연산자</h4>
+
+<p><code class="highlighter-rouge">%</code>는 나눗셈의 나머지 값을 반환하는 연산자이다.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; 7 % 3
+1
+&gt;&gt;&gt; 3 % 7
+3
+</code></pre>
+</div>
+
+<h4 id="section-8">나눗셈 후 소수점 아랫자리는 버리는 <code class="highlighter-rouge">//</code>연산자</h4>
+
+<p><code class="highlighter-rouge">//</code> 연산자를 이용할때의 주의할점</p>
+
+<ul>
+  <li>다음처럼 음수에 <code class="highlighter-rouge">//</code>연산자를 적용하는 경우</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; -7 / 4
+&gt;&gt;&gt; -1.75
+&gt;&gt;&gt; -7 // 4
+&gt;&gt;&gt; -2
+</code></pre>
+</div>
+
+<p><strong><code class="highlighter-rouge">//</code>연산자는 나눗셈의 결과에서 무조건 소수점을 버리는것이 아니라 나눗셈의 결과값보다 작은 정수 중, 가장 큰 정수를 리턴한다.</strong></p>
+
+<h2 id="section-9">문자열 자료형</h2>
+
+<p>문자열(String)이란 문자, 단어 등으로 구성된 문자들의 집합을 의미한다. 예를 들어 다음과 같은 것들이 문자열이다.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>"Life is too short, You need Python"
+"a"
+"123"
+</code></pre>
+</div>
+
+<h2 id="section-10">문자열은 어떻게 만들고 사용할까?</h2>
+
+<ol>
+  <li>큰따옴표로 양쪽 둘러싸기</li>
+</ol>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>"Hello World"
+</code></pre>
+</div>
+
+<ol>
+  <li>작은따옴표로 양쪽 둘러싸기</li>
+</ol>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>'Python is fun'
+</code></pre>
+</div>
+
+<ol>
+  <li>큰따옴표 3개를 연속으로 써서 양쪽 둘러싸기</li>
+</ol>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>"""Lifr is too short, You need python"""
+</code></pre>
+</div>
+
+<ol>
+  <li>작은따옴표 3개를 연속으로 써서 양쪽 둘러싸기</li>
+</ol>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>'''Life is too short, You need python'''
+</code></pre>
+</div>
+
+<h4 id="section-11">문자열 안에 짝은 따옴표나 큰따옴표를 포함시키고 싶을 때</h4>
+
+<p>1) 문자열에 작은따옴표(<code class="highlighter-rouge">'</code>)포함시키기</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Python's favorite food is perl
+</code></pre>
+</div>
+
+<p>위와 같은 문자열을 food라는 변수에 저장하고 싶다고 가정하자. 문자열 중 Python’s에 작은따옴표(‘)가 포함되어 있다.</p>
+
+<ul>
+  <li>이럴때는 다음과 같이 문자열을 큰따옴표(“)로 둘러싸야 한다. 큰따옴표 안에 들어 있는 작은 따옴표는 문자열을 나타내기 위한 기호로 인식되지 않는다.</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; food = "Python's favorite food is perl"
+</code></pre>
+</div>
+
+<p>프롬프트에 food를 입력해서 결과를 확인하면, 변수에 저장된 문자열이 그대로 출력된다</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; food
+"Python's favorite food is perl"
+</code></pre>
+</div>
+
+<ul>
+  <li>다음과 같이 큰따옴표(“)가 아닌 작은따옴표(‘)로 문자열을 둘러싼 후 다시 실행해보면, ‘Python’이 문자열로 인식되어 오류가 발생한다</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; food = 'Python's favorite food is perl'
+File "&lt;stdin&gt;", line 1
+food = 'Python's favorite food is perl'
+^
+SyntaxError: invalid syntax
+</code></pre>
+</div>
+
+<p>2) 문자열에 큰따옴표(<code class="highlighter-rouge">"</code>)포함시키기</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>"Python is very easy." he says.
+</code></pre>
+</div>
+
+<p>위와 같이 큰따옴표가 포함된 문자열이라면 다음과 같이 작은 따옴표로 둘러싸면 된다</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; say = '"Python is very easy." he says.'
+</code></pre>
+</div>
+
+<ul>
+  <li>작은따옴표안에 사용된 큰따옴표는 문자열을 만드는 기호로 인식되지 않는다.</li>
+</ul>
+
+<p>3) <code class="highlighter-rouge">\</code>(백슬래시)를 이용해서 작은따옴표(<code class="highlighter-rouge">'</code>)와 큰따옴표(<code class="highlighter-rouge">"</code>)를 문자열에 포함시키기</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; food = 'Python\'s favorite food is perl'
+&gt;&gt;&gt; say = "\Python is very easy.\" he says."
+</code></pre>
+</div>
+
+<ul>
+  <li><code class="highlighter-rouge">\</code>(백슬래시) 뒤의 작은따옴표나 큰따옴표는 문자열을 둘러싸는 기호의 의미가 아니라 문자(‘),(“)그 자체를 뜻하게 된다.</li>
+</ul>
+
+<h4 id="section-12">여러 줄인 문자열을 변수에 대입하고 싶을 때</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Life is too short
+You need python
+</code></pre>
+</div>
+
+<p>1) 줄을 바꾸기 위한 이스케이프 코드 <code class="highlighter-rouge">\n</code> 삽입하기</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; multiline = "Life is too short\nYou need python"
+</code></pre>
+</div>
+
+<p>2) 연속된 작은따옴표 3개(<code class="highlighter-rouge">'''</code>)또는 큰따옴표 3개(<code class="highlighter-rouge">"""</code>)이용</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; multiline='''
+... Life is too short
+... You need python
+... '''
+</code></pre>
+</div>
+
+<ul>
+  <li>print(multiline)을 입력해서 출력되는 값</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; print(multiline)
+Life is too short
+You need python
+</code></pre>
+</div>
+
+<p><strong>여러줄인 경우 이스케이프 코드를 쓰는 것보다 따옴표를 연속해서 쓰는 것이 훨씬 깔끔하다</strong></p>
+
+<h2 id="section-13">문자열 연산하기</h2>
+
+<h4 id="section-14">1) 문자열 더해서 연결하기</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; head = "Python"
+&gt;&gt;&gt; tail = " is fun!"
+&gt;&gt;&gt; head + tail
+'Python is fun!'
+</code></pre>
+</div>
+
+<ul>
+  <li>head와 tail 변수가 +에 의해 합쳐지게 된다.</li>
+</ul>
+
+<h4 id="section-15">2) 문자열 곱하기</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = "python"
+&gt;&gt;&gt; a * 2
+'pythonpython'
+</code></pre>
+</div>
+
+<ul>
+  <li><code class="highlighter-rouge">*</code>는 문자열의 반복을 뜻하는 의미로 사용되었다.</li>
+</ul>
+
+<h2 id="section-16">문자열 인덱싱과 슬라이싱</h2>
+
+<p>인덱싱(Indexing)이란 무엇인가를 “가리킨다”는 의미이고, 슬라이싱(Slicing)은 무엇인가를 “잘라낸다”는 의미이다.</p>
+
+<h3 id="section-17">문자열 인덱싱이란?</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = "Life is too short, You need Python"
+</code></pre>
+</div>
+
+<p>위의 코드에서 변수 a에 저장한 문자열의 각 문자마다 번호를 매겨보면 다음과 같다</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Life is too short, You need Python
+0         1         2         3 
+0123456789012345678901234567890123
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = "Life is too short, You need Python"
+&gt;&gt;&gt; a[3]
+'e'
+</code></pre>
+</div>
+
+<ul>
+  <li>a[3]이 뜻하는 것은 a라는 문자열의 네 번째 문자인 e를 말한다.</li>
+</ul>
+
+<p><strong>“파이썬은 0부터 숫자를 센다.”</strong></p>
+
+<p>고로 위의 문자열을 파이썬은 다음과 같이 바라본다</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>a[0]:'L', a[1]:'i', a[2]:'f', a[3]:'e', a[4]:' ', ...
+</code></pre>
+</div>
+
+<ul>
+  <li><code class="highlighter-rouge">a[번호]</code>는 문자열 내 특정한 값을 뽑아내는 역할을 한다. 이러한 것을 인덱싱이라고 한다!</li>
+</ul>
+
+<h4 id="section-18">문자열 인덱싱 활용하기</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = "Life is too short, You need Python"
+&gt;&gt;&gt; a[0]
+'L'
+&gt;&gt;&gt; a[12]
+'s'
+&gt;&gt;&gt; a[-1]
+'n'
+</code></pre>
+</div>
+
+<ul>
+  <li>뒤에서부터 첫 번째 문자를 표시할 때도 0부터 세어 “a[-0]이라고 해야 하지 않을까?”라는 의문이 들 수도 있지만 0 과 -0은 똑같은 것이기 때문에 a[-0]은 a[0]과 똑같은 값을 보여준다</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a[-0]
+'L'
+</code></pre>
+</div>
+
+<h3 id="section-19">문자열 슬라이싱이란?</h3>
+
+<p>“Life is too short, You need Python”이라는 문자열에서 단순히 한 문자열만을 뽑아내는 것이 아니라 ‘Life’또는 ‘You’같은 단어들만 뽑아내려면 다음과 같이 하면된다.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = "Life is too short, You need Python"
+&gt;&gt;&gt; b = a[0] + a[1] + a[2] + a[3]
+&gt;&gt;&gt; b
+'Life'
+</code></pre>
+</div>
+
+<ul>
+  <li>하지만 이것은 슬라이싱 기법으로 다음고 같이 더 간단하게 처리 할 수 있다.</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = "Life is too short, You need Python"
+&gt;&gt;&gt; a[0:4]
+'Life'
+</code></pre>
+</div>
+
+<h3 id="section-20">문자열을 슬라이싱하는 방법</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a[0:5]
+'Life'
+</code></pre>
+</div>
+
+<ul>
+  <li>위의 예는 a[0] + a[1] + a[2] + a[3] + a[4]와 동일하다.</li>
+</ul>
+
+<p>슬라이싱할 때 항상 시작 번호가 ‘0’일 필요는 없다.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a[0:2]
+'Li'
+&gt;&gt;&gt; a[5:7]
+'is'
+&gt;&gt;&gt; a[12:17]
+'short'
+</code></pre>
+</div>
+
+<p>a[시작 번호:끝 번호]에서 끝 번호 부분을 생략하면 시작번호부터 그 문자열의 끝까지 뽑아낸다.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a[19:]
+'You need Python'
+</code></pre>
+</div>
+
+<p>a[시작 번호:끝 번호]에서 시작 번호와 끝 번호를 생략하면 문자열의 처음부터 끝까지를 뽑아낸다</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a[:]
+'Life is too short, You need Python'
+</code></pre>
+</div>
+
+<p>슬라이싱에서도 인덱싱과 마찬가지로 마이너스(-) 기호를 사용할 수 있다.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a[19:-7]
+'You need'
+</code></pre>
+</div>
+
+<ul>
+  <li>위 소스 코드에서 a[19:-7]이 뜻하는 것은 a[19]에서부터 a[-8]까지를 말한다.</li>
+</ul>
+
+<h3 id="section-21">슬라이싱으로 문자열 나누기</h3>
+
+<p>다음은 자주 사용하게 되는 슬라이싱 기법 중 하나이다.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = "20010331Rainy"
+&gt;&gt;&gt; date = a[:8]
+&gt;&gt;&gt; weather = a[8:]
+&gt;&gt;&gt; date
+'20010331'
+&gt;&gt;&gt; weather
+'Rainy'
+</code></pre>
+</div>
+
+<ul>
+  <li>위의 예에서는 “20010331Rainy”라는 문자열을 날짜를 나타내는 부분인 ‘20010331’과 날씨를 나타내는 부분인’Rainy’로 나누는 방법을 보여준다!!</li>
+</ul>
+
+<h2 id="section-22">문자열 포매팅</h2>
+
+<p><strong>“현재 온도는 18도 입니다”</strong></p>
+
+<p><strong>“현재 온도는 20도 입니다”</strong></p>
+
+<ul>
+  <li>위의 두 문자열은 모두 같은데 20이라는 숫자와 18이라는 숫자만 다르다. 이렇게 문자열 내의 특정한 값을 바꿔야 할 경우가 있을 때 이것을 가능하게 해주는 것이 바로 문자열 포매팅 기법이다!</li>
+</ul>
+
+<h3 id="section-23">문자열 포매팅 따라하기</h3>
+
+<h4 id="section-24">1) 숫자 바로 대입</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; "I eat %d apples." % 3
+'I eat 3 apples.'
+</code></pre>
+</div>
+
+<ul>
+  <li>위의 예제에서는 문자열 내에 3이라는 정수를 삽입하는 방법을 보여준다!</li>
+</ul>
+
+<h4 id="section-25">2) 문자열 바로 대입</h4>
+
+<p>문자열 내에 꼭 숫자만 넣으라는 법은 없다! 숫자 대신 문자열도 가능하다!</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; 'I eat %s apples." % "five"
+'I eat five apples.'
+</code></pre>
+</div>
+
+<ul>
+  <li>숫자를 넣기 위해서는 <code class="highlighter-rouge">%d</code>를 사용한다</li>
+  <li>문자열을 넣기 위해서는 <code class="highlighter-rouge">%s</code>를 사용한다</li>
+</ul>
+
+<p><strong>(문자열을 대입할 때는 큰따옴표나 작은 따옴표를 반드시 사용해야 한다)</strong></p>
+
+<h4 id="section-26">3) 숫자 값을 나타내는 변수로 대입</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; number = 3 
+&gt;&gt;&gt; "I eat %d apples." % number
+'I eat 3 apples.'
+</code></pre>
+</div>
+
+<ul>
+  <li>숫자를 바로 대입하나 숫자 값을 나타내는 변수를 대입하나 결과는 같다</li>
+</ul>
+
+<h3 id="section-27">문자열 포맷 코드</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>코드</strong></th>
+      <th><strong>설명</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>%s</td>
+      <td>문자열(String)</td>
+    </tr>
+    <tr>
+      <td>%c</td>
+      <td>문자 1개(character)</td>
+    </tr>
+    <tr>
+      <td>%d</td>
+      <td>정수(Integer)</td>
+    </tr>
+    <tr>
+      <td>%f</td>
+      <td>부동소수(floating-point)</td>
+    </tr>
+    <tr>
+      <td>%o</td>
+      <td>8진수</td>
+    </tr>
+    <tr>
+      <td>%x</td>
+      <td>16진수</td>
+    </tr>
+    <tr>
+      <td>%%</td>
+      <td>Literal%(문자<code class="highlighter-rouge">%</code>자체)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="section-28">포맷 코드와 숫자 함께 사용하기</h3>
+
+<h4 id="section-29">1) 정렬과 공백</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; "%10s" % "hi"
+'			hi'
+</code></pre>
+</div>
+
+<ul>
+  <li>“%10s”의 의미는 전체 길이가 10개인 문자열 공간에서 hi를 오른쪽으로 정렬하고 그 앞의 나머지는 공백으로 남겨두라는 의미이다.</li>
+</ul>
+
+<h4 id="section-30">2) 소수점 표현하기</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; "%0.4f" % 3.42134234
+'3.4213'
+</code></pre>
+</div>
+
+<ul>
+  <li>3.42134234를 소수점 네 번째 자리까지만 나타내고 싶은 경우에는 위와 같이 사용한다!</li>
+</ul>
+
+<h2 id="section-31">문자열 관련 함수들</h2>
+
+<p>문자열 자료형은 자체적으로 가지고 있는 함수들이 있다. 이 함수들은 다른말로 문자열 내장함수라고 한다.</p>
+
+<h3 id="count">문자 개수 세기(count)</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = "hobby"
+&gt;&gt;&gt; a.count('b')
+2
+</code></pre>
+</div>
+
+<ul>
+  <li>문자열 중 b의 개수를 반환한다!</li>
+</ul>
+
+<h3 id="find">위치 알려주기1(find)</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = "Python is best choice"
+&gt;&gt;&gt; a.find('b')
+10
+&gt;&gt;&gt; a.find('k')
+-1
+</code></pre>
+</div>
+
+<ul>
+  <li>문자열 중 문자 b가 처음으로 나온 위치를 반환한다. 만약 찾는 문자나 문자열이 존재하지 않는다면 -1을 반환한다.</li>
+</ul>
+
+<p><strong>(*파이썬은 숫자를 0부터 세기 때문에 b의 위치는 11이 아닌 10이 된다)</strong></p>
+
+<h3 id="index">위치 알려주기2(index)</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = "Life is too short"
+&gt;&gt;&gt; a.index('t')
+8
+&gt;&gt;&gt; a.index('k')
+Traceback (most recent call last):
+File "&lt;stdin&gt;", line 1, in &lt;module&gt;
+ValueError: substring not found
+</code></pre>
+</div>
+
+<ul>
+  <li>문자열 중 문자 t가 맨 처음으로 나온 위치를 반환한다. 만약 찾는 문자나 문자열이 존재하지 않는다면 오류를 발생시킨다!</li>
+</ul>
+
+<h3 id="join">문자열 삽입(join)</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = ","
+&gt;&gt;&gt; a.join('abcd')
+'a,b,c,d'
+</code></pre>
+</div>
+
+<ul>
+  <li>abcd라는 문자열의 각각의 문자 사이에 변수 a의 값인’,’를 삽입한다.</li>
+</ul>
+
+<h3 id="upper">소문자를 대문자로 바꾸기(upper)</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = "hi"
+&gt;&gt;&gt; a.upper()
+'HI'
+</code></pre>
+</div>
+
+<ul>
+  <li>upper()함수는 소문자를 대문자로 바꾸어 준다!</li>
+</ul>
+
+<h3 id="lower">대문자를 소문자로 바꾸기(lower)</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = "HI"
+&gt;&gt;&gt; a.lower()
+'hi'
+</code></pre>
+</div>
+
+<ul>
+  <li>lower() 함수는 대문자를 소문자로 바꾸어 준다!</li>
+</ul>
+
+<h3 id="lstrip">왼쪽 공백 지우기(lstrip)</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = " hi "
+&gt;&gt;&gt; a.lstrip()
+'hi '
+</code></pre>
+</div>
+
+<h3 id="rstrip">오른쪽 공백 지우기(rstrip)</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = " hi "
+&gt;&gt;&gt; a.rstrip()
+' hi'
+</code></pre>
+</div>
+
+<h3 id="strip">양쪽 공백 지우기(strip)</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = " hi "
+&gt;&gt;&gt; a.strip()
+'hi'
+</code></pre>
+</div>
+
+<h3 id="replace">문자열 바꾸기(replace)</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = "Life is too short"
+&gt;&gt;&gt; a.replace("Life", "Your leg")
+'Your leg is too short'
+</code></pre>
+</div>
+
+<ul>
+  <li>문자열 내의 특정한 값을 다른 값으로 치환해준다!</li>
+</ul>
+
+<h3 id="split">문자열 나누기(split)</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = "Life is too short"
+&gt;&gt;&gt; a.split()
+['Life', 'is', 'too', 'short']
+&gt;&gt;&gt; a = "a:b:c:d"
+&gt;&gt;&gt; a.split(':')
+['a', 'b', 'c', 'd']
+</code></pre>
+</div>
+
+<h2 id="section-32">리스트 자료형</h2>
+
+<h3 id="section-33">리스트는 어떻게 만들고 사용할까?</h3>
+
+<p>리스트를 만들 때에는 대괄호([])로 감싸 주고 각 요소값들은 쉼표(,)로 구분해 준다</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; odd = [1, 3, 5, 7, 9]
+</code></pre>
+</div>
+
+<p>여러가지 리스트의 형태</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = [ ]
+&gt;&gt;&gt; b = [1, 2, 3]
+&gt;&gt;&gt; c = ['Life', 'is', 'too', 'short']
+&gt;&gt;&gt; d = [1, 2, 'Life', 'is']
+&gt;&gt;&gt; e = [1, 2, ['Life', 'is']]
+</code></pre>
+</div>
+
+<ul>
+  <li>리스트는 a처럼 아무것도 포함하지 않는, 비어있는 리스트([])일 수도 있고 b처럼 숫자를 요소값으로 가질 수도 있고 c처럼 문자열을 요소값으로 가질 수도 있다.</li>
+</ul>
+
+<p><strong>(*비어 있는 리스트는 a = list()로 생성할 수도 있다)</strong></p>
+
+<h2 id="section-34">리스트의 인덱싱과 슬라이싱</h2>
+
+<p>리스트도 문자열처럼 인덱싱과 슬라이싱이 가능하다.</p>
+
+<h4 id="section-35">리스트의 인덱싱</h4>
+
+<p>리스트 역시 문자열처럼 인덱싱을 적용 할 수 있다. 먼저 a 변수에 [1,2,3]이라는 값을 설정한다.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = [1, 2, 3]
+&gt;&gt;&gt; a
+[1, 2, 3]
+</code></pre>
+</div>
+
+<p>a[0]은 리스트 a의 첫번째 요소값을 말한다</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a[0]
+1
+</code></pre>
+</div>
+
+<p>아래의 예는 리스트의 첫번째 요소인 a[0]과 세번째 요소인 a[2]의 값을 더한것이다</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a[0] + a[2]
+4
+</code></pre>
+</div>
+
+<ul>
+  <li>이것은 1 + 3으로 해석되고 4라는 값을 출력한다</li>
+</ul>
+
+<h4 id="section-36">리스트의 슬라이싱</h4>
+
+<p>문자열과 마찬가지로 리스트에서도 슬라이싱 기법을 적용할 수 있다!</p>
+
+<ul>
+  <li>슬라이싱은 “나눈다”라는 뜻이다</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = [1, 2, 3, 4, 5]
+&gt;&gt;&gt; a[0:2]
+[1, 2]
+</code></pre>
+</div>
+
+<h2 id="section-37">리스트 연산자</h2>
+
+<p>리스트 역시 + 기호를 이용해서 더할 수 있고, *기호를 이용해서 반복할 수 있다.</p>
+
+<h4 id="section-38">1) 리스트 더하기(+)</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = [1, 2, 3]
+&gt;&gt;&gt; b = [4, 5, 6]
+&gt;&gt;&gt; a + b
+[1, 2, 3, 4, 5, 6]
+</code></pre>
+</div>
+
+<h4 id="section-39">2) 리스트 반복하기(<code class="highlighter-rouge">*</code>)</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = [1, 2, 3]
+&gt;&gt;&gt; a * 3
+[1, 2, 3, 1, 2, 3, 1, 2, 3]
+</code></pre>
+</div>
+
+<h2 id="section-40">리스트의 수정, 변경과 삭제</h2>
+
+<h3 id="section-41">1. 리스트에서 하나의 값 수정하기</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = [1, 2, 3]
+&gt;&gt;&gt; a[2] = 4
+&gt;&gt;&gt; a
+[1, 2, 4]
+</code></pre>
+</div>
+
+<h3 id="section-42">2. 리스트에서 연속된 범위의 값 수정하기</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a[1:2]
+[2]
+&gt;&gt;&gt; a[1:2] = ['a', 'b', 'c']
+&gt;&gt;&gt; a
+[1, 'a', 'b', 'c', 4]
+</code></pre>
+</div>
+
+<ul>
+  <li>a[1:2]를 [‘a’, ‘b’, ‘c’]로 바꾸었으므로 a리스트에서 2라는 값 대신에 [‘a’, ‘b’, ‘c’]라는 값이 대입된다.</li>
+</ul>
+
+<p><strong>주의할점</strong></p>
+
+<p>만약 전제를 a[1:2]가 아니라 a[1] = [‘a’, ‘b’, ‘c’]로 한다면 a의 출력값은 [1, [‘a’, ‘b’, ‘c’], 4]가 된다!!</p>
+
+<h3 id="section-43">3. [ ]사용해 리스트 요소 삭제하기</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a[1:3] = []
+&gt;&gt;&gt; a
+[1, 'c', 4]
+</code></pre>
+</div>
+
+<h3 id="del-----">4. del 함수 사용해 리스트 요소 삭제하기</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a 
+[1, 'c', 4]
+&gt;&gt;&gt; del a[1]
+&gt;&gt;&gt; a
+[1, 4]
+</code></pre>
+</div>
+
+<h2 id="section-44">리스트 관련 함수들</h2>
+
+<h3 id="append">리스트에 요소 추가(append)</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = [1, 2, 3]
+&gt;&gt;&gt; a.append(4)
+&gt;&gt;&gt; a
+[1, 2, 3, 4]
+</code></pre>
+</div>
+
+<h3 id="sort">리스트 정렬(sort)</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = [1, 4, 3, 2]
+&gt;&gt;&gt; a.sort()
+&gt;&gt;&gt; a
+[1, 2, 3, 4]
+</code></pre>
+</div>
+
+<h3 id="reverse">리스트 뒤집기(reverse)</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = ['a', 'c', 'b']
+&gt;&gt;&gt; a.reverse()
+&gt;&gt;&gt; a
+['b', 'c', 'a']
+</code></pre>
+</div>
+
+<h3 id="index-1">위치 반환(index)</h3>
+
+<p>index(x)함수는 리스트에 x라는 값이 있으면 x의 위치값을 리턴한다</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = [1,2,3]
+&gt;&gt;&gt; a.index(3)
+2
+&gt;&gt;&gt; a.index(1)
+0
+</code></pre>
+</div>
+
+<h3 id="insert">리스트에 요소 삽입(insert)</h3>
+
+<p>insert(a, b)는 리스트의 a번째 위치에 b를 삽입하는 함수이다.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = [1, 2, 3]
+&gt;&gt;&gt; a.insert(0, 4)
+[4, 1, 2, 3]
+</code></pre>
+</div>
+
+<h3 id="remove">리스트 요소 제거(remove)</h3>
+
+<p>remove(x)는 리스트에서 첫번째로 나오는 x를 삭제하는 함수이다.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = [1, 2, 3, 1, 2, 3]
+&gt;&gt;&gt; a.remove(3)
+[1, 2, 1, 2, 3]
+</code></pre>
+</div>
+
+<h3 id="pop">리스트 요소 끄집어내기(pop)</h3>
+
+<p>pop()은 리스트의 맨 마지막 요소를 돌려주고 그 요소는 삭제하는 함수이다!</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = [1,2,3]
+&gt;&gt;&gt; a.pop()
+3
+&gt;&gt;&gt; a
+[1, 2]
+</code></pre>
+</div>
+
+<h3 id="x--count">리스트에 포함된 요소 x의 개수 세기(count)</h3>
+
+<p>count(x)는 리스트 내에 x가 몇개 있는지 조사하여 그 개수를 돌려준다</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = [1,2,3,1]
+&gt;&gt;&gt; a.count(1)
+2
+</code></pre>
+</div>
+
+<ul>
+  <li>1이라는 값이 리스트 a에 2개 들어있으므로 2를 반환한다!</li>
+</ul>
+
+<h3 id="extend">리스트 확장(extend)</h3>
+
+<p>extend(x)에서 x에는 리스트만 올 수 있으며 원래의 a 리스트에 x 리스트를 더하게 된다.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = [1,2,3]
+&gt;&gt;&gt; a.extend([4,5])
+&gt;&gt;&gt; a
+[1, 2, 3, 4, 5]
+&gt;&gt;&gt; b = [6, 7]
+&gt;&gt;&gt; a.extend(b)
+&gt;&gt;&gt; a
+[1, 2, 3, 4, 5, 6, 7]
+</code></pre>
+</div>
+
+<h2 id="section-45">튜플 자료형</h2>
+
+<h3 id="section-46">튜플은 어떻게 만들까?</h3>
+
+<ul>
+  <li>리스트는 [과 ]으로 둘러싸지만 튜플은 (과 )으로 둘러싼다</li>
+  <li>리스트는 그 값의 생성, 삭제, 수정이 가능하지만 튜플은 그 값을 바꿀 수 없다</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; t1 = ()
+&gt;&gt;&gt; t2 = (1,)
+&gt;&gt;&gt; t3 = (1, 2, 3)
+&gt;&gt;&gt; t4 = 1, 2, 3
+&gt;&gt;&gt; t5 = ('a', 'b', ('ab', 'cd'))
+</code></pre>
+</div>
+
+<h3 id="section-47">튜플의 요소값을 지우거나 변경하려고 하면 어떻게 될까?</h3>
+
+<p><strong>튜플의 값을 리스트값을 지우거나 변경하는 것처럼 하면 오류가 발생한다!!</strong></p>
+
+<h2 id="section-48">튜플의 인덱싱과 슬라이싱, 더하기(+)와 곱하기(*)</h2>
+
+<h3 id="section-49">1. 인덱싱하기</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; t1 = (1, 2, 'a', 'b')
+&gt;&gt;&gt; t1[0]
+1
+&gt;&gt;&gt; t1[3]
+'b'
+</code></pre>
+</div>
+
+<ul>
+  <li>문자열, 리스트와 마찬가지로 t1[0], t1[3]처럼 인덱싱이 가능하다</li>
+</ul>
+
+<h3 id="section-50">2. 슬라이싱하기</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; t1 = (1, 2, 'a', 'b')
+&gt;&gt;&gt; t1[1:]
+(2, 'a', 'b')
+</code></pre>
+</div>
+
+<h3 id="section-51">3. 튜플 더하기</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; t2 = (3, 4)
+&gt;&gt;&gt; t1 + t2
+(1, 2, 'a', 'b', 3, 4)
+</code></pre>
+</div>
+
+<h3 id="section-52">4. 튜플 곱하기</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; t2 * 3
+(3, 4, 3, 4, 3, 4)
+</code></pre>
+</div>
+
+<h2 id="section-53">딕셔너리 자료형</h2>
+
+<p>파이썬에서는 자료형을 딕셔너리 라고 하며, Key와 Value값으로 한쌍을 이루는 자료형이다!</p>
+
+<ul>
+  <li>예컨대, Key가 “baseball”이라면 Value는 “야구”가 될 것이다!</li>
+</ul>
+
+<h2 id="section-54">딕셔너리는 어떻게 만들까?</h2>
+
+<p>Key에는 변하지 않는 값을 사용하고, Value에는 변하는 값과 변하지 않는 값 모두 사용 가능하다!</p>
+
+<p><strong>딕셔너리 dic의 정보</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th><strong>key</strong></th>
+      <th><strong>value</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>name</td>
+      <td>pey</td>
+    </tr>
+    <tr>
+      <td>phone</td>
+      <td>0118888888</td>
+    </tr>
+    <tr>
+      <td>birth</td>
+      <td>1111</td>
+    </tr>
+  </tbody>
+</table>
+
+<ul>
+  <li>다음의 예는 Key로 정수값 1, Value로 ‘hi’라는 문자열을 사용한 예이다</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = {1: 'hi'}
+</code></pre>
+</div>
+
+<ul>
+  <li>다음의 예처럼 Value에 리스트를 넣을 수도 있다.</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = {'a': [1,2,3]}
+</code></pre>
+</div>
+
+<h2 id="section-55">딕셔너리 쌍 추가, 삭제하기</h2>
+
+<p>추가되는 순서는 원칙이 없다!</p>
+
+<p>중요한 것은 “무엇이 추가되었는가”이다!</p>
+
+<h4 id="section-56">1. 딕셔너리 쌍 추가하기</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = {1: 'a'}
+&gt;&gt;&gt; a[2] = 'b'
+&gt;&gt;&gt; a
+{2: 'b', 1: 'a'}
+</code></pre>
+</div>
+
+<ul>
+  <li>{1: ‘a’}라는 딕셔너리에 a[2] = ‘b’와 같이 입력하면 딕셔너리 a에 Key와 Value가 각각 2와 ‘b’인 2: ‘b’라는 딕셔너리 쌍이 추가된다.</li>
+</ul>
+
+<h4 id="section-57">2. 딕셔너리 요소 삭제하기</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; del a[1]
+&gt;&gt;&gt; a
+{'name': 'pey', 3: [1, 2, 3], 2: 'b'}
+</code></pre>
+</div>
+
+<ul>
+  <li>del 함수를 사용해서 del a[key]처럼 입력하면 지정한 key에 해당하는 {key: value}쌍이 삭제된다!</li>
+</ul>
+
+<h2 id="section-58">딕셔너리를 사용하는 방법</h2>
+
+<p>예를 들어, 4명의 사람이 있다고 가정하고 각자의 특기를 표현 할 수 있는 좋은 방법에 대해서 생각해봤을때 리스트나 문자열로는 표현하기가 상당히 까다롭지만 딕셔너리를 사용하면 표현하기가 쉽다!!</p>
+
+<h3 id="key--value-">딕셔너리에서 Key 사용해 Value 얻기</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; grade = {'pey': 10, 'julliet': 99}
+&gt;&gt;&gt; grade['pey']
+10
+&gt;&gt;&gt; grade['julliet']
+99
+</code></pre>
+</div>
+
+<ul>
+  <li>위의 예에서, ‘pey’라는 Key의 Value를 얻기 위해 grade[‘pey’]를 사용한 것처럼 어떤 Key의 어떤 Value를 얻기 위해서는 “딕셔너리 변수[Key]”를 사용한다!</li>
+</ul>
+
+<h3 id="section-59">딕셔너리를 만들 때 주의사항</h3>
+
+<p>딕셔너리에서 Key는 고유한 값이므로 중복되는 Key값을 설정해놓으면 하나를 제외한 나머지 것들이 모두 무시된다 ( 꼭 어떤것이 무시될지는 알수없다! )</p>
+
+<ul>
+  <li>중복되는 Key를 사용하지 말아야한다.</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = {1: 'a', 1: 'b'}
+&gt;&gt;&gt; a
+{1: 'b'}
+</code></pre>
+</div>
+
+<ul>
+  <li>Key를 통해서 Value를 얻는 딕셔너리의 특징상, 동일한 Key가 존재한다면 어떤 Key에 해당하는 Value를 불러야 할 지 알 수 없기 때문이다!</li>
+</ul>
+
+<h2 id="section-60">딕셔너리 관련 함수들</h2>
+
+<h3 id="key--keys">Key 리스트 만들기(keys)</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = {'name': 'pey', 'phone': '0118384384', 'birth': '1111'}
+&gt;&gt;&gt; a.keys()
+dict_keys(['name', 'phone', 'birth'])
+</code></pre>
+</div>
+
+<ul>
+  <li>a.keys()는 딕셔너리 a의 Key만을 모아서 dict_keys라는 객체를 리턴한다!</li>
+</ul>
+
+<p>**dict_keys 객체는 리스트를 사용하는 것과는 차이가 없지만, 리스트 고유의 함수인 append, insert, pop, remove, sort등의 함수를 수행할 수는 없다!</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; for k in a.keys():
+... 	print(k)
+...
+phone
+birth
+name
+</code></pre>
+</div>
+
+<p>dict_keys 객체를 리스트로 변환하려면 다음과 같이 하면 된다!</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; list(a.keys())
+['phone', 'birth', 'name']
+</code></pre>
+</div>
+
+<h3 id="value--value">Value 리스트 만들기(value)</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a.values()
+dict_values(['pey', '0102392392', '1111'])
+</code></pre>
+</div>
+
+<ul>
+  <li>key를 얻는 것과 마찬가지 방법으로 Value만 얻고 싶다면 a.value()처럼 value함수를 사용하면 된다!</li>
+</ul>
+
+<h3 id="key-value--items">Key, Value 쌍 얻기(items)</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a.items()
+dict_items([('name', 'pey'), ('phone', '01024242424'), ('birth', '1111')])
+</code></pre>
+</div>
+
+<ul>
+  <li>item 함수는 key와 value의 쌍을 튜플로 묶은 값을 dict_items 객체로 돌려준다!</li>
+</ul>
+
+<h3 id="key-value---clear">Key: Value 쌍 모두 지우기(clear)</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a.clear()
+&gt;&gt;&gt; a
+{}
+</code></pre>
+</div>
+
+<ul>
+  <li>clear() 함수는 딕셔너리 안의 모든 요소를 삭제한다.</li>
+</ul>
+
+<h3 id="key-valueget">Key로 Value얻기(get)</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = {'name': 'pey', 'phone':'0102222222', 'birth': '1111'}
+&gt;&gt;&gt; a.get('name')
+'pey'
+&gt;&gt;&gt; a.get('phone')
+'01022222222'
+</code></pre>
+</div>
+
+<ul>
+  <li>get(x) 함수는 x라는 key에 대응되는 value를 돌려준다</li>
+</ul>
+
+<h3 id="key----in">해당 Key가 딕셔너리 안에 있는지 조사하기(in)</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = {'name':'pey', 'phone':'0102222222', 'birth':'1111'}
+&gt;&gt;&gt; 'name' in a
+True
+&gt;&gt;&gt; 'email' in a
+False
+</code></pre>
+</div>
+
+<ul>
+  <li>‘name’이라는 문자열은 a 딕셔너리의 key 중 하나이다. 따라서 ‘name’ in a를 호출하면 참(True)을 리턴한다.</li>
+</ul>
+
+<h2 id="section-61">집합 자료형</h2>
+
+<h3 id="section-62">집합 자료형은 어떻게 만들까?</h3>
+
+<p>집합(set)은 파이썬 2.3부터 지원되기 시작한 자료형으로, 집합에 관련된 것들을 쉽게 처리하기 위해 만들어진 자료형이다.</p>
+
+<ul>
+  <li>집합 자료형은 다음과 같이 set 키워드를 이용해 만들 수 있다.</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; s1 = set([1,2,3])
+&gt;&gt;&gt; s1
+{1, 2, 3}
+</code></pre>
+</div>
+
+<h3 id="section-63">집합 자료형의 특징</h3>
+
+<ul>
+  <li>중복을 허용하지 않는다.</li>
+  <li>순서가 없다</li>
+</ul>
+
+<p>리스트나 튜플은 순서가 있기 때문에 인덱싱을 통해 자료형의 값을 얻을 수 있지만 set 자료형은 순서가 없기 때문에 인덱싱으로 값을 얻을 수 없다.</p>
+
+<ul>
+  <li>만약 set 자료형에 저장된 값을 인덱싱으로 접근하려면 다음과 같이 리스트나 튜플로 변환한 후 사용 가능하다.</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; s1 = set([1,2,3])
+&gt;&gt;&gt; l1 = list(s1)
+&gt;&gt;&gt; l1
+[1, 2, 3]
+&gt;&gt;&gt; l1[0]
+1
+&gt;&gt;&gt; t1 = tuple(s1)
+&gt;&gt;&gt; t1
+(1, 2, 3)
+&gt;&gt;&gt; t1[0]
+1
+</code></pre>
+</div>
+
+<h3 id="section-64">집합 자료형 활용하는 방법</h3>
+
+<h4 id="section-65">교집합, 합집합, 차집합 구하기</h4>
+
+<p>set 자료형이 정말 유용하게 사용되는 경우는 다음과 같이 교집합, 합집합, 차집합을 구할 때이다!</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; s1 = set([1, 2, 3, 4, 5, 6])
+&gt;&gt;&gt; s2 = set([4, 5, 6, 7, 8, 9])
+</code></pre>
+</div>
+
+<h3 id="section-66">1. 교집합</h3>
+
+<p>s1과 s2의 교집합</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; s1 &amp; s2
+{4, 5, 6}
+</code></pre>
+</div>
+
+<h3 id="section-67">2. 합집합</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; s1 | s2
+{1, 2, 3, 4, 5, 6, 7, 8, 9}
+</code></pre>
+</div>
+
+<ul>
+  <li>4,5,6처럼 중복해서 포함된 값은 한개씩만 표현된다</li>
+</ul>
+
+<h3 id="section-68">3. 차집합</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; s1 - s2
+{1, 2, 3}
+&gt;&gt;&gt; s2 - s1
+{8, 9, 7}
+</code></pre>
+</div>
+
+<h3 id="section-69">집합 자료형 관련 함수들</h3>
+
+<h4 id="add">값 1개 추가하기(add)</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; s1 = set([1, 2, 3])
+&gt;&gt;&gt; s1.add(4)
+&gt;&gt;&gt; s1
+{1, 2, 3, 4}
+</code></pre>
+</div>
+
+<ul>
+  <li>이미 만들어진 set 자료형에 값을 추가할 수 있다. 1개의 값만 추가(add)할 경우에는 위와 같이 한다.</li>
+</ul>
+
+<h4 id="update">값 여러 개 추가하기(update)</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; s1 = set([1, 2, 3])
+&gt;&gt;&gt; s1.update([4, 5, 6])
+&gt;&gt;&gt; s1
+{1, 2 ,3, 4, 5, 6}
+</code></pre>
+</div>
+
+<h4 id="remove-1">특정 값 제거하기(remove)</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; s1 = set([1, 2, 3])
+&gt;&gt;&gt; s1.remove(2)
+&gt;&gt;&gt; s1
+{1, 3}
+</code></pre>
+</div>
+
+<h2 id="section-70">자료형의 참과 거짓</h2>
+
+<p>자료형에도 참과 거짓이 있다. 이는 매우 중요한 특징이며 실제로도 자주 쓰인다.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = [1, 2, 3, 4]
+&gt;&gt;&gt; while a:
+... 	a.pop()
+... 
+4
+3
+2
+1
+</code></pre>
+</div>
+
+<ul>
+  <li>먼저 a = [1,2,3,4]라는 리스트를 하나 만들었다.</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>while 조건문:
+	수행할 문장
+</code></pre>
+</div>
+
+<ul>
+  <li>
+    <p>조건문이 참인 동안 조건문 안에 있는 문장을 반복해서 수행한다!</p>
+  </li>
+  <li>
+    <p>위의 예를 보면 a가 참인 경우에 a.pop()을 계속 실행하라는 의미이다. a.pop()이라는 함수는 리스트 a의 마지막 요소를 끄집어내는 함수이므로 a가 참인 동안(리스트 내에 요소가 존재하는 한)마지막 요소를 계속해서 끄집어낼 것이다.</p>
+  </li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; if [ ]:
+...	 	print("True")
+... else:
+... 	print("False")
+...
+False
+</code></pre>
+</div>
+
+<ul>
+  <li>위의 에제를 보면 쉽게 이해 할 수 있다.</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; if [1, 2, 3]:
+... 	print("True")
+... else:
+... 	print("False")
+...
+True
+</code></pre>
+</div>
+
+<ul>
+  <li>
+    <p>위의 코드를 해석하면 이와 같다고 할 수 있다.</p>
+
+    <ul>
+      <li>만약 [1,2,3]이 참이면, “True”라는 문자열을 출력하고, 그렇지 않다면 “False”라는 문자열을 출력해라!”</li>
+    </ul>
+  </li>
+</ul>
+
+<p>위 코드의 [1,2,3]은 요소값이 있는 리스트이기 때문에 참이다!</p>
+
+<h2 id="section-71">자료형의 값을 저장하는 공간, 변수</h2>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = 1
+&gt;&gt;&gt; b = "python"
+&gt;&gt;&gt; c = [1,2,3]
+</code></pre>
+</div>
+
+<p>변수를 만들 때는 위의 예처럼 =(assignment)기호를 사용한다.</p>
+
+<p><strong>변수명 = 변수에 저장할 값</strong></p>
+
+<h2 id="section-72">변수란?</h2>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = 3 
+</code></pre>
+</div>
+
+<ul>
+  <li>만약 위의 코드처럼 a = 3이라고 한다면 3이라는 값을 가지는 정수 자료형(객체)이 자동으로 메모리에 생성된다. a는 변수의 이름이며, 3이라는 정수형 객체가 저장된 메모리 위치를 가리키게 된다!</li>
+</ul>
+
+<p><strong>a–&gt;3</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = 3 
+&gt;&gt;&gt; b = 3
+&gt;&gt;&gt; a is b
+True
+</code></pre>
+</div>
+
+<ul>
+  <li>a가 3을 가리키고 b도 3을 가리킨다. 즉 a = 3 을 입력하는 순간, 3이라는 정수형 객체가 생성되고 변수 a는 3이라는 객체의 메모리 주소를 가리킨다!</li>
+</ul>
+
+<h2 id="section-73">변수를 만드는 여러가지 방법</h2>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a, b = ('python', 'life')
+</code></pre>
+</div>
+
+<ul>
+  <li>위의 예문처럼 튜플로 a,b에 값을 대입 할 수 있다.</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; (a, b) = 'python', 'life'
+</code></pre>
+</div>
+
+<ul>
+  <li>튜플은 괄호를 생략해도 된다!</li>
+</ul>
+
+<h2 id="section-74">메모리에 생성된 변수 없애기!!</h2>
+
+<p>a=3을 입력하면 3이라는 정수형 객체가 메모리에 생성된다고 했다. 그렇다면 이 값을 메모리에서 없앨 수 있을까? 3이라는 객체를 가리키는 변수들의 개수를 레퍼런스 카운트라고 하였는데, 이 레퍼런스 카운트가 0이 되는 순간 3이라는 객체는 자동으로 사라진다. 즉, 3이라는 객체를 가리키고 있는 것이 하나도 없을 때 3이라는 객체는 메모리에서 사라지게 된다! 이것을 어려운 말로 가비지 콜렉션(쓰레기 수집)이라고도 한다!</p>
+
+<ul>
+  <li>다음은 특정한 객체를 가리키는 변수를 없애는 것이다</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = 3
+&gt;&gt;&gt; b = 3 
+&gt;&gt;&gt; del(a)
+&gt;&gt;&gt; del(b)
+</code></pre>
+</div>
+
+<ul>
+  <li>변수 a와 b가 3이라는 객체를 가리켰다가 del이라는 파이썬 내장 함수에 의해서 사라진다. 따라서 레퍼런스 카운트가 0이 되어 정수형 객체 3도 메모리에서 사라지게 된다</li>
+</ul>
+
+<p><strong>(* 사용한 변수를 del 명령어를 이용하여 일일이 삭제할 필요는 없다. 파이썬이 이 모든 것을 자동으로 해준다)</strong></p>
+
+<p>** 리스트를 변수에 넣고 복사하고자 할 때</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&gt;&gt;&gt; a = [1,2,3]
+&gt;&gt;&gt; b = a
+&gt;&gt;&gt; a[1] = 4
+&gt;&gt;&gt; a
+[1, 4, 3]
+&gt;&gt;&gt; b
+[1, 4, 3]
+</code></pre>
+</div>
+
+<ul>
+  <li>
+    <p>b라는 변수에 a가 가리키는 리스트를 대입하였다. 그런 다음 a 리스트의 a[1]을 4라는 값으로 바꾸면 a 리스트만 바뀌는 것이 아니라 b 리스트도 똑같이 바뀐다.</p>
+
+    <ul>
+      <li>
+        <p>그렇다면 b변수를 생성할 때 a와 같은 값을 가지도록 복사해 넣으면서 a가 가리키는 리스트와는 다른 리스트를 가리키게 하는 방법은 없을까?</p>
+
+        <ul>
+          <li>
+            <p>두가지 방법이 있다.</p>
+
+            <p>#### 1. [:]의 이용</p>
+
+            <p>```</p>
+            <blockquote>
+              <blockquote>
+                <blockquote>
+                  <p>from copy import copy
+b = copy(a)
+  ```</p>
+                </blockquote>
+              </blockquote>
+            </blockquote>
+
+            <p>#### 2. copy 모듈 이용</p>
+
+            <p>```</p>
+            <blockquote>
+              <blockquote>
+                <blockquote>
+                  <p>b is a
+  False
+  ```</p>
+                </blockquote>
+              </blockquote>
+            </blockquote>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+</article>
+
+
+
+<section class="tags">
+  <strong>Tags:</strong> <a href="/tag/Python">Python</a>
+</section>
+
+
+
+<section class="rss">
+  <p class="rss-subscribe text"><strong>Subscribe <a href="/feed.xml">via RSS</a></strong></p>
+</section>
+
+<section class="share">
+  <span>Share: </span>
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+      <a href="//www.facebook.com/sharer.php?t=Jump+to+Python+-+%ED%8C%8C%EC%9D%B4%EC%8D%AC+%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D%EC%9D%98+%EA%B8%B0%EC%B4%88%28%EC%9E%90%EB%A3%8C%ED%98%95%29&u=http%3A%2F%2Fyoonkh.github.io%2Fpython%2F2017%2F11%2F29%2Fjump1.html"
+        onclick="window.open(this.href, 'facebook-share', 'width=550,height=255');return false;">
+        <i class="fa fa-facebook-square fa-lg"></i>
+      </a>
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+      <a href="//plus.google.com/share?title=Jump+to+Python+-+%ED%8C%8C%EC%9D%B4%EC%8D%AC+%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D%EC%9D%98+%EA%B8%B0%EC%B4%88%28%EC%9E%90%EB%A3%8C%ED%98%95%29&url=http%3A%2F%2Fyoonkh.github.io%2Fpython%2F2017%2F11%2F29%2Fjump1.html"
+        onclick="window.open(this.href, 'google-plus-share', 'width=550,height=255');return false;">
+        <i class="fa fa-google-plus-square fa-lg"></i>
+      </a>
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+      <a href="//www.pinterest.com/pin/create/button/?description=Jump+to+Python+-+%ED%8C%8C%EC%9D%B4%EC%8D%AC+%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D%EC%9D%98+%EA%B8%B0%EC%B4%88%28%EC%9E%90%EB%A3%8C%ED%98%95%29&url=http%3A%2F%2Fyoonkh.github.io%2Fpython%2F2017%2F11%2F29%2Fjump1.html&media=http://yoonkh.github.io/assets/development.png"
+        onclick="window.open(this.href, 'pinterest-share', 'width=550,height=255');return false;">
+        <i class="fa fa-pinterest-square fa-lg"></i>
+      </a>
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+      <a href="//www.reddit.com/submit" onclick="window.location = '//www.reddit.com/submit?url=' + encodeURIComponent('http://yoonkh.github.io/python/2017/11/29/jump1.html') + '&title=Jump to Python - 파이썬 프로그래밍의 기초(자료형)'; return false">
+        <i class="fa fa-reddit-square fa-lg"></i>
+      </a>
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+</section>
+
+	
+
+	<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://https-yoonkh-github-io.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+<!--  -->
+
+</div>
+</div>
+
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h3 class="footer-heading">yoonkh blog</h3>
+
+    <div class="site-navigation">
+
+      <p><strong>Site Map</strong></p>
+      <ul class="pages">
+        
+        
+          <li class="nav-link"><a href="/about/">About</a>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+          <li class="nav-link"><a href="/posts/">Posts</a>
+        
+        
+        
+        
+      </ul>
+    </div>
+
+    <div class="site-contact">
+
+      <p><strong>Contact</strong></p>
+      <ul class="social-media-list">
+        <li>
+          <a href="mailto:zizou0812@gmail.com">
+            <i class="fa fa-envelope-o"></i>
+            <span class="username">zizou0812@gmail.com</span>
+          </a>
+        </li>
+
+        
+          
+        
+          
+          <li>
+            <a href="https://facebook.com/kin2577" title="Friend me on Facebook">
+              <i class="fa fa-facebook"></i>
+              <span class="username">페이스북</span>
+            </a>
+          </li>
+          
+        
+          
+          <li>
+            <a href="https://github.com/yoonkh" title="GitHub">
+              <i class="fa fa-github"></i>
+              <span class="username">Github</span>
+            </a>
+          </li>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+
+      </ul>
+    </div>
+
+    <div class="site-signature">
+      <p class="rss-subscribe text"><strong>Subscribe <a href="/feed.xml">via RSS</a></strong></p>
+      <p class="text">back-end Developer
+</p>
+    </div>
+
+  </div>
+
+</footer>
+
+<!-- Scripts -->
+<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/js/lightbox.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+  // Default syntax highlighting
+  hljs.initHighlightingOnLoad();
+
+  // Header
+  var menuToggle = $('#js-mobile-menu').unbind();
+  $('#js-navigation-menu').removeClass("show");
+  menuToggle.on('click', function(e) {
+    e.preventDefault();
+    $('#js-navigation-menu').slideToggle(function(){
+      if($('#js-navigation-menu').is(':hidden')) {
+        $('#js-navigation-menu').removeAttr('style');
+      }
+    });
+  });
+});
+
+</script>
+
+
+
+
+
+
+  </body>
+
+</html>
