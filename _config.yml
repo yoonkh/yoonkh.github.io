@@ -57,7 +57,7 @@ descriptions:
   - cat: Flask
     desc: "플라스크를 공부한 내용입니다"
 
-  - cat: RestfulAPI
+  - cat: RESTfulAPI
     desc: "restful-api관련 학습 내용입니다"
     
   - cat: Python 
