@@ -68,7 +68,7 @@
 
   <!-- Site styles -->
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://yoonkh.github.io/page2/">
+  <link rel="canonical" href="http://yoonkh.github.io/tags/Flasky/">
   <link rel="alternate" type="application/rss+xml" title="yoonkh blog" href="http://yoonkh.github.io/feed.xml" />
 </head>
 
@@ -119,153 +119,13 @@
 
 
     <div class="page-content">
-        <div class="home">
-
-<div class="site-header-container has-cover" style="background-image: url(/assets/development.png);">
-  <div class="scrim has-cover">
-    <header class="site-header">
-      <h1 class="title">yoonkh blog</h1>
-      <p class="subtitle">매우 쑥스러운 블로그</p>
-    </header>
-  </div>
-</div>
-
-<div class="wrapper">
-<ul class="post-list">
-  
-  <li>
-    <h2>
-      <a class="post-link" href="/python/2017/11/29/jump2.html">Jump to Python - 프로그램의 구조를 쌓는다(제어문)</a>
-    </h2>
-    <section class="post-excerpt" itemprop="description">
-      <p>프로그램의 구조를 쌓는 제어문 제어문에는 if, while, for등의 제어문이 있다! if 문 프로그래밍에서 조건을 판단하여 해당 조건에 맞는 상황을 수행하는 데 쓰이는 것이 바로 if문이다! &gt;&gt;&gt; money = 1 &gt;&gt;&gt; if money: ... print("택시를 타고 가라") ... else: ... print("걸어 가라") ... 택시를 타고 가라 money에 입력된 1은 참이다. 따라서...</p>
-    </section>
-    <section class="post-meta">
-      <div class="post-date">November 29, 2017</div>
-      <div class="post-categories">
-      in 
+        <h1>Articles by tag :</h1>
+<div>
+   
         
-        <a href="/category/Python">Python</a>
+            <a href=/flask/2017/11/27/flask.html/>Flask Heroku(배포)</a>
         
-      
-      </div>
-    </section>
-  </li>
-  
-  <hr>
-  
-  
-  <li>
-    <h2>
-      <a class="post-link" href="/python/2017/11/29/jump1.html">Jump to Python - 파이썬 프로그래밍의 기초(자료형)</a>
-    </h2>
-    <section class="post-excerpt" itemprop="description">
-      <p>숫자형 숫자형(Number)이란 숫자 형태로 이루어진 자료형이다! 항목 사용 예 정수 123, -345, 0 실수 123.45, -1234.5, 3.4e10 8진수 0o34, 0o25 16진수 0x2A, 0xFF 숫자형은 어떻게 만들고 사용할까? 정수형 정수형(integer)란 말 그대로 정수를 뜻하는 자료형을 말한다. 다음은 양의 정수와 음의 정수, 숫자0을 변수 a에 대입하는 예이다. &gt;&gt;&gt; a = 123 &gt;&gt;&gt;...</p>
-    </section>
-    <section class="post-meta">
-      <div class="post-date">November 29, 2017</div>
-      <div class="post-categories">
-      in 
-        
-        <a href="/category/Python">Python</a>
-        
-      
-      </div>
-    </section>
-  </li>
-  
-  <hr>
-  
-  
-  <li>
-    <h2>
-      <a class="post-link" href="/python/2017/11/29/jump.html">Jump to Python - 파이썬이란 무엇인가?</a>
-    </h2>
-    <section class="post-excerpt" itemprop="description">
-      <p>파이썬이란? 파이썬(Python)은 1990년 암스테르담의 귀도 반 로섬이 개발한 인터프리터 언어이다. 귀도는 파이썬이라는 이름을 자신이 좋아하는 코미디 쇼인 “몬티 파이썬의 날아다니는 서커스”에서 따왔다고 한다. 파이썬의 사전적인 의미는 고대신화에 나오는 파르나소스 산의 동굴에 살던 큰 뱀을 뜻하며, 아폴로 신이 델파이에서 파이썬을 퇴치했다는 이야기가 전해진다. 파이썬의 특징 파이썬은 인간다운 언어이다 프로그래밍이란 인간이 생각하는...</p>
-    </section>
-    <section class="post-meta">
-      <div class="post-date">November 29, 2017</div>
-      <div class="post-categories">
-      in 
-        
-        <a href="/category/Python">Python</a>
-        
-      
-      </div>
-    </section>
-  </li>
-  
-  <hr>
-  
-  
-  <li>
-    <h2>
-      <a class="post-link" href="/python/2017/11/29/base.html">코딩을 지탱하는 기술</a>
-    </h2>
-    <section class="post-excerpt" itemprop="description">
-      <p>코딩을 지탱하는 기술 프로그래밍 학습에 중요한 포인트 3가지 비교를 통한 학습 역사를 통한 학습 만드는 것을 통한 학습 규칙은 언어마다 다르다 ex) C언어에서는 0이 참이지만, ruby에서는 0이 거짓이다. 자바에서는 0이 단순한 정수형을 의미하기 때문에 조건식에 0을 사용하게 되면 컴파일 에러가 발생한다. 잘못된 고정관념을 버려야 한다. 특정언어에 국한된 지식을 습득할 것이...</p>
-    </section>
-    <section class="post-meta">
-      <div class="post-date">November 29, 2017</div>
-      <div class="post-categories">
-      in 
-        
-        <a href="/category/Python">Python</a>
-        
-      
-      </div>
-    </section>
-  </li>
-  
-  <hr>
-  
-  
-  <li>
-    <h2>
-      <a class="post-link" href="/flask/2017/11/27/flask.html">Flask Heroku(배포)</a>
-    </h2>
-    <section class="post-excerpt" itemprop="description">
-      <p>flasky deploy 과정 태스크를 애플리케이션이 설치될 때나 업그레이드될 때 수동으로 실행하면 에러에 취약하고 시간 소모적인 작업이 된다. 따라서 필요한 모든 태스크를 실행하는 커맨드를 manage.py에 추가한다. ex) 17-1 manage.py def deploy(): """Run deployment tasks.""" from flask.ext.migrate import upgrade from app.models import Role, User # migrate database to latest revision upgrade() #...</p>
-    </section>
-    <section class="post-meta">
-      <div class="post-date">November 27, 2017</div>
-      <div class="post-categories">
-      in 
-        
-        <a href="/category/Flask">Flask</a>
-        
-      
-      </div>
-    </section>
-  </li>
-  
-  
-</ul>
-
-<nav class="pagination" role="navigation">
-	<p>
     
-			
-			<a class="newer-posts" href="/">
-        <span class="fa-stack fa-lg">
-          <i class="fa fa-square fa-stack-2x"></i>
-          <i class="fa fa-angle-double-left fa-stack-1x fa-inverse"></i>
-        </span>
-      </a>
-			
-		
-		<span class="page-number">Page 2 of 2</span>
-		
-		<span class="fa-stack fa-lg">
-      <i class="fa fa-square fa-stack-2x"></i>
-      <i class="fa fa-angle-double-right fa-stack-1x fa-inverse"></i>
-    </span>
-		
-	</p>
-</nav>
-
-</div>
 </div>
 
     </div>
