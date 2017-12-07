@@ -10,7 +10,7 @@ exclude:
   - "/vendor/"
 
 # Site settings
-title: yoonkh blog
+title: yoonkh's blog
 subtitle: "매우 쑥스러운 블로그"
 email: zizou0812@gmail.com
 name: KyeongHan Yoon
