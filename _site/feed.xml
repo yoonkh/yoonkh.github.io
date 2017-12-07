@@ -6,8 +6,8 @@
 </description>
     <link>http://yoonkh.github.io/</link>
     <atom:link href="http://yoonkh.github.io/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 07 Dec 2017 11:23:11 +0900</pubDate>
-    <lastBuildDate>Thu, 07 Dec 2017 11:23:11 +0900</lastBuildDate>
+    <pubDate>Thu, 07 Dec 2017 11:57:18 +0900</pubDate>
+    <lastBuildDate>Thu, 07 Dec 2017 11:57:18 +0900</lastBuildDate>
     <generator>Jekyll v3.2.1</generator>
     
       <item>
@@ -6029,7 +6029,11 @@ def total(xs):
         <link>http://yoonkh.github.io/python/2017/11/29/base.html</link>
         <guid isPermaLink="true">http://yoonkh.github.io/python/2017/11/29/base.html</guid>
         
-        <category>Python</category>
+        <category>tag1</category>
+        
+        <category>tag2</category>
+        
+        <category>tag3</category>
         
         
         <category>Python</category>
