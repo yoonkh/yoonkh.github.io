@@ -88,14 +88,14 @@ social:
 
   - name: Facebook
     icon: facebook
-    username: yoonkh/페이스북
+    username: 페이스북/yoonkh
     url: https://facebook.com/kin2577
     desc: Friend me on Facebook
     share: true
 
   - name: GitHub
     icon: github
-    username: yoonkh/Github
+    username: Github/yoonkh
     url: https://github.com/yoonkh
     desc: GitHub
     share: false
@@ -116,7 +116,7 @@ social:
 
   - name: Instagram
     icon: instagram
-    username: yoonkh/인스타그램 
+    username: 인스타그램/yoonkh
     url: https://instagram.com/khyun880
     desc: Follow me on Instagram
     share: false
