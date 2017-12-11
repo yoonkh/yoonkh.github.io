@@ -1,0 +1,194 @@
+---
+layout: post
+title:  "뇌를 자극하는 파이썬 3 - 파이썬으로 이미지 요리하기"
+date:   2017-12-10
+author: Yoonkh
+categories: Python
+tags:	Python
+comments: True
+---
+
+## 파이썬으로 이미지 요리하기
+
+### 이미지 매직
+
+이미지 매직(Image Magick)은 포토샵 같은 이미지 편집 소프트웨어 이다. GUI를 갖고 있는 포토샵과는 달리 이미지 매직은 명령 프롬프트에서 실행하는 것이 특징이다. 이미지 매직은 형식 변환, 이미지 회전, 도형 그리기, 텍스트 출력, 이미지간 합성, 이미지 자르기, 크기 변환 등등 이미지 편집에 필요한 다양한 기능을 제공한다. 
+
+### Wand: 이미지 매직 파이썬 API 라이브러리
+
+Wand는 깔끔한 인터페이스를 제공하는 이미지 매직용 파이썬 라이브러리이다.
+
+#### Wand 설치 
+
+```
+> pip install Wand
+```
+
+#### Wand를 이용한 이미지 편집
+
+Wand를 이용한 이미지 편집 프로그래밍도 관련 모듈을 코드에 반입하는 것으로 시작된다. 주로 사용할 모듈은 wand.image이다. 이 모듈 안에서도 특히 Image 클래스를 주로 사용한다.
+
+
+| **기능**  | **메소드 이름**  |
+|---|---|
+| 파일 형식 바꾸기  | image.convert()  |
+| 크기 바꾸기  | image.resize()  |
+| 이미지 자르기  | 슬라이스 연산자.  |
+| 이미지 회전  | image.retate()  |
+| 이미지 뒤집기  | image.flip() # 상하 뒤집기, image.flop() # 좌우 뒤집기  |
+| 이미지 명도, 채도, 색상 변경하기  | image.modulate()  |
+| 이미지 합성  | image.composite()  |
+| 워터 마크  | image.watermark()  |
+
+- 이미지 도형이나 텍스트를 그려 넣을 때는 image.drawing 모듈의 Drawing 클래스도 함께 사용한다.
+
+| **기능**  | **메소드 이름**  |
+|---|---|
+| 이미지에 텍스트와 도형 넣기  | Drawing.line(), Drawing.rectangle(), Drawing.text(), Drawing.draw()  |
+
+#### 이미지 파일 형식 바꾸기
+
+이미지 파일 형식을 바꿀 때에는 wand.Image 클래스의 convert() 메소드를 사용한다.
+
+convert() 메소드는 새 이미지 형식의 이름을 매개변수로 입력받는다. 
+
+#### 이미지 크기 바꾸기
+
+이미지의 크기를 바꿀 때에는 resize() 메소드를 이용한다. resize() 메소드는 다음과 같이 재조정할 이미지의 너비와 높이를 매개변수로 입력받는다.
+
+```
+with Image(filename=original_path) as image:
+	image.resize(100, 50) # 어떤 이미지건 너비 100, 높이 50으로 크기 변경
+```
+
+#### 이미지 자르기
+
+이미지 자르기를 위한 슬라이스 연산자([])는 다음과 같이 사용하며, (x1, y1)과 (x2, y2) 좌표로 이루어지는 사각형 영역을 잘라낸다. 
+
+```
+cropped = image[x1:y1, x2:y2]
+```
+
+#### 이미지 회전 
+
+이미지 회전은 Image 클래스의 rotate() 메소드를 이용한다. rotate()의 매개변수는 두 가지이다. 하나는 회전 각도이고 하나는 이미지를 회전시켰을 때 남는 공간에 채워넣을 색상이다.
+
+```
+rotated.rotate(degree, background=Color(bgcolor))
+```
+
+#### 이미지 뒤집기
+
+이미지를 상하로 뒤집을 때는 flip() 메소드를, 좌우로 뒤집을 때는 flop() 메소드를 사용한다. 
+
+```
+with Image(filename=original_path) as image:
+	image.flip() # 상하 뒤집기
+	image.flop() # 좌우 뒤집기
+```
+
+#### 이미지에 텍스트와 도형 넣기
+
+텍스트와 도형을 그려 넣을 때는 wand.drawing.Drawing 클래스의 도움이 필요하다. Drawing 클래스를 사용하는 방법은 먼저 wand.drawing 모듈부터 Drawing 클래스를 반입한다. Image 클래스도 반입해야 한다.
+
+```
+from wand.drawing import Drawing
+from wand.image import Image
+```
+
+- 그 다음에는 Image와 Drawing의 인스턴스를 생성한다.
+
+```
+with Image(filename=original_path) as image:
+	with Drawing() as draw:
+```
+
+#### 이미지의 명도, 채도, 색상 변경하기
+
+모든 색은 명도, 채도, 색상 이렇게 세 가지 속성을 가진다.
+
+*ex) test*
+
+
+```
+import sys
+from wand.image import Image
+
+if len(sys.argv) < 5:
+    print('{0} <ORIGINAL PATH> <BRIGHTNESS> <SATURATION> <HUE>'
+          .format(sys.argv[0]))
+    sys.exit()
+
+original_path = sys.argv[1]
+brightness = float(sys.argv[2])
+saturation = float(sys.argv[3])
+hue = (float(sys.argv[4]) * 100 / 180 ) + 100 
+
+with Image(filename=original_path) as image:
+    with image.clone() as clone:
+        clone.modulate(brightness, saturation, hue) 
+        clone.save(filename= 'modulated_' + original_path)
+```
+
+#### 이미지 합성
+
+이미지의 합성은 Image 객체의 composite() 메소드로 수행 가능하다. 
+
+```
+image1.composite(image2, 100, 100) # image1 위의 (100, 100) 위치에 image2를 합성
+```
+
+- 한쪽 이미지를 약간 투명하게 만들어서 더 자연스럽게 합성하고 싶다면, 이미지를 투명하게 만들 때에는 Image 객체의 transparentize() 메소드를 이용한다. transparentize() 메소드는 투명도를 0에서 1사이의 값으로 입력받는다.
+
+- 다음과 같이 transparentize() 메소드에 0.7을 매개변수로 입력하여 호출하면 해당 이미지의 투명도를 70%로 변환한다.
+
+```
+image2.transparentize(0.7)
+```
+
+*ex) 두개의 이미지를 사용자로부터 입력받고 그 중 하나를 70% 투명도로 다른 이미지 위에 합성하는 예*
+
+```
+import sys
+from wand.image import Image
+
+if len(sys.argv) < 3:
+    print('{0} <Image 1> <Image 2>'.format(sys.argv[0]))
+    sys.exit()
+
+image1_path = sys.argv[1]
+image2_path = sys.argv[2]
+
+with Image(filename=image1_path) as image1:
+    with Image(filename=image2_path) as image2:
+        with image1.clone() as clone:
+            image2.transparentize(0.7)
+            clone.composite(image2, 100, 100)
+            clone.save(filename= image1_path + "_" + image2_path)
+```
+
+#### 워터마크
+
+Image 클래스에는 composite() 메소드와 transparentize() 메소드의 기능을 한꺼번에 수행하는 메소드가 있는데, 바로 watermark()이다!
+
+- watermark() 메소드의 첫 번째 매개변수는 합성할 Image 객체, 두 번째 매개변수는 투명도, 세 번째와 네 번째 매개변수는 각각 합성할 이미지의 x,y 좌표를 나타낸다.
+
+*ex) watermark() 메소드 예*
+
+```
+import sys
+from wand.image import Image
+
+if len(sys.argv) < 3:
+    print('{0} <Image 1> <Image 2>'.format(sys.argv[0]))
+    sys.exit()
+
+image1_path = sys.argv[1]
+image2_path = sys.argv[2]
+
+with Image(filename=image1_path) as image1:
+    with Image(filename=image2_path) as image2:
+        with image1.clone() as clone:
+            clone.watermark(image2, 0.7, 100, 100)
+            clone.save(filename= image1_path + "_" + image2_path)
+```
