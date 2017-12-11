@@ -1,0 +1,985 @@
+---
+layout: post
+title:  "뇌를 자극하는 파이썬 3 - Pygame으로 게임 만들기"
+date:   2017-12-10
+author: Yoonkh
+categories: Python
+tags:	Python
+comments: True
+---
+
+## Pygame으로 게임 만들기!!!
+
+### pygame 소개
+
+pygame은 게임과 같은 멀티미디어 소프트웨어 개발을 위해 만들어진 파이썬 라이브러리이다. SDL(Simple DirectMedia Layer) 라이브러리를 기반으로 만들어진 pygame은 윈도우, 리눅스, 맥 등 다양한 운영체제를 지원하며, 조이스틱 입력, 그래픽 처리, 사운드 재생 등 다양한 기능을 탑재하고 있다.
+
+#### pygame 라이브러리 설치
+
+#### 게임 루프
+
+게임 루프는 게임과 사용자 간의 지속적인 상호 작용을 하는 무한 루프이다. 게임이 자신의 상태를 화면에 표시하면 사용자는 표시된 상태에 따라 조이스틱이나 키보드 등을 이용해서 명령을 입력한다.
+
+게임은 이렇게 입력된 명령을 처리하고 자신의 상태를 변경한 후, 다시 사용자에게 자신의 상태를 화면에 표시한다. 게임 루프는 시작부터 끝까지 이 과정을 지속적으로 반복한다.
+
+반복 수행해야 하는 일을 정리하면 다음과 같다.
+
+1. 사용자 입력 처리 : 사용자가 조이스틱, 키보드를 통해 입력한 명령을 처리한다.
+
+2. 게임 상태 업데이트 : 주인공의 에너지, 총알 수, 위치, 적과의 충돌 여부 등을 갱신한다.
+
+3. 게임 상태 그리기 : 2.에서 갱신된 내용을 화면에 그려 넣는다.
+
+#### pygame을 사용하는 방법
+
+pygame을 이용하는 게임 코드는 크게 다섯 부분으로 나뉜다.
+
+1. pygame 관련 모듈 반입
+2. pygame 초기화
+3. 스크린 크기 설정
+4. 게임 루프
+5. pygame 관련 모듈 사용 자원 해제
+
+- pygame 모듈을 반입하는 것으로 시작 
+
+```
+import pygame
+```
+
+- 모듈을 반입한 후에는 pygame에 관련된 다른 기능을 사용하기 전에 pygame.init() 메소드부터 호출해야 한다. 이 메소드가 하는 일은 반입된 모든 pygame 관련 모듈을 초기화 하는 것이다.
+
+```
+pygame.init()
+```
+
+- 그 다음에는 pygame.display.set_mode() 메소드를 호출하여 게임 스크린의 크기를 지정한다. 
+
+```
+screen = pygame.display.set_mode(400, 300))
+```
+
+- 게임 루프를 작성하기 전에 게임 루프의 주기를 결정할 pygame.time.Clock 객체를 생성한다.
+
+```
+clock = pygame.time.Clock()
+```
+
+- 게임 루프를 작성
+
+```
+while True:
+	# 1) 사용자 입력을 처리
+	# 2) 게임 상태 업데이트
+	# 3) 게임 상태 그리기
+	clock.tick(30)
+```
+
+- 사용자의 명령이나 게임 상태 업데이트에 의해서 게임 루프를 빠져 나오게 되면 어플리케이션이 종료되기 전에 다음과 같이 pygame.quit() 메소드를 호출한다. 
+
+```
+pygame.quit()
+```
+
+#### 처음 만들어보는 pygame 애플리케이션
+
+*ex) 스크린의 색상이 완전히 빨간색이 되면 다시 하얀색이 되어 빨간색으로 변하기를 반복하는 예*
+
+```
+import pygame
+
+pygame.init() 
+screen = pygame.display.set_mode((400, 300)) 
+pygame.display.set_caption("Hello, pygame!")
+
+clock = pygame.time.Clock()
+run = True
+gb = [255, 255]
+
+# Game Loop
+while run:
+    # 1) 사용자 입력 처리
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            run = False
+
+    # 2) 게임 논리 실행
+    if gb[0] == 0:
+        gb[0] = 255
+        gb[1] = 255
+    else:
+        gb[0] -= 1
+        gb[1] -= 1
+   
+    # 3) 게임 장면 그리기
+    screen.fill(pygame.color.Color(255, gb[0], gb[1]))
+    pygame.display.flip()
+    
+    clock.tick(60)
+
+pygame.quit()
+```
+
+#### pygame에서의 사용자 입력 처리
+
+pygame에서 사용자 입력 이벤트를 담당하는 모듈은 pygame.event이다. pygame.event.get() 함수는 게임의 이벤트 큐에 있는 모든 이벤트를 순서열로 만들어 반환한다.
+
+```
+events = pygame.event.get()
+```
+
+*ex) KEYDOWN, KEYUP + QUIT 이벤트 테스트의 예*
+
+```
+import pygame
+
+pygame.init() 
+screen = pygame.display.set_mode((300, 100)) 
+pygame.display.set_caption("Keyboard Test")
+
+clock = pygame.time.Clock()
+run = True
+key_status = ""
+key = None
+
+# 게임 루프
+while run:
+    # 1) 사용자 입력 처리
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            run = False
+        elif event.type == pygame.KEYDOWN:
+            key_status = "Key Down"
+            key = event.key
+        elif event.type == pygame.KEYUP:
+            key_status = "Key Up"
+            key = event.key
+            
+    # 2) 게임 상태 업데이트
+    
+   
+    # 3) 게임 상태 그리기
+    screen.fill(pygame.color.Color(255, 255, 255))
+    
+    if key != None:
+        pygame.display.set_caption(
+            pygame.key.name(key) + " " + key_status)
+    
+    pygame.display.flip()    
+    clock.tick(60)
+
+pygame.quit()
+```
+
+스페이스 키가 눌러져 있는지를 알고 싶을 때는 다음과 같이 pygame.key.get_pressed() 함수가 반환한 튜플에 해당 키를 나타내는 상수(pygame.K_SPACE)을 첨자로 넘기면 된다.
+
+```
+keys = pygame.key.get_pressed()
+if keys[pygame.K_SPACE]:
+	print("스페이스 키 눌렀음")
+```
+
+*ex) 커서 키가 눌러져 있는지를 감시하고 현재 눌러져 있는 키의 이름을 출력하는 예*
+
+```
+import pygame
+
+pygame.init() 
+screen = pygame.display.set_mode((300, 100)) 
+pygame.display.set_caption("Keyboard Test2")
+
+clock = pygame.time.Clock()
+run = True
+key_status = ""
+key = None
+
+# 게임 루프
+while run:
+    # 1) 사용자 입력 처리
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            run = False
+    # 누르고 있는 키 확인하기.
+    keys = pygame.key.get_pressed() 
+    if keys[pygame.K_LEFT]:
+        print("LEFT")
+    elif keys[pygame.K_RIGHT]:
+        print("RIGHT")
+    elif keys[pygame.K_UP]:
+        print("UP")
+    elif keys[pygame.K_DOWN]:
+        print("DOWN")
+        
+    # 2) 게임 상태 업데이트    
+   
+    # 3) 게임 상태 그리기
+    screen.fill(pygame.color.Color(255, 255, 255))
+    
+    if key != None:
+        pygame.display.set_caption(
+            pygame.key.name(key) + " " + key_status)
+    
+    pygame.display.flip()    
+    clock.tick(60)
+
+pygame.quit()
+```
+
+#### pygame으로 그리기
+
+#### 텍스트 그리기
+
+pygame으로 텍스트를 그릴 때는 pygame.font.SysFont 클래스를 이용한다. 
+
+```
+# 1) Sysfont 생성자에 폰트명과 크기를 입력
+
+sf = pygame.font.SysFont("Monospace", 20)
+
+# 2) SysFont.render 메소드가 하는 일은 텍스트를 그려넣은 Surface 객체를 반환하는 것.
+#	이 메소드의 1번째 매개변수는 출력할 텍스트,
+# 	2번째 매개변수는 안티알리아싱(Anti-aliasing) 여부,
+# 	3번째 매개변수는 텍스트의 색상
+
+text = sf.render("Hello, World", True, (0,0,255))
+
+# 3) Surface.blit() 메소드는 다른 Surface 객체를 자신에게 그려넣는 일을 한다. 
+# 	이 메소드의 1번째 매개변수는 그려넣을 Surface 객체, 
+# 	2번째 매개변수에 해당 Surface 객체를 그려넣을 좌표
+
+screen.blit(text, (10,10)) 
+```	
+
+#### 도형 그리기
+
+pygame.draw 모듈에는 다양한 도형 그리기 함수가 있다. 
+
+*ex) 도형 그리기의 예*
+
+```
+import pygame
+
+pygame.init() 
+screen = pygame.display.set_mode((300, 100)) 
+pygame.display.set_caption("Drawing Shapes")
+
+clock = pygame.time.Clock()
+run = True
+key = None
+start_pos = [0, 0]
+
+# 게임 루프
+while run:
+    # 1) 사용자 입력 처리
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            run = False
+        elif event.type == pygame.KEYDOWN:
+            key = event.key
+            
+    # 2) 게임 상태 업데이트    
+    if start_pos[0] > screen.get_width():
+        start_pos[0] = 0
+    else:
+        start_pos[0] += 1
+    
+    # 3) 게임 상태 그리기
+    screen.fill(pygame.color.Color(255, 255, 255))
+    
+    if key == pygame.K_1:
+        pygame.draw.line(screen, 
+            pygame.color.Color(0, 0, 0), 
+            start_pos, 
+            (screen.get_width(), screen.get_height()), 1)
+    elif key == pygame.K_2:
+        pygame.draw.ellipse(screen,
+            pygame.color.Color(255, 0, 0), 
+            pygame.Rect(start_pos, (50, 50)))
+    elif key == pygame.K_3:
+        pygame.draw.polygon(screen,
+            pygame.color.Color(0, 255, 0), 
+            [start_pos, 
+             (0, screen.get_height()), 
+             (screen.get_width(), screen.get_height())])
+    elif key == pygame.K_4:
+        pygame.draw.rect(screen,
+            pygame.color.Color(0, 0, 255), 
+            pygame.Rect(start_pos, (50, 50)))
+    
+    pygame.display.flip()    
+    clock.tick(60)
+
+pygame.quit()
+```
+
+#### 이미지 그리기
+
+pygame.image.load() 함수는 이미지 파일을 읽어 들여 Surface 객체를 만들어 반환한다. 
+
+```
+# load() 함수는 이미지 파일로부터 Surface 객체를 반환
+img = pygame.image.load("image.png")
+
+# img 객체가 그려질 위치와 크기를 나타내는 pygame.Rect 객체를 반환.
+rect = img.get_rect()
+
+while True:
+	screen.blit(img, rect) # Surface.blit() 메소드를 이용해 img 객체를 그린다.
+```
+
+#### pygame으로 오디오 재생하기
+
+pygame.mixer.Sound 클래스는 오디오를 재생하는 기능을 가지고 있으며, OGG 또는 압축하지 않은 WAV 형식의 오디오 파일을 지원한다. 
+
+```
+# Sound 생성자에 오디오 파일 경로를 입력
+fire_sound = pygame.mixer.Sound('fire.ogg')
+
+# play() 메소드는 오디오 파일을 재생한다.
+fire_sound.play()
+
+# stop() 메소드는 오디오 파일의 재생을 중지시킨다.
+fire_sound.stop()
+```
+
+### 스프라이트의 이해
+
+스프라이트(Sprite)는 다른 이미지와 합성하기 위해 사용하는 이미지나 애니메이션을 말한다. "게임 화면 내에서 움직이는 물체"라고 생각해도 된다. 
+
+- 스프라이트를 사용하면 더 작은 용량으로 더 작은 메모리로 객체의 상태 변화나 객체들 간의 충동 처리 등이 용이하게 구현 가능하다.
+
+#### pygame.sprite.Sprite와 pygame.sprite.Group
+
+다음은 Sprite 클래스가 제공하는 메소드의 목록이다.
+
+| **메소드**  | **기능**  |
+|---|---|
+| update()  | 객체의 상태를 업데이트 한다.  |
+| add()  | 스프라이트를 그룹에 추가한다.  |
+| remove()  | 스프라이트를 그룹에서 제거한다.  |
+| kill()  | 스프라이트가 속해 있는 모든 그룹에서부터 스프라이트를 제거한다.  |
+| alive()  | 스프라이트가 한 그룹에라도 속해있는지의 여부를 반환한다.  |
+| groups()  | 스프라이트가 속해 있는 모든 그룹을 반환한다.  |
+
+- Sprite의 파생 클래스는 다음의 사항을 만족해야 한다.
+
+1. 스프라이트 객체를 그룹에 추가하기 전에 Sprite.__init__() 메소드를 호출해야 한다.
+2. pygame.Surface 형식의 image 데이터 속성을 할당해둬야 한다.
+3. pygame.Rect 형식의 rect 데이터 속성을 할당해둬야 한다.
+4. update() 메소드를 오버라이드 해야 한다.
+
+
+다음의 예제에서는 Sprite 클래스의 상속 조건 4가지를 만족시키는 Runner 클래스를 정의한다. 
+
+*ex) Sprite_Runner의 예*
+
+```
+import pygame
+from pygame.color import Color
+from pygame.sprite import Sprite
+from pygame.surface import Surface
+
+class Runner(Sprite):
+    def __init__(self):
+        Sprite.__init__(self)
+
+        self.sprite_image = 'runnersprite.png'
+        self.sprite_width = 70
+        self.sprite_height = 100 
+        self.sprite_sheet = pygame.image.load(
+                                self.sprite_image).convert()
+        self.sprite_columns = 14
+        self.current_frame = 0
+        self.image = Surface((self.sprite_width, self.sprite_height))
+
+        rect = (self.sprite_width*self.current_frame, 0, 
+                self.sprite_width, self.sprite_height)
+        self.image.blit( self.sprite_sheet, (0, 0), rect)
+        self.image.set_colorkey(Color(255, 0, 255))
+        self.rect = self.image.get_rect()
+       
+    def update(self):
+        if self.current_frame == self.sprite_columns - 1:
+            self.current_frame = 0
+        else:
+            self.current_frame += 1
+
+        rect = (self.sprite_width*self.current_frame, 0, 
+                self.sprite_width, self.sprite_height)
+        self.image.blit( self.sprite_sheet, (0, 0), rect)
+```
+
+*ex) 애니메이션 효과 연출의 예*
+
+```
+import pygame
+from pygame.color import Color
+from runner import Runner
+
+FPS = 28
+
+if __name__ == "__main__": 
+    pygame.init()
+ 
+    size = (400, 300)
+    screen = pygame.display.set_mode(size) 
+    pygame.display.set_caption("Runner Animation")
+ 
+    run = True
+    clock = pygame.time.Clock()
+
+    background_img = pygame.image.load("background.png")
+    
+    runner1 = Runner()
+    runner1.rect.x = 0
+    runner1.rect.y = 170
+
+    # 게임 루프
+    while run:
+        # 1) 사용자 입력 처리
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+
+        # 2) 게임 상태 업데이트      
+        runner1.update()
+
+        # 3) 게임 상태 그리기
+        screen.blit(background_img, screen.get_rect())
+        screen.blit(runner1.image, runner1.rect)
+        pygame.display.flip()
+ 
+        clock.tick(FPS)
+        
+    pygame.quit()
+```
+
+- Sprite 클래스는 pygame.sprite.Group 클래스와 함께 사용하도록 고안되었다. Group은 Sprite 객체의 컨테이너 기능을 하는 클래스이다. 
+
+다음은 Group 클래스의 메소드 목록이다.
+
+| **메소드**  | **기능**  |
+|---|---|
+| sprites()  | 이 그룹에 소속되어 있는 모든 스프라이트의 목록을 반환한다.  |
+| copy()  | 그룹을 복사한다.  |
+| add()  | 스프라이트를 그룹에 추가한다.  |
+| remove()  | 스프라이트를 그룹에서 제거한다.  |
+| has()  | 그룹이 특정 스프라이트를 갖고 있는지 확인한다.  |
+| update()  | 그룹에 소속되어 있는 모든 스프라이트 객체의 update() 메소드를 호출한다.  |
+| draw()  | 그룹에 소속되어 있는 각 스프라이트 객체의 image 데이터 속성과 rect 데이터 속성을 매개변수로 Surface.blit() 메소드를 호출한다.  |
+| clear()  | 그룹이 갖고 있는 스프라이트 위로 배경을 그린다.  |
+| empty()  | 모든 스프라이트를 그룹에서 제거한다.  |    
+
+
+#### 스프라이트간의 충돌 처리
+
+pygame.sprite.groupcollide() 함수는 스프라이트 그룹간의 충돌 여부를 평가하고, 충돌이 일어난 스프라이트 객체를 자동으로 그룹에서 제거해준다. 게다가 어떤 스프라이트에 충돌이 발생했는지를 dict 객체에 담아 출력해주기까지 한다.
+
+```
+while True: # 게임 루프
+	collided = pygame.sprite.groupcollide(group1, group2, False, True)
+	for item collide.items():
+		print(item)
+```
+
+### 투석기 게임
+
+#### 게임 컨셉 및 구조
+
+이 문제는 16세기에 갈릴레오가 해결을 해주었다. 던져진 물체는 포물선 운동을 한다는 사실을 갈릴레오가 밝혀내고 이것을 이론으로 정리해놨기 때문이다.
+
+- 포물선 운동 공식을 적용해야 한다.
+
+#### 게임에 사용할 상수 정의
+
+*ex) 상수 정의의 예*
+
+```
+g = 0.7
+BASE_Y = 250
+
+CATAPULT_READY = 0
+CATAPULT_FIRE = 1
+
+STONE_READY = 0
+STONE_FLY = 1
+
+MIN_POWER = 1
+MAX_POWER = 20
+
+MIN_DIRECTION = 20
+MAX_DIRECTION = 85
+
+GAME_INIT = 0
+GAME_PLAY = 1
+GAME_CLEAR = 2
+GAME_OVER = 3
+```
+
+### 스프라이트 클래스 정의: 배경, 투석기, 돌, 외계인, 폭발
+
+#### 게임에 사용할 스프라이트의 부모 클래스
+
+Animation 클래스는 두 가지 메소드를 구현한다. 하나는 init_animation() 메소드로, 스프라이트 시트 파일을 읽어 들이고 FPS에 따른 프레임 변경 시간 등을 초기화한다. 
+
+또 다른 하나는 calc_next_frame() 메소드이다. 이 메소드는 시간이 얼마나 지났는지를 보고 애니메이션 프레임을 전환할지를 결정한다.
+
+*ex) Animation 클래스 구현의 예*
+
+```
+import pygame
+from pygame import Surface
+from pygame.color import Color
+from pygame.sprite import Sprite
+
+class Animation(Sprite):
+    def init_animation(self):
+        Sprite.__init__(self)
+
+        self.sprite_sheet = pygame.image.load(self.sprite_image).convert()
+        self.current_frame = 0
+        self.image = Surface((self.sprite_width, self.sprite_height))
+
+        rect = (self.sprite_width*self.current_frame, 0, 
+                self.sprite_width, self.sprite_height)
+        self.image.blit( self.sprite_sheet, (0, 0), rect)
+        self.image.set_colorkey(Color(255, 0, 255))
+        self.rect = self.image.get_rect()        
+        self.elapsed = pygame.time.get_ticks()
+        self.threshold =  1000/self.fps
+ 
+    def calc_next_frame(self):
+       tick = pygame.time.get_ticks()
+       if tick - self.elapsed > self.threshold:
+           self.elapsed = tick
+           if self.current_frame == self.sprite_columns:
+               self.current_frame = 0
+           else:
+               self.current_frame += 1
+```
+
+#### Stone 스프라이트 클래스
+
+Stone 스프라이트 클래스는 투석기가 던지는 돌을 표현한다. Stone 스프라이트 애니메이션의 각프레임 크기는 8픽셀이며 총 프레임의 수는 4개이다.
+
+Stone 객체는 발사되기 전에는 STONE_READY 상태를 갖고 있다가, 사용자가 투석기에게 발사 명령을 내리면 setup() 메소드를 통해 초기 발사 파워(power), 발사각(direction), 발사 위치(initial_pos)를 객체에 저장한 후 상태를 STONE_FLY로 변경 한다. 
+
+STONE_FLY 상태가 된 Stone 객체는 게임 루프가 호출하는 move() 메소드를 통해 외계인을 향해 날아간다. 이 때 Stone의 위치가 게임 화면을 벗어나면 상태를 다시 STONE_READY로 돌려 발사 준비 상태로 돌아간다. 
+
+*ex) Stone 클래스의 구현의 예*
+
+```
+import math
+import pygame
+from pygame.color import Color
+from animation import Animation
+from const import *
+
+class Stone(Animation):
+    # STATE : STONE_READY -> STONE_FLY
+    #           ^---------------|
+    # READY일 때만 이동 가능
+    # FIRE일 때는 아무것도 못함.
+    def __init__(self):
+        self.sprite_image = 'stone.png'
+        self.sprite_width = 8
+        self.sprite_height = 8
+        self.sprite_columns = 4
+        self.fps = 20
+        self.state = STONE_READY
+        self.init_animation()
+               
+    def update(self): 
+        # 돌은 투석기가 발사한 이후부터 목표 또는 
+        # 지면에 충돌할 때까지 날기만 하므로
+        # 상태에 따른 스프라이트 정지 등은 필요 없음.
+        self.calc_next_frame()
+                
+        rect = (self.sprite_width*self.current_frame, 0, 
+                self.sprite_width, self.sprite_height)
+        self.image.blit( self.sprite_sheet, (0, 0), rect)
+        self.image.set_colorkey(Color(255, 0, 255))
+
+    def setup(self, initial_pos, power, direction):
+        self.initial_pos = initial_pos
+        self.rect.x = initial_pos[0]
+        self.rect.y = initial_pos[1]
+        self.power = power
+        self.direction = direction
+        self.state = STONE_FLY
+
+    def move(self, time, space, decrement_stones):
+        pos = self.calculate_position(time, g, self.direction)
+
+        pos = self.map_position(
+            self.initial_pos[0], self.initial_pos[1], 
+            pos[0], pos[1])
+        self.rect.x = pos[0]
+        self.rect.y = pos[1]
+
+        if pos[0] > space[0] or pos[1] > space[1]:
+            self.state = STONE_READY
+            decrement_stones()
+
+    # 포탄 위치 계산
+    def calculate_position(self, t, g, direction):
+        r = math.radians(direction)
+        x = self.power*math.cos(r)*t
+        y = self.power*math.sin(r)*t - 0.5*g*math.pow(t, 2)
+
+        return (int(x), int(y))
+
+    # 포탄의 위치를 화면 좌표에 맞게 변환
+    def map_position(self, x, y, new_x, new_y):
+        return (x + new_x, y + (new_y*-1))
+```
+
+#### Catapult 스프라이트 클래스 정의
+
+Catapult 클래스는 투석기를 앞/뒤로 이동시키는 forward()/backward() 메소드와 돌을 발사하는 fire() 메소드를 갖고 있다. fire() 메소드는 게임 루프로부터 발사 파워와 발사각을 입력 받아 데이터 속성에 저장하고 Catapult 객체의 상태를 CATAPULT_READY로 변경한다. 그 다음 update() 메소드가 호출될 때 이 상태를 확인하고 발사 애니메이션을 실행한다. 
+
+발사 애니메이션의 끝에 도달하면 Catapult 객체의 상태는 다시 CATAPULT_READY로 돌아가고, stone 객체의 setup() 메소드를 호출함으로써 돌이 날아가도록 만든다. setup() 메소드를 호출받은 stone 객체의 상태는 STONE_FLY로 바뀌어 외계인을 향해 비행을 시작한다.    
+
+*ex) Catapult 클래스 구현의 예*
+
+```
+import pygame
+from pygame.color import Color
+from animation import Animation
+from stone import Stone
+from const import *
+
+class Catapult(Animation):
+    # STATE : CATAPULT_READY -> CATAPULT_FIRE
+    #           ^------|
+    # READY일 때만 이동 가능
+    # FIRE일 때는 아무것도 못함.
+    def __init__(self, stone):
+        self.sprite_image = 'catapult.png'
+        self.sprite_width = 32
+        self.sprite_height = 32
+        self.sprite_columns = 5
+        self.fps = 30
+        self.stone = stone
+        self.state = CATAPULT_READY
+        self.init_animation()
+
+    def update(self): 
+        if self.state == CATAPULT_FIRE:
+            self.calc_next_frame()
+
+            if self.current_frame == self.sprite_columns:
+                self.current_frame = 0
+                # 돌멩이 날리기 시작
+                self.state = CATAPULT_READY
+                self.stone.setup(
+                    (self.rect.x, self.rect.y), 
+                    self.power, self.direction)
+        else:
+            self.current_frame = 0
+                
+        rect = (self.sprite_width*self.current_frame, 0, 
+                self.sprite_width, self.sprite_height)
+        self.image.blit( self.sprite_sheet, (0, 0), rect)
+        self.image.set_colorkey(Color(255, 0, 255))
+
+    def forward(self):
+        if self.rect.x < 100:
+            self.rect.x += 1
+
+    def backward(self):
+        if self.rect.x > 0:
+            self.rect.x -= 1
+
+    def fire(self, power, direction):
+        self.state = CATAPULT_FIRE
+        self.power = power
+        self.direction = direction
+```
+
+#### Alien 스프라이트 클래스 정의
+
+Alien 클래스는 우리의 적인 외계인 스프라이트를 표현한다!
+
+Alien 클래스는 숨 쉬는 것 말고는 특별한 기능을 갖고 있지 않다. 
+
+*ex) Alien 클래스 구현의 예*
+
+```
+from pygame.color import Color
+from animation import Animation
+
+class Alien(Animation):
+    def __init__(self):
+        self.sprite_image = 'alien.png'
+        self.sprite_width = 32
+        self.sprite_height = 32
+        self.sprite_columns = 3
+        self.fps = 10
+        self.init_animation()
+               
+    def update(self): 
+        self.calc_next_frame()
+
+        rect = (self.sprite_width*self.current_frame, 0, 
+                self.sprite_width, self.sprite_height)
+        self.image.blit( self.sprite_sheet, (0, 0), rect)
+        self.image.set_colorkey(Color(255, 0, 255))
+```
+
+#### Explosion 스프라이트 클래스 정의
+
+Explosion 클래스는 폭발 애니메이션을 구현한다. 돌과 외계인이 충돌 했을 때 사용된다.
+
+*ex) Explosion 클래스 구현의 예*
+
+```
+from pygame.color import Color
+from animation import Animation
+
+class Explosion(Animation):
+    def __init__(self):
+        self.sprite_image = 'explosionsprite.png'
+        self.sprite_width = 100
+        self.sprite_height = 100 
+        self.sprite_columns = 25
+        self.fps = 16
+        self.init_animation()
+       
+    def update(self): 
+        self.calc_next_frame()
+        if self.current_frame == self.sprite_columns:
+            self.current_frame = 0
+            self.kill()
+        
+        rect = (self.sprite_width*self.current_frame, 0, 
+                self.sprite_width, self.sprite_height)
+        self.image.blit( self.sprite_sheet, (0, 0), rect)
+        self.image.set_colorkey(Color(255, 0, 255))
+```
+
+#### 메인 모듈(게임 루프)
+
+
+*ex) 메인 모듈 구현의 예*
+
+```
+import math
+import pygame
+from pygame import draw
+from pygame.color import Color
+from pygame.sprite import Sprite
+
+from catapult import Catapult
+from stone import Stone
+from alien import Alien
+from explosion import Explosion
+from const import *
+
+FPS = 60
+stone_count = 3
+
+def decrement_stones():
+    global stone_count
+    stone_count -= 1
+
+class Background(Sprite):
+    def __init__(self):        
+        self.sprite_image = 'background.png'
+        self.image = pygame.image.load(
+                self.sprite_image).convert()
+        self.rect = self.image.get_rect()
+        self.rect.x = 0
+        self.dx = 1
+
+        Sprite.__init__(self)
+        
+    def update(self):
+        self.rect.x -= self.dx
+        if self.rect.x == -800:
+            self.rect.x = 0
+
+if __name__ == "__main__": 
+    pygame.init()
+ 
+    size = (400, 300)
+    screen = pygame.display.set_mode(size)
+ 
+    pygame.display.set_caption("Catapult VS Alien")
+ 
+    run = True
+    clock = pygame.time.Clock()
+    t = 0
+    fire_sound = pygame.mixer.Sound('fire.ogg')
+    crash_sound = pygame.mixer.Sound('crash.ogg')
+
+    power = 15
+    direction = 45
+    
+    game_state = GAME_INIT
+    background = Background()
+    background_group = pygame.sprite.Group()
+    background_group.add(background)
+    
+    stone = Stone() 
+    stone.rect.y = -100   # 위치 변경
+    stone_group = pygame.sprite.Group()
+    stone_group.add(stone)
+
+    catapult = Catapult(stone)    
+    catapult.rect.x = 50 # 위치 변경                       
+    catapult.rect.y = BASE_Y
+    catapult_group = pygame.sprite.Group()
+    catapult_group.add(catapult)
+
+    alien = Alien()
+    alien.rect.x = 350
+    alien.rect.y = BASE_Y
+    alien_group = pygame.sprite.Group()
+    alien_group.add(alien)    
+
+    explosion = Explosion()
+    explosion_group = pygame.sprite.Group()
+    explosion_group.add(explosion)
+
+    # 게임 루프
+    while run:
+        # 1) 사용자 입력 처리
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_SPACE:
+                    # 초기화면에서 스페이스를 입력하면 시작
+                    if game_state == GAME_INIT: 
+                        game_state = GAME_PLAY
+                    elif game_state == GAME_PLAY: 
+                        # GAME_PLAY 상태일 때 스페이스를 입력하면 발사
+                        if stone.state == STONE_READY:
+                            t = 0
+                            catapult.fire(power, direction)
+                            fire_sound.play()
+
+        if game_state == GAME_PLAY:
+            # 누르고 있는 키 확인하기.
+            keys = pygame.key.get_pressed()  
+            if keys[pygame.K_LEFT]:
+                catapult.backward()
+            elif keys[pygame.K_RIGHT]:
+                catapult.forward()
+            elif keys[pygame.K_UP]:
+                if direction < MAX_DIRECTION:
+                    direction += 1
+            elif keys[pygame.K_DOWN]:
+                if direction > MIN_DIRECTION:
+                    direction -= 1    
+            elif keys[pygame.K_SPACE]:
+                if power > MAX_POWER:
+                    power = MIN_POWER
+                else:
+                    power += 0.2
+
+        # 2) 게임 상태 업데이트
+        if stone.state == STONE_FLY:
+            t += 0.5
+            stone.move(t, 
+                       (screen.get_width(), screen.get_height()), 
+                       decrement_stones)
+        
+        if alien.alive():
+            collided = pygame.sprite.groupcollide(
+                        stone_group, alien_group, False, True)
+            if collided:
+                explosion.rect.x = \
+                    (alien.rect.x + alien.rect.width/2) - \
+                     explosion.rect.width/2
+                explosion.rect.y = \
+                    (alien.rect.y + alien.rect.height/2) - \
+                    explosion.rect.height/2
+                crash_sound.play()
+
+        elif not explosion.alive(): 
+            # 외계인도 죽고 폭발 애니메이션도 끝났을 때.
+            game_state = GAME_CLEAR
+       
+        # 외계인이 살아 있는데 돌멩이 수가 0이면 게임 오버.
+        if alien.alive() and stone_count == 0:
+            game_state = GAME_OVER
+
+        if game_state == GAME_PLAY: # 게임 객체 업데이트
+            catapult_group.update()
+            stone_group.update()
+            alien_group.update()
+        
+        # 3) 게임 상태 그리기
+        background_group.update()
+        background_group.draw(screen)
+                
+        if game_state == GAME_INIT: 
+            # 초기화면
+            sf = pygame.font.SysFont("Arial", 20, bold=True)
+            title_str = "Catapult VS Alien"
+            title = sf.render(title_str, True, (255,0,0))
+            title_size = sf.size(title_str)
+            title_pos = (screen.get_width()/2 - title_size[0]/2, 100)
+            
+            sub_title_str = "Press [Space] Key To Start"
+            sub_title = sf.render(sub_title_str, True, (255,0,0))
+            sub_title_size = sf.size(sub_title_str)
+            sub_title_pos = (screen.get_width()/2 - sub_title_size[0]/2, 200)
+
+            screen.blit(title, title_pos)
+            screen.blit(sub_title, sub_title_pos)
+
+        elif game_state == GAME_PLAY: 
+            # 플레이 화면
+            catapult_group.draw(screen)
+            stone_group.draw(screen) 
+            alien_group.draw(screen)
+
+            # 파워와 각도를 선으로 표현.
+            line_len = power*5 
+            r = math.radians(direction)        
+            pos1 = (catapult.rect.x+32, catapult.rect.y)
+            pos2 = (pos1[0] + math.cos(r)*line_len, 
+                    pos1[1] - math.sin(r)*line_len)
+            draw.line(screen,Color(255, 0, 0), pos1, pos2)                 
+
+            # 파워와 각도를 텍스트로 표현.
+            sf = pygame.font.SysFont("Arial", 15)
+            text = sf.render("{0} °, {1} m/s".
+                             format(direction, int(power)), True, (0,0,0))
+            screen.blit(text, pos2)
+
+            # 돌의 개수를 표시
+            sf = pygame.font.SysFont("Monospace", 20)
+            text = sf.render("Stones : {0}".
+                             format(stone_count), True, (0,0,255))
+            screen.blit(text, (10, 10))
+
+            if not alien.alive():
+                explosion_group.update()
+                explosion_group.draw(screen)
+
+        elif game_state == GAME_CLEAR: 
+            # 게임 클리어
+            sf = pygame.font.SysFont("Arial", 20, bold=True)
+            title_str = "Congratulations! Mission Complete"
+            title = sf.render(title_str, True, (0,0,255))
+            title_size = sf.size(title_str)
+            title_pos = (screen.get_width()/2 - title_size[0]/2, 100)
+            screen.blit(title, title_pos)
+
+        elif game_state == GAME_OVER: 
+            # 게임 오버
+            sf = pygame.font.SysFont("Arial", 20, bold=True)
+            title_str = "Game Over"
+            title = sf.render(title_str, True, (255,0,0))
+            title_size = sf.size(title_str)
+            title_pos = (screen.get_width()/2 - title_size[0]/2, 100)
+            screen.blit(title, title_pos)
+
+        pygame.display.flip() 
+        clock.tick(FPS)
+ 
+    pygame.quit()
+```
