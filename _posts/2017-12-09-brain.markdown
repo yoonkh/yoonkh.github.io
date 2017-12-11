@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "뇌를 자극하는 파이썬 3 - 코딩으로의 초대 1 ~ 10"
+title:  "뇌를 자극하는 파이썬 3 - 프로그램의 흐름 제어 1 ~ 6"
 date:   2017-12-09
 author: Yoonkh
 categories: Python
