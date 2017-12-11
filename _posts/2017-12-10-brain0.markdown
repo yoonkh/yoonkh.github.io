@@ -1,0 +1,354 @@
+---
+layout: post
+title:  "뇌를 자극하는 파이썬 3 - 함수로 코드 간추리기"
+date:   2017-12-10
+author: Yoonkh
+categories: Python
+tags:	Python
+comments: True
+---
+
+## 함수로 코드 간추리기
+
+### 이 단원을 시작하기에 앞서 알아둬야하는 용어!!
+
+#### 정의
+
+정의(Definition)는 어떤 이름을 가진코드가 구체적으로 어떻게 동작하는지를 '구체적으로 기술'하는것을 말한다.
+
+#### 호출과 반환
+
+모든 함수는 이름을 갖고 있다.
+
+이 이름을 불러주면 파이썬은 그 이름 아래 정의되어 있는 코드를 실행한다.
+
+- 함수가 자신의 코드를 실행하면 결과가 나오는데, 그 결과를 자신의 이름을 부른 코드에게 돌려준다.
+
+- 이때 함수를 부르는 행위를 호출(Call)이라고 하고, 함수를 부르는 코드를 호출자(Caller)라고 한다.
+
+- 함수가 호출자에게 결과를 돌려주는 것을 반환(Return)이라고 한다.
+
+### 함수 정의하기
+
+*ex) 함수를 정의하는 문법*
+
+```
+>>> def 함수이름( 매개변수 목록 ):
+>>> 	# 코드블록
+>>> 	return 결과
+```
+
+#### 매개변수를 입력받는 여러가지 방법
+
+매개변수는 호출자와 함수 사이의 관계를 맺어주는 변수를 뜻한다.
+
+매개변수에 어떤 값이 들어있느냐에 따라서 함수의 동작이 달라진다
+
+```
+def my_abs( arg ): # arg: 매개변수
+	if ( arg < 0 ):
+		result = arg * -1
+	else:
+		result = arg
+		
+	return result
+```
+
+#### 기본값 매개변수와 키워드 매개변수
+
+*ex) 기본값 매개변수*
+
+```
+>>> def print_string(text, count=1): # 매개변수를 정의 할 때 값을 할당해 놓으면 기본값 매개변수가 된다!
+	 	for i in range(count):
+	 		print(text)	
+	 		
+>>> print_string('안녕하세요') # 호출할 때 두 번째 매개변수를 생략하면 기본값 1이 사용된다!
+안녕하세요
+>>> print_string('안녕하세요', 2)
+안녕하세요
+안녕하세요
+```
+
+*ex) 키워드 매개변수*
+
+```
+>>> def print_personel(name, position='staff', nationality='Korea'):
+	 	print('name = {0}'.format(name))
+	 	print('position = {0}'.format(position))
+	 	print('nationality = {0}'.format(nationality))
+	 	
+>>> print_personnel(name='윤경한') # position과 nationality는 기본값이 사용된다
+name = 윤경한
+position = staff
+nationality = Korea 	
+
+>>> print_personnel(name='윤경한', nationality='ROK') # position만이 기본값을 사용!
+name = 윤경한
+position = staff
+nationality = ROK
+
+>>> print_personnel(name='윤경한', position='인턴') # nationality만이 기본값을 사용!
+name = 윤경한
+position = 인턴
+nationality = Korea
+```
+
+#### 가변 매개변수
+
+상황에 따라 매개변수의 수가 달라지는 함수는 매개변수(Arbitrary Argument List)를 이용하면 된다!
+
+```
+>>> def 함수이름(*매개변수): # 매개변수 앞에 *를 붙이면 해당 매개변수는 가변으로 지정된다!
+	 	코드블록
+```
+
+**```*```를 이용하여 정의된 가변 매개변수는 튜플이다!**
+
+#### 호출자에게 반환하기!
+
+함수가 호출자에게 값을 반환할 때에는 return문이 이용된다. return문은 대체로 다음 3가지 방법으로 사용된다!
+
+1. return문에 결과 데이터를 담아 실행하기 => 함수가 즉시 종료되고 호출자에게 결과가 전달
+
+2. return문에 아무 결과도 넣지 않고 실행하기 => 함수가 즉시 종료!
+
+3. return문 생략하기 => 함수의 모든 코드가 실행되면 종료!
+
+*ex) return문에 결과 데이터를 담아 실행하기*
+
+```
+>>> def multiply(a, b):
+	 	return a+b # return문은 함수의 실행을 종료시키고 자신에게 넘겨진 데이터를 호출자에게 전달한다!
+	 	
+>>> result = multiply(2, 3)
+>>> resutl
+6
+``` 	
+
+- 한 함수 안에 return문을 여러 개 두는 것이 문법적인 문제를 일으키는 것은 아니지만, 가급적이면 return문은 함수 코드블록의 마지막에 하나만 실행하도록 하는 것이 좋다!
+
+*ex) return문에 아무 결과도 넣지 않고 실행하기*
+
+```
+>>> def ogamdo(num):
+	 	for i in range(1, num+1):
+	 		print('제 {0}의 이해'.format(i))
+	 		if i == 5:
+	 			return # 반환할 데이터 없이 실행하는 return문은 '반환'의 의미보다는 '함수종료'의 의미로 사용된다!
+```
+
+```
+>>> ogamdo(3)
+제 1의 이해
+제 2의 이해
+제 3의 이해
+>>> ogamdo(5)
+제 1의 이해
+제 2의 이해
+제 3의 이해
+제 4의 이해
+제 5의 이해
+>>> ogamdo(8) # 8을 입력하면 for반복문은 8번 반복을 수행하려고 준비하겠지만 실행되는 return문 때문에 다섯 번 수행하면 함수가 종료되고 만다!
+제 1의 이해
+제 2의 이해
+```
+
+#### 함수 밖의 변수, 함수 안의 변수
+
+```
+>>> def scope_test():
+ 	 	a = 1 # 함수를 정의하는 시점에서는 a가 메모리에 생성되지 않았다. 함수를 호출하면 그제서야 함수의 코드가 실행되면서 a가 메모리에 생성된다!
+ 	 	print('a:{0}'.format(a))
+ 	 	
+>>> a = 0 # 함수 밖에서 a를 정의하고 0으로 초기화한다!
+>>> scope_test() # scope_test()가 호출되면 함수 내부에서 a를 정의하고 1로 초기화한다!
+a:1
+>>> print('a:{0}'.format(a)) # 하지만 함수 밖에서 정의한 a를 출력해보면 여전히 0을 갖고 있음을 확인할 수 있다!
+a:0
+```
+
+```
+>>> def scope_test():
+ 	 	global a # global 키워드는 지정한 변수의 유효 범위가 전역임을 알리고, 지역 변수의 생성을 막는다. 이 a는 scope_test() 함수 안에서 전역 변수로 사용된다!
+ 	 	a = 1 
+ 	 	print('a:{0}'.format(a))
+ 	 	
+>>> a = 0
+>>> scope_test() # scope_test()는 0으로 초기화된 a에 접근해 1로 값을 변경한다!
+a:1
+>>> print('a:{0}'.format(a)) # a를 출력해보면 scope_test() 함수 안에서 변경한 값 1이 들어있음을 확인 할 수 있다!
+a:1 	
+```
+
+### 자기 스스로를 호출하는 함수: 재귀 함수
+
+재귀 함수(Recursive Function)는 자기 스스로를 호출하는 함수를 말한다! 함수가 자기 자신을 부르는 것을 재귀 호출(Recursive Call)이라고 한다!
+
+- 함수 자신이 호출자이자 피호출자가 되는것이다
+
+```
+>>> def some_func(count):
+ 	 	if count > 0:
+ 	 		some_func(count-1)
+ 		print(count)
+```
+
+- 재귀 함수는 편리하지만 호출 비용이 크다!
+
+컴퓨터가 더 많은 일을 하게 만들어서 성능이 떨어지는 소프트웨어를 만들게 된다. 좋은 성능이 요구되는 코드에서는 재귀 함수를 반복문으로 대체해서 사용하는 것이 좋다.
+
+### 함수를 변수에 담아 사용하기
+
+파이썬에서는 함수를 변수에 담아 사용할 수 있다!
+
+```
+>>> def print_something(a):
+  	 	print(a)
+  	 	
+>>> p = print_something # ()없이 함수의 이름만을 변수에 저장한다!
+>>> p(123) # 변수의 이름 뒤에 ()를 붙여 함수처럼 호출한다!
+123
+>>> p('abc')
+abc
+```
+
+### 함수안의 함수: 중첩 함수
+
+함수 안에 정의된 함수를 중첩함수(Nested Fuction)라고 한다. 이 중첩 함수는 자신이 소속된 함수의 매개변수에 접근 할 수 있다.
+
+```
+>>> import math
+>>> def stddev(*args):
+  	 	def mean():	# 중첩 함수 ...
+  	 		return sum(args)/len(args) # ... 중첩 함수
+  	 		
+  	 	def variance(m): # 중첩 함수 ...
+  	 		total = 0 
+  	 		for arg in args:
+  	 			total += (arg - m ) ** 2
+ 			return total/len(args)-1) # ... 중첩 함수 			
+	v = variance(mean())
+	return math.sqrt(v)
+	
+>>> stddev(2.3, 1.7, 1.4, 0.7, 1.9)
+0.6	
+```
+
+- mean()과 variance()는 중첩 함수의 특징을 활용하여, stddev()의 매개변수인 args에 접근해서 평균과 분산을 각각 계산한다!
+
+## 모듈과 패키지
+
+모듈(Module)은 대체적으로 '독자적인 기능을 갖는 구성 요소'를 의미한다!
+
+- 파이썬에서는 각각의 소스파일을 일걸어 '모듈'이라고 한다.
+
+### 두 개의 소스 파일로 만드는 하나의 프로그램 예제
+
+*ex) calculator.py*
+
+```
+def plus(a, b):
+    return a+b
+
+def minus(a, b):
+    return a-b
+
+def multiply(a, b):
+    return a*b;
+
+def divide(a, b):
+    return a/b
+```
+
+*ex) calc_tester.py*
+
+```
+import calculator # 불러올 모듈의 이름 calculator.py에서 '.py'는 생략한다.
+
+print(calculator.plus(10, 5))
+print(calculator.minus(10, 5)) # 모듈이름.함수()의 꼴로 clculator모듈의 함수를 호출한다.
+print(calculator.multiply(10, 5))
+print(calculator.divide(10, 5))
+```
+
+*ex) 실행 결과*
+
+```
+> calc_tester.py
+15
+5
+50
+2.0
+```
+
+함수들은 모두 calculator.py 모듈에 정의되어 있다. calc_tester.py 모듈에서 import문을 이용해 calculator.py 모듈을 불러들였기 때문에 이들 함수를 사용할 수 있었다. 
+
+- 모듈을 분리함으로써 코드를 재사용할 수 있는 장점이 있다.
+
+#### import에 대해
+
+import를 사용하는 방법의 2가지
+
+1.
+
+```
+import 모듈 # 모듈의 실제 파일 명은 "모듈.py"
+```
+
+2.
+
+```
+from 모듈 import 변수 또는 함수
+```
+
+#### 모듈을 찾아서
+
+import문을 만나면 파이썬은 다음과 같은 순서로 모듈 파일을 찾아 나선다!
+
+1. 파이썬 인터프리터 내장 모듈
+
+2. sys.path에 정의되어 있는 디렉토리
+
+sys.path에 정의되어 있는 디렉토리는 크게 3가지로 나눌 수 있다.
+
+1. 파이썬 모듈이 실행되고 있는 현재 디렉토리
+
+2. PYTHONPATH 환경변수에 정의되어 있는 디렉토리
+
+3. 파이썬과 함께 설치된 기본 라이브러리
+
+#### 메인 모듈과 하위 모듈
+
+*"도대체 메인(main) 함수는 어디에 있는 거지?"*
+
+- 파이썬에서는 이른바'최상위 수준(Top Level)'에서 실행되는 스크립트가 있을 뿐, 메인 함수가 따로 없다. 최상위 수준 실행은 별 다른게 아니라 명령 프롬프트 창이나 탐색기를 이용하여 파이썬 모듈을 실행하는 것이다.
+
+**파이썬에서는 "어떻게 만드느냐"가 아닌 "어떻게 실행하느냐"에 따라 메인 모듈이 결정된다.**
+
+### 패키지
+
+파이썬에서는 모듈을 모아놓는 디렉토리를 패키지(Package)라고 한다. 영어로 패키지는 '꾸러미'라는 뜻을 가지고 있으니 파이썬에서는 '모듈 꾸러미' 정도로 생각하면 된다.
+
+```
+from my_package import calculator # 'from 패키지 import 모듈'의 골로 모듈을 불러온다! 
+
+print(calculator.plus(10, 5))
+print(calculator.minus(10, 5))
+print(calculator.multiply(10, 5))
+print(calculator.divide(10, 5))
+```
+
+#### ```__init__.py```의 이해
+
+패키지란, '```__init__.py```파일을 갖고 있는 디렉토리'임을 뜻한다.
+
+- ```__init__.py```파일은 대개 비워두는 것이 보통이다. 이 파일을 손대는 경우는 ```__all__```이라는 변수를 조정할때 정도이다. 
+
+- ```__all__```은 패키지로부터 반입할 모듈의 목록을 정의하기 위해서 사용한다.
+
+#### ```site-packages```에 대해
+
+site-packags는 파이썬의 기본 라이브러리 패키지 외에 추가적인 패키지를 설치하는 디렉토리이다.
+
+만든 패키지나 모듈을 site-packages 디렉토리에 위치시키면 어느 경로에서든 접근해 반입할 수 있다.
