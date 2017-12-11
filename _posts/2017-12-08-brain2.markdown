@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "뇌를 자극하는 파이썬 3 - 파일에 데이터 읽고 쓰기 11 ~ 17"
-date:   2017-12-08
+date:   2017-12-10
 author: Yoonkh
 categories: Python
 tags:	Python
