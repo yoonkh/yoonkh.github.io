@@ -1,0 +1,281 @@
+---
+layout: post
+title:  "뇌를 자극하는 파이썬 3 - 파일에 데이터 읽고 쓰기"
+date:   2017-12-10
+author: Yoonkh
+categories: Python
+tags:	Python
+comments: True
+---
+
+
+
+## 파일에 데이터 읽고 쓰기
+
+### 열라, 읽으라(쓰라), 닫으라
+
+애플리케이션이 디스크 같은 하드웨어를 직접 제어해 파일에 접근하는 경우는 거의 없다. 운영체제가 파일관리 업무를 담당하고 있기 때문에, 애플리케이션이 운영체제에게 API 함수를 통해 파일 처리를 의뢰하면 운영체제가 요청한 업무를 수행해주고, 그 결과를 애플리케이션에게 돌려준다. 
+
+파일 열기 - 읽기/쓰기 - 닫기에 필요한 파이썬 함수는 다음과 같다.
+
+```
+1. 파일 열기 # file = open()
+
+2. 파일 읽기/쓰기 # file.read()/file.write()
+
+3. 파일 닫기 # file.close()
+```
+
+*ex) 파일에 데이터를 기록하는 프로그램 예*
+
+```
+file = open('test.txt', 'w')
+file.write('hello')
+file.close()
+```
+
+*ex) 실행 결과*
+
+```
+> write.py
+```
+
+*ex) 파일의 내용을 읽는 프로그램 예*
+
+```
+file = open('test.txt', 'r')
+str = file.read()
+print(str)
+file.close()
+```
+
+*ex) 실행 결과*
+
+```
+> read.py
+hello
+```
+
+#### 자원 누수 방지를 돕는 with ~ as
+
+open() 함수와 함께 with ~ as 문을 사용하면 명시적으로 close() 함수를 호출하지 않아도 파일이 항상 닫힌다. with ~ as 문을 사용하는 방법은 다음과 같다. 
+
+```
+with open(파일이름) as 파일 객체: # "파일객체 = open(파일이름)"과 같다.
+	# 코드 블록
+	# 이곳에서 읽거나
+	# 쓰기를 한 후
+	# 그냥 코드를 빠져나가면 된다 # with문 덕분에 close()을 하지 않아도 된다.
+```
+
+#### with문의 비밀: 컨텍스트 매니저
+
+아무 함수나 with절에 올 수 있는 것은 아니다. 컨텍스트 매니저(Context Manager)를 제공하는 함수여야 with문과 함께 사용할 수 있다. 
+
+컨텍스트 매니저는 ```__enter__()```메소드와 ```__exit__()```메소드를 구현하고 있는 객체이다. with문은 컨텍스트 매니저를 획득한 후 코드 블록의 실행을 시작할 때 컨텍스트 매니저의 ```__enter__()```메소드를 호출하고, 코드블록이 끝날 때 ```__exit__()```를 호출한다. 
+
+- ```__exit__()```메소드에 프로그래머들이 흔하게 잊곤 한느 자원 해제 코드를 구현해 놓으면 자원을 해제하는 명시적인 코드가 없어도 자원 획득/해제를 안전하게 처리할 수 있게 된다. (with문을 사용한다는 전제하)
+
+```
+with open('test.txt', 'r') as file: # 코드블록 시작하기 전에 컨텍스트 매니저 __exit__()호출
+	s = file.read()
+	print(s) # 컨텍스트 매니저 __exit__()호출
+```
+
+*ex) 컨텍스트 매니저 구현 예*
+
+```
+class open2(object):
+    def __init__(self, path):
+        print ('initialized')
+        self.file = open(path)
+
+    def __enter__(self):
+        print ('entered')
+        return self.file
+
+    def __exit__(self, ext, exv, trb):
+        print ("exited")
+        self.file.close()
+        return True
+
+with open2("test.txt") as file:
+    s = file.read()
+    print(s)
+```
+
+*ex) 실행 결과*
+
+```
+> open2.py
+initialized
+entered
+hello
+exited
+```
+
+컨텍스트 매니저를 훨씬 간편하게 구현 할 수 있는 방법이 있다.
+
+- 바로 @contextmanager 데코레이터를 이용하는 것이다.
+
+@contextmanager 데코레이터는 ```__call__()```메소드는 물론이고, 컨텍스트 매니저 규약을 준수하는 데 필요한 ```__enter__()``` 메소드와 ```__exit__()``` 메소드를 모두 갖추고 있다. 
+
+```
+from contextlib import contextmanager # contextlib 모듈로부터 contextmanager를 반입
+
+@contextmanager # @contextmanager 데코레이터로 함수 수식
+def 함수이름():
+	# 자원 획득
+	try:
+		yield 자원 # yield문을 통해 자원 반환: with문의 코드블록이 시작될 때 실행.
+	finally:
+		# 자원 해제 # with문의 코드블록이 종료될 때 실행된다.
+```
+
+- @contextmanager로 수식되는 함수의 구조에서 눈여겨봐야 할 곳은 크게 3가지이다.
+
+1. try ~ finally 블록을 갖고 있다.
+
+2. try 블록에서는 yield문을 통해 자원을 반환한다. 이때 yield문은 자신의 매개변수로 넘겨진 자원을 반환한 뒤 임시적으로 현재 함수의 실행을 정지시킨다. yield에 의해 정지된 함수는 with문의 코드블록 실행이 끝날 때 다시 실행된다. 
+
+3. finally 블록에서 획득한 자원을 해제한다.
+
+요약하면, @contextmanager로 수식하는 함수는 try 블록이 ```__enter__()``` 메소드의 역할을, finally 블록이 ```__exit__()``` 메소드의 역할을 수행한다고 할 수 있다.
+
+#### open()함수 다시보기
+
+컴퓨터가 다루는 모든 파일은 바이너리 파일이다. 바이너리 파일 중에서 텍스트 데이터만 기록하고 있는 파일을 텍스트 파일이라고 한다. open() 함수는 코드에서 입력되는 매개변수에 따라 텍스트 파일을 처리할 것인가 또는 바이너리 파일을 처리할 것인가를 결정한다.
+
+- open() 함수는 모두 8개의 매개변수를 받아들인다. 이들 매개변수는 하나의 필수 매개변수과 일곱 개의 선택적 매개변수로 이루어져 있다. open() 함수의 반환값은 물론 파일 객체이다.
+
+```
+open(file, mode='r', buffering=-1, encoding=None, errors=None, newline=None, closed=True, opener=None)
+```
+
+### 텍스트 파일 읽고/쓰기
+
+#### 문자열을 담은 리스트를 파일에 쓰는 writelines() 메소드
+
+writelines()는 문자열을 요소로 가지는 순서열 객체를 매개변수로 입력받아 해당 순서열 객체의 내용을 모두 파일에 기록한다.
+
+```
+lines = ["we'll find a way we always have - Interstellar\n", 
+         "I'll find you and I'll kill you - Taken\n",
+         "I'll be back - Terminator 2\n"]
+         
+with open('movie_quotes.txt', 'w') as file:
+    file.writelines(lines)
+```
+
+*ex) 실행 결과*
+
+```
+> writelist.py
+
+> type movie_quotes.txt
+we'll find a way we always have - Interstellar
+I'll find you and I'll kill you - Taken
+I'll be back - Terminator 2
+```
+
+#### 2줄 단위로 텍스트를 읽는 readline()과 redlines() 메소드
+
+*ex) readline() method 예*
+
+```
+with open('movie_quotes.txt', 'r') as file:    
+    line = file.readline()
+    
+    while line != '': # readline() 메소드는 파일의 끝에 도달하면 ''를 반환한다. 그런데 실제로 빈 줄을 읽어 들였을 경우에는? 빈 줄을 읽어 들인 경우에는 개행 문자를 반환한다.
+        print(line, end='')
+        line = file.readline()
+```
+
+*ex) 실행 결과*
+
+```
+> readline.py
+we'll find a way we always have - Interstellar
+I'll find you and I'll kill you - Taken 
+I'll be back - Terminator2
+```
+
+*ex) readlines() method 예*
+
+```
+with open('movie_quotes.txt', 'r') as file:    
+    lines = file.readlines()
+    
+    line = ''
+    for line in lines:
+        print(line, end='')
+```
+
+*ex) 실행 결과*
+
+```
+> readlines.py
+we'll find a way we always have - Interstellar
+I'll find you and I'll kill you - Taken
+I'll be back - Terminator 2
+```
+
+#### 문자 집합과 인코딩
+
+컴퓨터의 발명, 발전이 미국의 학계와 기업을 중심으로 이루어지다 보니 문자 집합도 미국을 기준으로 제정되었고, 미국에서 제정된 ASCII는 1960년대에 제정된 문자 집합으로, 이후에 개발된 문자 집합들의 토대를 이루고 있다.
+
+미국의 엔지니어들은 ASCII으로 행복하게 살아가고 있었지만, 다른나라의 사람들은 그렇지 못했다. 자국언어에서 사용해야 하는 문자들을 ASCII로는 표현 할 수가 없었다. 
+
+그래서 미국 표준을 보완한 새로운 국제 표준이 등장했는데 그것이 ISO/IEC 8859-1이다.
+
+이 표준 제정 이후 중앙 유럽어, 남유럽어, 북유럽어, 아랍어 등을 지원하는 ISO/IEC 8859-N 표준이 새로 제정 되었다.
+
+- DBCS라는 2바이트(16비트)를 활용해서 문자 집합을 구성하는 방법으로 한글 문자 집합 표준도 만들어졌다.
+
+	- KS X 1001, EUC-KR, CP949 등이 있다.
+
+**문자 집합을 저장하고 표현하는 방법을 통일해서 문서와 소프트웨어를 작성하고 열람한다면 얼마나 좋을까?**
+
+이런 배경에서 소프트웨어 회사들이 힘을 모아 유니코드 협회를 만들고 유니코드(Unicode)를 제정했다.
+
+하지만 기존의 시스템을 추가하자 코드 포인트가 2바이트를 넘어서게 되었고, 새로운 문자를 위한 코드 포인트가 부족해지게 되었다.
+
+- 이런 요구사항들을 충족시키려다보니 유니코드를 인코딩(부호화)하는 방법을 정의하는 표준이 필요해졌다.
+
+	- UTF-7, UTF-8, UTF-16, UTF-32등이 바로 그것이다.
+
+*UTF는 우리 말로 하면 변환 인코딩 형식(Unicode Transformation Format)이라고 하는데, 이 중에서 가장 많이 사용하는 것은 UTF-8이다!*
+
+#### 바이너리 파일 다루기
+
+파이썬에서 struct 모듈의 도움이 없이는 바이너리 파일을 제대로 다루기가 어렵다. struct 모듈은 일반 데이터 형식과 bytes 형식 사이의 변환을 수행하는 함수들을 담고 있다. 
+
+*ex) struct 예*
+
+```
+>>> import struct 
+>>> packed = struct.pack('i', 123) # pack() 함수는 첫 번째에 매개변수 1에 따라 4바이트 크기의 bytes 객체 packed를 준비하고 두 번째 매개변수를 bytes에 복사해 넣는다.
+>>> for b in packed:  
+    	print(b) # bytes 객체 packed의 각바이트에 있는 내용을 출력.
+    	
+123
+0
+0
+0
+>>> unpacked = struct.unpack('i', packed) 
+>>> unpacked 
+(123,)
+>>> type(unpacked) # unpack() 함수는 튜플 형식을 반환한다.
+<<class 'tuple'>>
+```	
+
+- struct.pack(), struct.unpack() 함수의 예는 형식 문자열을 'i'로만 지정했는데 이것은 '바이트 순서:시스템 기본값, 데이터 구조:4바이트 크기의 정수형식 1개'로 데이터를 반환하겠다는 뜻이다.
+
+
+
+
+
+
+
+
+
