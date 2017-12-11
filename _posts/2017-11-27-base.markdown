@@ -3,7 +3,7 @@ layout: post
 title:  "코딩을 지탱하는 기술"
 date:   2017-11-29
 author: Yoonkh
-categories: Python
+categories: Code
 tags: Code
 comments: True
 ---
