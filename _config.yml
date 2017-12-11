@@ -62,6 +62,9 @@ descriptions:
     
   - cat: Python 
     desc: "파이썬을 공부한 내용입니다"
+    
+  - cat: Code
+    desc: "코드의 기본을 학습한 내용입니다"
 
 # Social icons and sharing options
 #
