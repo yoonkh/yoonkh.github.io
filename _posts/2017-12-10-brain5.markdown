@@ -1,0 +1,255 @@
+---
+layout: post
+title:  "뇌를 자극하는 파이썬 3 - SQLite"
+date:   2017-12-10
+author: Yoonkh
+categories: Python
+tags:	Python
+comments: True
+---
+
+## SQLite
+
+### 데이터베이스에 대해
+
+데이터베이스(Database)는 자료를 저장하고 저장된 자료를 다시 운용하기 위한 목적으로 구축된 시스템이다.
+
+데이터베이스는 간단한 가계부에서부터 기업에서 사용하는 경영정보 시스템에 이르기까지 다양한 분야와 폭넓은 범위에 걸쳐 사용될 정도로 중요한 분야이다. 
+
+### 데이터베이스의 역사
+
+#### 태초에 '데이터'가 있었더라
+
+사람들이 데이터베이스를 생각해 내기전, 아니 컴퓨터라는 기계를 생각해 내기 훨씬 이전부터 데이터는 존재했었다. 아주 옛날 진흙판에 동그라미를 찍어 수를 표시하던 것에서부터 종이를 이용하여 기록할 때까지, 그 매체는 다르지만 사람들은 데이터를 잃어버리지 않기 위해 끊임없이 기록을 해왔다.
+
+#### 계층형/네트워크형 데이터베이스
+
+늘어나는 데이터와 산업 전반에 걸쳐 거대해지는 시스템에 대응 하는 데이터 처리 방법을 연구하던 사람들은 '데이터 모델(Data Model)'이라는 도구를 사용하기 시작했고, 이것은 현실세계의 데이터를 다시 논리적으로 정의하고 표현하는 방법으로, 사람들은 이 기법을 통해 더욱 논리적인 데이터 베이스 시스템을 가질 수 있게 되었다. 이러한 모델링 기법을 이용한 초창기의 데이터베이스가 계층형, 네트워크형 데이터베이스이다!
+
+#### 관계형 데이터베이스
+
+현재 가장 일반적으로 사용되는 데이터베이스 시스템이다. 관계형 데이터베이스는 데이터의 구조를 테이블(Table), 즉 표의 형태로 구성한다. SQLite가 바로 이 관계형 데이터베이스에 해당한다.
+
+### DBMS
+
+DBMS(Database Management System)는 데이터베이스의 역할(데이터를 저장하고 이를 운용하게 하는 것)그 자체를 수행하는 소프트웨어를 말한다. Oracle, SQLServer 그리고 MySQL, 그리고 SQLite가 바로 이 DBMS이다.
+
+#### 관계형 데이터베이스의 기본구조
+
+관계형 데이터베이스는 데이터베이스가 여러 개의 테이블을 소유하는 형식으로 구성된다. 각 테이블은 실제 데이터를 담고 있는데, 데이터가 담기는 구조는 '표'형태로 이루어져 있다. 해당 표의 속성이 담긴 열은 '필드(field)'라고 하고, 실제 데이터를 이루는 각 행은 '레코드'라고 한다.
+
+#### SQL 익히기
+
+SQL은 데이터베이스와 테이블의 생성과 수정, 삭제 기능부터 데이터의 검색, 추가, 삭제, 수정 등의 데이터 처리 기능을 모두 수행할 수 있다.
+
+#### 테이블의 생성: CREATE TABLE
+
+레코드를 추가하고 조회하는 등의 작업을 하려면 테이블이 있어야 한다. 
+
+CREATE TABLE문은 각 필드의 자료형과 크기 등으로 구성된 테이블의 구조(이것을 스키마(Schema)라고 한다)를 매개변수로 하여 테이블을 생성하며, 다음과 같은 형식으로 사용한다.
+
+```
+CREATE TABLE <테이블> ( 필드1 필드형식1, 필드2 필드형식2, ... )
+```
+
+#### 레코드 추가: INSERT 문
+
+INSERT 문은 레코드를 테이블에 추가할 때 사용한다. 
+
+```
+INSERT INTO <테이블> ([필드1, 필드2, ...]) VALUE([데이터1, 데이터2, ...])
+```
+
+#### 레코드 조회: SELECT 문
+
+SELECT 문의 기본적인 구조는 아래의 형식과 같다. 우리말로 해석하면 "<테이블>에서 <필드>를 선택하라."라는 뜻이 된다.
+
+```
+SELECT <필드> FROM <테이블>
+```
+
+#### WHERE: 특정 조건의 레코드에 대해 작업
+
+WHERE 절은 SELECT 문에 조건을 한정하는 기능을 한다. WHERE 절은 아래와 같이 SELECT 문 뒤에 붙여서 사용한다. 
+
+```
+<SELECT 문 ...> WHERE <조건>
+```
+
+#### ORDER BY: 조회 결과의 정렬
+
+ORDER BY 절은 조회 결과가 여러 레코드로 구성되어 있을 경우, 이를 특정한 기준으로 정렬해 준다. WHERE절과 마찬가지로 SELECT문 뒤에 붙여서 사용한다. 
+
+```
+sqlite> SELECT * FROM PHONEBOOK ORDER NAME ASC:
+윤경한|010-1111-1111|zizou0812@gmail.com
+윤경한1|010-1111-1111|zizou0812@gmail.com
+윤경한2|010-1111-1111|zizou0812@gmail.com
+```
+
+#### 레코드 수정: UPDATE 문
+
+UPDATE문은 테이블에 이미 존재하는 레코드의 특정 필드를 수정할 때 사용한다. 
+
+```
+UPDATE <테이블> Set [필드1]=[데이터1], [필드2]=[데이터2], ... WHERE [조건]
+```
+
+#### 레코드 삭제: DELETE 문
+
+DELETE 문은 레코드를 삭제할 때 사용한다. DELETE문은 모든 SQL 구문 중에서 가장 간단하다고 할 수 있다. 
+
+```
+DELETE FROM <테이블> WHERE [조건]
+```
+
+#### SQLite의 파이썬 API
+
+파이썬3에는 SQLite 라이브러리가 기본 탑재되어 있다. 다음과 같이 import문으로 sqlite3모듈을 반입하면 SQLite API를 사용할 준비가 끝난것이다. 
+
+```
+import sqlite3
+```
+
+#### 커넥션 열고 닫기
+
+커넥션은 sqlite.connect() 함수를 이용해 생성한다. connect() 함수에는 데이터베이스 파일의 경로를 매개변수로 입력한다
+
+```
+import sqlite3
+
+conn = sqlite3.connect('test.db') # 커넥션 열기 # test.db 파일이 있다면 그 파일을 열고, 그렇지 않다면 새로 만든다.
+
+conn.close() # 커넥션 닫기 
+```
+
+#### 커서로 작업하기
+
+커서는 커넥션 객체의 cursor() 메소드를 이용해서 얻을 수 있다. 
+
+```
+import sqlite3
+
+conn = sqlite3.connect('test.db')
+cursor = conn.cursor() # 커서 열기
+
+cursor.close() # 커서 닫기
+conn.close()
+```
+
+#### 테이블 생성 
+
+다음은 test.db 파일안에 PHONEBOOK 테이블을 생성한다.
+
+```
+import sqlite3
+
+conn = sqlite3.connect('test.db')
+cursor = conn.cursor()
+
+cursor.execute("""
+CREATE TABLE PHONEBOOK 
+(NAME CHAR(32), PHONE CHAR(32), EMAIL CHAR(64) PRIMARY KEY)
+""")
+
+cursor.close()
+conn.close()
+```
+
+#### 레코드 추가 
+
+execute() 메소드는 매개변수 치환 기능을 지원한다. SQL문을 만들기 위해 일일히 문자열을 결합하는 대신 매개변수 치환 기능을 사용하면 읽기도 좋고 사용하기도 좋은 코드가 작성된다.
+
+SQL 문자열에 매개변수를 치환할 부분에 ?를 넣어놓고 ?에 들어갈 매개변수를 튜플 안에 넣어 execute() 메소드의 매개변수로 넘기면 된다.
+
+```
+cursor.execute("""
+INSERT INTO PHONEBOOK (NAME, PHONE, EMAIL)
+VALUE(?, ?, ?) # 이곳에 '윤경한' '010-111-1111', 'zizou0812@gmail.com'가 입력된다
+""", ('윤경한', '010-111-1111', 'zizou0812@gmail.com'))
+```
+
+- 레코드의 추가, 수정, 삭제 등을 실행하고 난 뒤에는 반드시 Connection 객체의 commit() 함수를 불러줘야 한다. 그렇지 않으면 실제 데이터베이스 파일에는 아무 변경이 이루어지지 않는다. 이것은 SQLite가 데이터의 일관성(Consistency)을 위한 트랜젝션(Transaction)을 지원하기 때문이다. 
+
+*ex) 레코드 예제*
+
+```
+import sqlite3
+
+conn = sqlite3.connect('test.db')
+cursor = conn.cursor()
+
+cursor.execute("""
+INSERT INTO PHONEBOOK (NAME, PHONE, EMAIL) 
+VALUES(?, ?, ?)
+""", ('윤경한', '010-111-1111', 'zizou0812@gmail.com'))
+
+id = cursor.lastrowid
+print(id)
+
+cursor.execute("""
+INSERT INTO PHONEBOOK (NAME, PHONE, EMAIL) 
+VALUES(?, ?, ?)
+""", ('윤경한1', '010-111-1111', 'zizou0812@gmail.com'))
+
+id = cursor.lastrowid
+print(id)
+
+conn.commit()
+
+cursor.close()
+conn.close()
+```
+
+*ex) 실행 결과*
+
+```
+> insert_record.py
+1
+2
+```
+
+#### 레코드 조회
+
+SELECT문을 실행한 후 결과를 얻어올 때는 커서 객체의 fetchone() 또는 fetchall() 메소드를 이용한다. fetchone() 메소드는 이름처럼 SELECT 실행 결과에서 레코드를 하나씩만 가져온다.
+
+```
+row = cursor.fetchone()
+print(row)
+```
+
+반면에, fetchall() 메소드는 한 번에 모든 결과 레코드를 가져온다.
+
+```
+rows = cursor.fetchall()
+for row in rows:
+	print("NAME: {0}, PHONE: {1}, EMAIL: {2} ",
+		format(row[0], row[1], row[2]))
+```
+
+*ex) SELECT문을 실행하고 결과를 출력하는 예*
+
+```
+import sqlite3
+
+conn = sqlite3.connect('test.db')
+cursor = conn.cursor()
+
+cursor.execute("SELECT NAME, PHONE, EMAIL FROM PHONEBOOK")
+
+rows = cursor.fetchall()
+for row in rows:
+   print ("NAME: {0}, PHONE: {1}, EMAIL: {2} ".
+        format(row[0], row[1], row[2]))
+
+cursor.close()
+conn.close()
+```
+
+*ex) 실행 결과*
+
+```
+> select_record.py
+NAME: 윤경한, PHONE: 010-111-1111, EMAIL: zizou0812@gmail.com
+NAME: 윤경한1, PHONE: 010-111-1111, EMAIL: zizou0812@gmail.com
+```
