@@ -65,6 +65,9 @@ descriptions:
     
   - cat: Code
     desc: "코드의 기본을 학습한 내용입니다"
+    
+  - cat: Algorithm
+    desc: "알고리즘을 공부한 내용입니다"
 
 # Social icons and sharing options
 #
