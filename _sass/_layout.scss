@@ -70,6 +70,8 @@ pre code.hljs {
 }
 
 .site-header-container, .post-header-container {
+	background-attachment: fixed;
+    	background-size: cover;
 	width: 100%;
 	text-align: center;
 	&.has-cover {
