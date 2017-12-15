@@ -103,7 +103,14 @@ virtualenv는 고립된 파이썬 환경을 생성한다. 환경마다 폴더를
 
 - **액티브스테이트의 액티브파이썬**
 
+	- 액티브 스테이트 배포판은 ActiveState Community Licence로 배포되며 무료 평가판이 제공된다. 그 외에는 라이선스를 구매해야 한다. 액티브 스테이트는 펄(Perl)과 Tcl을 위한 해법도 제공한다.
+
 - **Enthought의 캐노피**
+
+	- Enthought에서 제공하는 배포판은 Canopy Software License로 공개되었다. enpkg라는 패키지 관리자와 함께 제공되는데, 캐노피의 패키지 색인과 연결되어 pip 대신 사용한다.
+
+
+
 
 
 
