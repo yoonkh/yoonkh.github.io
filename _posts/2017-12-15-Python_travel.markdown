@@ -261,9 +261,7 @@ IDLE은 실제로는 IDE지만, 이전 섹션에 포함되지 않았다. 대부�
 				if not lexer:
 					lexer = guess_lexer(code)
 
-				return highlight(code,
-								 lexer,
-								 TerminalFomatter(bg='dark'))
+				return highlight(code, lexer, TerminalFomatter(bg='dark'))
 			```
 			
 			
