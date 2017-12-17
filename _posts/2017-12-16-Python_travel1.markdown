@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "파이썬을 여행하는 히치하이커를 위한 안내서 - 훌륭한 코드 작성하기"
+title:  "파이썬을 여행하는 히치하이커를 위한 안내서 - 훌륭한 코드 작성하기, 훌륭한 코드 읽어보기"
 date:   2017-12-16
 author: Yoonkh
 categories: Python
@@ -598,7 +598,818 @@ Sphinx는 가장 널리 사용되는 파이썬 문서화 도구다. reStructured
 
 카피레프트(copyleft) 라이선스는 덜 허용적인 라이선스라고도 불리며, 소스 코드가 그 자체로 사용 가능하도록 하는 데 중점을 둔다. GPL 라이선스가 가장 잘 알려져 있다.
 			
+## 훌륭한 코드 읽어 보기 
 
+프로그래머는 수많은 코드를 읽어야 한다. 능수능란한 프로그래머가 되는 비결은 탁월한 코드를 읽고, 이해하고, 따라잡는 데 있다. 
+
+### HowDoi
+
+벤자민 글라이츠만의 HowDoI 프로젝트는 코드 전체가 300줄이 채 안되며, 이번 코드 읽기 여정을 시작하기에 제격이다. 
+
+#### 단일 파일 스크립트 읽기
+
+스크립트는 대체로 명료한 시작점, 명료한 옵션, 명료한 종료점이 있으며, API나 프레임워크를 제공하는 라이브러리보다 이해하기 쉽다. 
+
+#### HowDoI의 문서 읽기
+
+HowDoI는 프로그래밍에 관한 질문의 답을 인터넷에서 찾도록 돕는 조그마한 명령줄 애플리케이션이다!
+
+```
+usage: howdoi.py [-h] [-p POS] [-a] [-l] [-c] [-n NUM_ANSWERS] [-C] [-v] QUERY [QUERY ...]
+
+instant coding answers via the command line
+
+positional arguments:
+  QUERY                 the question to answer
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -p POS, --pos POS     select answer in specified position (default: 1)
+  -a, --all             display the full text of the answer
+  -l, --link            display only the answer link
+  -c, --color           enable colorized output
+  -n NUM_ANSWERS, --num-answers NUM_ANSWERS
+                        number of answers to return
+  -C, --clear-cache     clear the cache
+  -v, --version         displays the current version of howdoi
+```
+
+#### HowDoI 사용하기
+
+```
+(venv)$ howdoi --num-answers 2 python lambda function list comprehension
+--- Answer 1 ---
+[(lambda x: x*x)(x) for x in range(10)]
+
+--- Answer 2 ---
+[x() for x in [lambda m=m: m for m in [1,2,3]]]
+# [1, 2, 3]
+```
+
+#### HowDoI의 코드 읽기
+
+howdoi.py를 훑어보면 각 함수가 그 다음 함수에서 사용되는 것을 알 수 있어 흐름을 이해하기 쉽다. 또한 함수 이름만 봐도 알 수 있듯이, 함수별로 단 하나의 작업이 주어져 있다. 메인 함수인 ```command_line_runner()```는 howdoi.py 파일의 마지막 부분에 있다. 
+
+#### HowDoI의 구조 예시
+
+HowDoI는 작은 라이브러리이기 때문에 구조에 대해 짚고 넘어갈 점이 별로 없다 
+
+#### 하나의 함수는 하나의 일만 하도록 하자!
+
+HowDoI의 함수는 각자 하나의 일만 처리하도록 분리되어 있다. 이게 얼마나 유익한지는 아무리 강조해도 모자르다. 심지어 다른 함수의 try/except문을 위해서만 존재하는 함수도 있다(```_format_output()```는 예외인데, try/except를 통해 예외처릴르 하는게 아니라, 구문 강조에 사용할 코딩 언어를 식별한다!)
+
+#### 시스템에서 사용할 수 있는 데이터 활용
+
+HowDoI는 관련 시스템 값을 확인하고 사용한다. 프락시 서버를 처리하기 위한 ```urllib.request.getproxies()```가 하나의 예다!(학교와 같은 기관에서 중간 서버를 통해 인터넷 연결 중 일부를 제한하는 경우)
+
+#### HowDoI의 스타일 예시
+
+HowDoI는 대체로 PEP8을 따르지만, 가독성이 떨어진다면 따르지 않는다. 예를 들어, import문은 파일의 맨 위에 위치하지만 표준 라이브러리와 외부 모듈이 뒤섞여 있다. 
+
+#### 밑줄이 앞에 붙은 함수 이름(우리는 모두 책임 있는 사용자다)
+
+HowDoI의 거의 모든 함수명 앞에 밑줄이 붙어 있다. 이는 패키지의 내부에서만 사용되는 함수임을 의미한다. 
+
+#### 호환성은 한 곳에서만 처리(가독성은 중요하다)
+
+메인 코드가 실행되기 전에 의존성 버전 차이를 처리한다. 이는 코드 독자에게 의존성 문제가 없을 거란 확신을 주고, 버전 확인 코드가 도처에 남용되지 않도록 막는다. 이 점은 HowDoI가 명령줄 도구이므로 장점이다. 명령줄 도구를 사용하려고 파이썬 인터프리터 버전을 바꾸려는 사람은 거의 없을 것이기 때문이다.
+
+#### 파이썬스러운 선택(아름다움이 추함보다 좋다)
+
+아래 스니펫은 howdoi.py에서 가져왔으며, 파이썬스럽고 사려 깊은 선택이 뭔지 보여 준다. ```get_link_at_pos()``` 함수는 결과가 없으면 False를 반환하고, 아니면 결과 링크 중 스택오버플로 링크를 판별하여 적절한 위치의 링크(링크가 충분하지 않으면 마지막 위치의 링크)를 반환한다.
+
+```
+def _is_question(link): # 1번
+	return re.search('questions/\d+/', link)
+	
+# [ ... 기타 함수 생략 ... ]
+
+def get_link_at_pos(links, position):
+    links = [link for link in links if _is_question(link)] # 2번   
+    if not links:
+        return False # 3번
+
+    if len(links) >= position:
+        link = links[position - 1] # 4번
+    else:
+        link = links[-1] # 5번
+    return link # 6번
+```
+
+- 1번: ```_is_question()```은 한 줄짜리 함수이며, 불명확한 정규 표현식 검색에 명확한 의미를 부여한다. 
+
+- 2번: 리스트 컴프리헨션이 문장처럼 읽힌다. 이는 ```_is_question()```을 따로 분리해 정의하고, 의미 있는 변수명을 사용한 덕분이다. 
+
+- 3번: 이른 반환문은 보다 수평적인 구조의 코드를 만들어준다. 
+
+- 4번: link 변수에 값을 지정해주는 추가 단계다. 
+
+- 5번: 여기에선 새로운 변수 선언 없이 두 개의 서로 다른 return문을 사용하는 대신, 명확한 변수명의 link를 사용하여 ```get_link_at_pos()```의 목적을 확실하게 드러냈다. 그 결과 코드 자체가 문서처럼 쉽게 읽힌다. 
+
+- 6번: 최상위 들여쓰기 수준에 위치한 하나의 반환문은 각종 코드 경로가 이곳에서 종료됨을 명시적으로 보여준다. 코드의 첫 줄과 마지막 줄만 읽으면 함수가 무슨 일을 하는지 알 수 있다는 단순한 규칙이 여기에도 적용된다.
+
+### Diamond 
+
+Diamond는 시스템 수치를 수집하여 다운스트림 프로그램에 전달하는 데몬(백그라운드 프로세스 상태로 계속 실행되는 애플리케이션)이다. 다운스트림 프로그램으로는 MySQL, Graphite 등이 있다. 
+
+#### 보다 큰 애플리케이션 코드 읽기
+
+Diamond는 HowDoI와 같은 명령줄 애플리케이션이다. 코드 파일이 여러 개임에도 여전히 시작점과 실행 경로가 명료하다. 
+
+#### Diamond 사용하기 
+
+먼저 Diamond/tmp 폴더를 만들어 수정된 구성 파일을 해당 위치로 옮긴다. 
+
+폴더 생성은 Diamond 폴더에서 다음과 같이 입력하면 된다.
+
+```
+(venv)$ mkdir tmp
+(venv)$ cp conf/diamond.conf.example tmp/diamond.conf
+```
+
+그리고 tmp/diamond.conf 파일을 다음과 같이 수정한다.
+
+```
+### Options for the server
+[server]
+# Handlers for published metrics. # 1번 
+handlers = diamond.handler.archive.ArchiveHandler
+user = # 2번
+group = 
+# Diarectory to load collector modules from # 3번
+collectors_path = src/collectors/
+
+### Options for handlers # 4번
+[handlers]
+[[default]]
+
+[[ArchiveHandler]]
+log_file = /dev/stdout
+
+### Optrions for collectors
+[collectors]
+[[default]]
+# Default Poll Interval (seconds)
+interval = 20 
+
+#### Default enabled collectors
+[[CPUCollector]]
+enabled = True
+
+[[MemoryCollector]]
+enabled = True
+```
+
+- 1번: 여러 핸들러가 있고, 클래스 이름을 사용해 선택할 수 있다. 
+
+- 2번: 데몬을 실행할 사용자와 그룹을 제어할 수 있다.
+
+- 3번: 콜렉터 모듈을 찾을 경로를 지정할 수 있다. 구성 파일에 경로를 명시하지 않으면 Diamond는 사용자가 만든 Collector 서브 클래스를 찾지 못한다. 
+
+- 4번: 구성 핸들러를 개별로 저장할 수 있다. 
+
+#### Diamond 코드 읽기
+
+큰 프로젝트의 코드를 읽을 때는 IDE가 유용하다. 소스 코드에서 함수와 클래스가 정의된 위치를 빠르게 찾을 수 있고, 주어진 정의가 사용된 모든 위치를 찾을 수도 있다. 이러한 기능을 사용하기 위해 가상환경의 파이썬 인터프리터를 IDE의 인터프리터로 지정해주자!
+
+diamond는 util로부터 버전 정보를 얻고, utils.log를 사용해 로그 기록 설정을 하고, server를 통해 서버를 가동한다. server는 util 패키지의 거의 모든 모듈을 불러온다. utils.classes를 통해 handler.Handler와 collector에 접근하고, utils.config를 통해 구성 파일에서 콜렉터 설정을 불러온다. 그리고 utils.schedular를 통해 콜렉터가 수치를 계산하기 위한 폴링 간격을 설정하고, utils.signals을 통해 핸들러를 구성하고 시작한다!
+
+#### Diamond의 구조 예시 
+
+Diamond는 실행 가능한 애플리케이션이면서 맞춤형 콜렉터를 만들고 사용할 수 있는 방법을 제공하는 라이브러리이기도 하다.
+
+#### 서로 다른 기능을 네임스페이스로 분리하자(네임스페이스는 대박 좋은 아이디어였다!)
+
+server 모듈이 diamond.handler, diamond.collector 그리고 diamond.utils라는 세 가지 모듈과 상호작용함을 보았다. 사실 utils하위 패키지에 포함된 모든 클래스와 함수를 모두 util.py 모듈에 모아 하나의 거대한 파일로 만들 수 있지만, Diamond 개발팀은 네임스페이스를 사용하여 기능별로 코드를 분리했다. 대박!
+
+#### 사용자가 확장할 수 있는 사용자 정의 클래스(복잡함이 꼬인 것보다 낫다)
+
+새 콜렉터를 구현하는 작업은 쉽다. 그저 diamond.collector.Collector **추상 베이스 클래스**를 상속하여 Collector.collect() 메서드를 구현한 뒤, 구현 결과를 폴더에 담아 venv/src/collectors/에 넣어주면 된다. 
+
+#### Diamond 스타일 예시 
+
+#### 클로저 사용 예시(갓차가 갓차가 아닌 경우)
+
+클로저는 지역 변수를 사용하는 함수이며, 해당 지역 변수가 정의된 함수가 호출되지 않는 한 클로저 함수르 사용할 수 없다. 다른 언어에서는 클로저는 구현하거나 이해학기 어려울 수 있지만, 파이썬에서는 그렇지 않다. 파이썬은 함수를 여타 객체처럼 다루기 때문이다. 예를 들어, 파이썬의 함수는 다른 함수의 인자 혹은 반환 값이 될 수 있다. 
+
+```
+##~~ ... 임포트 구문 생략 ... # 1번
+
+def main():
+    try:
+        ##~~ ... 명령줄 파서 구현 생략 ...
+
+        # Parse Command Line Args
+        (options, args) = parser.parse_args()
+
+        ##~~ ... 구성 파일을 파싱하는 코드 생략 ...
+        ##~~ ... 로그를 구성하는 코드 생략 ...
+
+    # Pass the exit up stream rather then handle it as an general exception
+    except SystemExit, e:
+        raise SystemExit
+
+    ##~~ ... 구성에 관한 기타 예외 처리 코드 생략 ...
+    
+    try:
+        # PID MANAGEMENT # 2번
+        if not options.skip_pidfile:
+            # Initialize Pid file
+            if not options.pidfile:
+                options.pidfile = str(config['server']['pid_file'])
+
+            ##~~ ... PID 파일이 존재하면 이를 불러온 뒤, ...
+            ##~~ ... 해당 PID의 프로세스가 없다면 파일을 삭제하고 ...
+            ##~~ ... 해당 PID의 프로세스가 실행 중이라면 종료하는 코드 생략 ...
+            
+            ##~~ ... 그룹과 사용자 ID를 설정하는 코드와 ...
+            ##~~ ... PID 파일 권한을 변경하는 코드 생략 ...
+            
+            ##~~ ... 데몬 여부를 확인한 뒤 ...
+            ##~~ ... 만약 그렇다면 프로세스를 분리하는 코드 생략 ...
+
+        # PID MANAGEMENT # 3번
+        if not options.skip_pidfile:
+            # Finish Initialize PID file
+            if not options.foreground and not options.collector:
+                # Write pid file
+                pid = str(os.getpid())
+                try:
+                    pf = file(options.pidfile, 'w+')
+                except IOError, e:
+                    log.error("Failed to write child PID file: %s" % (e))
+                    sys.exit(1)
+                pf.write("%s\n" % pid)
+                pf.close()
+                # Log
+                log.debug("Wrote child PID file: %s" % (options.pidfile))
+
+        # Initialize Server
+        server = Server(configfile=options.configfile)
+
+        def sigint_handler(signum, frame): # 4번
+            log.info("Signal Received: %d" % (signum))
+            # Delete Pidfile
+            if not options.skip_pidfile and os.path.exists(options.pidfile): # 5번
+                os.remove(options.pidfile)
+                # Log
+                log.debug("Removed PID file: %s" % (options.pidfile))            
+            sys.exit(0)
+
+        # Set the signal handlers
+        signal.signal(signal.SIGINT, shutdown_handler) # 6번
+        signal.signal(signal.SIGTERM, shutdown_handler)
+
+        server.run()
+
+    # Pass the exit up stream rather then handle it as an general exception
+    except SystemExit, e:
+        raise SystemExit
+
+    ##~~ ... 기타 예외 처리 코드 생략 ...
+    ##~~ ... 나머지 코드 생략
+```
+
+- 1번: 요약 내용
+
+- 2번: PID 파일을 통해 데몬이 고유한지 확인하고, 관련 프로세스 ID를 다른 스크립트에 신속히 전달한다.
+
+- 3번: 이 부분은 클로저까지 이어지는 문맥을 제공하고자 남겼다. 이제 프로세스가 데몬화되어 이전과 다른 PID를 가진다. 
+
+- 4번: sigint_handler() 함수는 클로저다. 최상위 수준이 아닌 main() 함수 안에 정의되어 있다. 이는 sigint_handler()가 PID 파일 탐색 여부와 그 위치를 알아야 하기 때문이다!
+
+- 5번: 명령줄 옵션으로부터 조건문에 사용되는 정보를 얻는다. 이 정보는 main() 함수가 실행되기 전까지는 얻을 수 없다. 즉, PID 파일에 관한 모든 옵션은 main 네임스페이스의 지역 변수이다.
+
+- 6번: 클로서(signal_handler() 함수)가 신호 핸들러에 전달되어 SIGINT와 SIGTERM을 처리하는 데 사용한다. 
+
+### Tablib
+
+Tablib은 데이터 형식을 바꾸거나, Dataset 객체에 데이터를 저장하거나, Datebook에 여러 Dataset을 저장하는 파이썬 라이브러리이다. 
+
+#### 작은 라이브러리 읽기
+
+Tablib은 애플리케이션이 아닌 라이브럴리이다. 따라서 HowDoI나 Diamond와 달리 진입점이 여러 개이다.
+
+#### Tablib 사용하기
+
+Tablib은 파이썬 대화형 세션에서 help() 함수를 사용하여 API를 탐색할 수 있다. 
+
+다음은 tablib.Dataset 클래스를 사용해 여러 형식의 데이터를 불러오거나 저장하는 코드이다. 
+
+```
+>>> import tablib
+>>> data = tablib.Dataset()
+>>> names = ('Black Knight', 'Killer Rabbit')
+>>> 
+>>> for name in names:
+... 	fname, lname = name.split()
+... 	data.append((fname, lname))
+...
+>>> data.dict
+>>> [['Black', 'Knight'], ['Killer', 'Rabbit']]
+>>> 
+>>> print(data.csv)
+Black,Knight
+Killer,Rabbit
+
+>>> data.headers=('First name', 'Last name')
+>>> print(data.yaml)
+- {First name: Black, Last name: Knight}
+- {First name: Killer, Last name: Rabbit}
+
+>>> with open('tmp.csv', 'w') as outfile:
+... 	outfile.write(data.csv)
+...
+64
+>>> newdata = tablib.Dataset()
+>>> newdata.csv = open('tmp.csv').read()
+>>> print(newdata.yaml)
+- {First name: Black, Last name: Knight}
+- {First name: Killer, Last name: Rabbit}
+```
+
+#### Tablib 코드 읽기
+
+모듈의 문서화 문자열을 통해 기존과 다른 방식으로 소스 코드를 둘러보자. 
+
+다음과 같이 터미널 셸에서 패키지의 최상위 디렉터리로 이동한 뒤 head *.py를 입력하면, 모든 모듈의 문서화 문자열을 한꺼번에 볼 수 있다. 
+
+```
+(venv)$ cd tablib
+(venv)$ head *.py
+==> __init__.py <== # 1번
+""" Tablib. """
+
+from tablib.core import (
+	Databook, Dataset, detect, import_set, import_book,
+	InvalidDatasetType, InvalidDimensions, UnsupportedFormat,
+	__version__
+)
+
+==> compat.py <== # 2번
+# -*- coding: utf-8 -*-
+
+"""
+tablib.compat
+~~~~~~~~~~~~~
+Tablib compatiblity module.
+"""
+
+==> core.py <== # 3번
+# -*- coding: utf-8 -*-
+"""
+	tablib.core
+	~~~~~~~~~~~
+	
+	This module implements the central Tablib objects.
+	
+	:copyright: (c) 2014 by Kenneth Reitz.
+	:license: MIT, see LECENSE for more details.
+"""
+```
+
+- 1번: 최상위 수준 API에는 딱 아홉 개의 진입점이 있다. 먼저 Dataset과 Databook 클래스는 문서에 언급되어 있다. 일단 detect는 형식을 식별하는 것처럼 보이고, import_set과 import_book은 데이터를 불러올 게 분명하다. 그리고 나머지 세 클래스 InvalidDataType, InvalidDataDimensions, UnsupportedFormat는 예외처럼 보인다.
+
+- 2번: tablib/compat.py는 호환성 모듈이다. 해당 모듈의 코드를 훑어보면, 파이썬 2와 3의 호환 문제를 처리하기 위해 tablib/core.py에서 사용하는 모듈의 위치나 이름 차이를 해결한다는 점을 쉽게 알 수 있다. 이는. HowDoI와 비슷한 해결법이다. 
+
+- 3번: tablib/core.py에는 모듈 이름에서 알 수 있듯 Dataset과 Databook과 같은 핵심 Tablib 객체가 구현되어 있다. 
+
+#### Tablib의 구조 예시
+
+Tablib에서 가장 주목할 점은 tablib/formats/ 안의 모듈에 클래스가 없다는 것이다. 이는 클래스를 남용하지 않는 완벽한 예시이다. 
+
+#### 형식적으로 불필요한 객체지향 코드는 필요 없다(함수 그룹화를 위해 네임스페이스를 사용하자)
+
+grep^def formats/*.py를 사용하면 각 모듈이 다음 함수 중 일부 혹은 전부를 담고 있음을 알 수 있다. 
+
+- detect(stream)은 스트림 내용에 기반하여 파일 형식을 유추한다. 
+
+- dset_sheet(dataset, ws)는 엑셀 스프레드시트 셀의 서식을 지정한다. 
+
+- export_set(dataset)은 Dataset을 주어진 형식으로 내보내며, 형식이 갖춰진 문자열을 반환한다. 
+
+- import_set(dset, in_stream, headers=True)는 Dataset의 내용을 입력 스트림 내용으로 바꾼다. 
+
+- export_set(dset, in_stream, headers=True)는 Databook 안의 Datasheet를 주어진 형식으로 내보내며, 문자열이나 bytes 객체를 반환한다. 
+
+- import_book(dbook, in_stream, headers=True) Databook의 내용을 입력 스트림 내용으로 바꾼다. 
+
+#### Tablib의 스타일 예시 
+
+#### 연산자 오버로딩(아름다움이 추함보다 좋다)
+
+Tablib은 파이썬의 연산자 오버로딩을 사용하여 Dataset의 행 단위/열 단위 연산을 가능하게 했다. 
+
+```
+>>> data[-1] # 1번
+('1 whole', 'olive')
+>>>
+>>> data[-1] = ['2 whole', 'olives'] # 2번
+>>> 
+>>> data[-1]
+('2 whole', 'olives') # 3번
+>>>
+>>> del data[2:7] # 4번
+>>> 
+>>> print(data.csv)
+amount,ingredient # 5번
+1 bottle,0l' Janx Spirit
+1 measure,Santraginus V seawater
+2 whole,olives
+
+>>> data['ingredient'] # 6번
+["Ol' Janx Spirit", 'Santraginus V seawater', 'olives']
+```
+
+- 1번: 대괄호 연산자([])와 숫자를 함께 사용하면, 특정 위치의 행 데이터에 접근할 수 있다. 
+
+- 2번: 중괄호 연산자를 사용해 값을 할당할 수 있다. 
+
+- 3번: 그리고 원래의 값이 바뀐 것을 확인할 수 있다. 
+
+- 4번: 슬라이스(slice)를 사용해 값을 삭제했다. 2:7은 2,3,4,5,6을 가리키며, 7은 포함되지 않는다. 
+
+- 5번: 데이터가 csv형식으로 바뀌었다. 
+
+- 6번: 열 이름을 통해 열 데이터에 접근할 수도 있다. 
+
+### Requests
+
+2011년 발렌타인데이에 케네스 레이츠는 파이썬 커뮤니티에 대한 애정을 담아 Requests 라이브러리를 공개했다. Requests 라이브러리의 (API 문서를 읽을 필요가 없을 정도로) 직관적인 API 디자인은 파이썬 커뮤니티의 마음을 단숨에 사로잡았다. 
+
+#### Requests 문서 읽기
+
+Requests는 몇 가지 함수와 특색있는 클래스, 키워드 인자 뭉치만을 사용하여 IETF의 HTTP 기준을 맞추고자 노력하였다. 
+
+#### Requests 사용하기
+
+Tablib과 마찬가지로 Requests 또한 문서화 문자열이 잘 정리되어 있어 온라인 문서를 굳이 읽지 않아도 무리가 없다. 
+
+다음은 간략한 상호작용 예시이다. 
+
+```
+>>> import requests
+>>> help(requests) # 사용법 설명문을 보면 requests.api를 살펴보라고 설명되어 있다.
+>>> help(requests.api) # 자세한 API 설명을 보여준다.
+>>> 
+>>> result = request.get('https://pypi.python.org/pypi/requests/json')
+>>> result.status_code
+200
+>>> result.ok
+True
+>>> result.text[:42]
+'{\n 	"info": {\n
+>>> 
+>>> result.json().keys()
+dict_keys(['info', 'releases', 'urls'])
+>>>
+>>> result.json()['info']['summary']
+'Python HTTP for Humans.'
+```
+
+#### Requests 스타일 예시 
+
+Requests의 스타일은 집합을 사용하는 방법에 대한 좋은 예다(대개 집합은 자주 사용되지 않는다) requests.status_code 모듈은 전반적인 코드 스타일을 단순화하기 위해 존재하며, 이 모듈로 인해 HTTP 상태 코드가 필요할 때마다 일일히 코드를 나열하지 않아도 된다. 
+
+#### 집합과 집합 연산(파이썬스럽고 멋진 관용구)
+
+다음은 cookies.py에서 가져온 코드다. 함수 끝부분에서 집합 연산을 확인할 수 있다.
+
+```
+# 
+# ... cookies.py에서 가져온 코드 ...
+# 
+
+def create_cookie(name, value, **kwargs): # 1번
+    """Make a cookie from underspecified parameters.
+    By default, the pair of `name` and `value` will be set for the domain ''
+    and sent on every request (this is sometimes called a "supercookie").
+    """
+    result = dict(
+        version=0,
+        name=name,
+        value=value,
+        port=None,
+        domain='',
+        path='/',
+        secure=False,
+        expires=None,
+        discard=True,
+        comment=None,
+        comment_url=None,
+        rest={'HttpOnly': None},
+        rfc2109=False,)
+
+    badargs = set(kwargs) - set(result) # 2번
+    if badargs:
+        err = 'create_cookie() got unexpected keyword arguments: %s'
+        raise TypeError(err % list(badargs)) # 3번
+
+    result.update(kwargs) # 4번
+    result['port_specified'] = bool(result['port']) # 5번
+    result['domain_specified'] = bool(result['domain'])
+    result['domain_initial_dot'] = result['domain'].startswith('.')
+    result['path_specified'] = bool(result['path'])
+
+    return cookielib.Cookie(**result) # 6번
+```    
+
+- 1번: **kwargs를 사용하여 사용자가 쿠키에 대한 키워드 인자를 자유로이 넘기거나 넘기지 않을 수 있게 한다. 
+
+- 2번: 집합 연산이다! 파이썬스럽고 단순하다. 표준 라이브러리에 있다. 딕셔너리에 set()을 적용하면 키로 구성된 집합이 된다. 
+
+- 3번: 긴 줄의 코드를 짧은 두 줄로 쪼갠 훌륭한 예다. err 변수가 추가됐지만 별 영향은 없다. 
+
+- 4번: result.update(kwargs)는 result 딕셔너리를 kwargs 딕셔너리의 키/값 쌍으로 업데이트하며, 기존 쌍이 존재하면 값을 업데이트하고 그렇지 않으면 새로 만든다. 
+
+- 5번: bool()을 호출하여 객체가 의미 있으면 True를 반환한다
+
+- 6번: cookielib.Cookie를 초기화하려면 시그니처상 18개의 위치 인자와 1개의 키워드 인자가 필요하다. 따라서 Requests는 위치 인자를 키워드 인자처럼 사용할 수 있도록 딕셔너리 형태로 전달한다. 
+
+### Werkzeug
+
+Werkzeug 코드를 읽으려면 웹 서버가 애플리케이션과 통신하는 방법에 대해 조금 알아야 한다. 다음 문단에 최대한 간략하게 요약해보았다. 
+
+1. 서버는 HTTP 요청을 받을 때마다 애플리케이션을 한번 호출한다.
+
+2. 애플리케이션은 서버가 HTTP 요청에 대한 응답으로 사용할 순회 가능한 바이트 문자열을 포함한다.
+
+3. 문서에 따르면 애플리케이션은 두 개의 파라미터를 받는다. 
+
+2007년에 아르민 로나허는 WSGI라이브러리에 대한 염원과 필요를 충족시켜줄 백자이크(Werkzeug)를 배포했다. 백자이크는 WSGI 애플리케이션과 미들웨어 컴포넌트를 만드는 데 사용할 수 있다. 
+
+#### 툴킷 코드 읽기
+
+소프트웨어 툴킷은 호환 가능한 유틸리티의 모음이다. Werkzeug의 경우, WSGI 애플리케이션과 연관된 모든 게 소프트웨어 툴킷이 된다. 
+
+#### Werkzeug 사용하기
+
+Werkzeug는 WSGI 애플리케이션을 위한 여러 유틸리티를 제공한다. 
+
+Werkzeug에는 일회용 테스트를 수행할 때 실제 웹서버를 대신하기 위한 werkqeug.client 클래스가 구현되어 있다. 클라이언트의 응답은 response_wrapper 인자 타입을 가진다. 
+
+#### Werkzeug 코드 읽기 
+
+테스트 커버리지가 좋다면 단위 테스트만 보고도 라이브러리의 역할과 기능을 알 수 있다. 단위 테스트를 볼 때는 의식적으로 '숲'이 아닌 '나무'를 봐야 한다는 점을 주의하자. werkzeug/test_routing.py를 열어 임포트한 객체를 찾아보자 이를 통해 모듈간 상호 연결을 빠르게 살필 수 있다. 
+
+```
+import pytest # 1번
+
+import uuid # 2번
+
+from tests import strict_eq # 3번
+
+from werkzeug import routing as r # 4번
+from werkzeug.wrappers import Response # 5번 
+from werkzeug.datastructures import ImmutableDict, MultiDict # 6번
+from werkzeug.test import create_environ # 7번
+```
+
+- 1번: 여기서는 테스트를 위해 pytest를 사용했다. 
+
+- 2번: uuid 모듈은 test_uuid_converter() 함수에서만 사용된다. 이 함수는 문자열을 uuid.UUID 객체로 변환하는 기능이 잘 작동하는지 테스트한다. 
+
+- 3번: strict_eq() 함수는 werkzeug/tests/__init__.py에 정의되어 있는 테스트용 함수이며, 자주 사용된다. 
+
+- 4번: werkzeug.routing 모듈이 테스트 대상이다. 
+
+- 5번: Respond 객체는 test_dispatch() 함수에서만 사용된다. 
+
+- 6번: 여기에서 불러온 딕셔너리 객체는 한 번씩만 사용된다. ImmutableDict는 werkzeug.routing.Map의 변경 불가능한 딕셔너리가 정말 변경할 수 없는지 확인하는 데 사용하며, MultiDict는 여러 키 값을 URL 빌드 도구에 제공했을 때 알맞은 URL을 빌드하는지 확인하는 데 사용한다. 
+
+- 7번: create_environ()는 테스트를 위한 함수이며, 실제 HTTP 요청을 사용하지 않고도 WSGI 환경을 만든다. 
+
+#### Werkzeug 스타일 예시 
+
+#### 자료형을 추측하는 우아한 방법(구현 결과를 설명하기 쉽다면, 그 아이디어는 좋은 아이디어일 수 있다)
+
+텍스트 파일을 파싱하여 여러 자료형으로 변환해야 하는 작업은 자주 필요하다. 이에 대한 Werkzeug의 해답은 유독 파이썬스러우며, 스타일 예시로 소개하기 적절하다. 
+
+```
+_PYTHON_CONSTANTS = {
+	'None':	None,
+	'True': 	True,
+	'False': 	False
+}
+
+def _pythonize(value):
+	if value in _PYTHON_CONSTANTS: # 1번
+		return _PYTHON_CONSTANTS[value]
+	for convert in int, float: # 2번
+		try: # 3번
+			return convert(value)
+		except ValueError:
+			pass
+	if value[:1] == value[-1:] and value[0] in '"\'': # 4번
+		value = value[1:-1]
+	return text_type(value) # 5번
+```
+
+- 1번: 파이썬 딕셔너리는 키를 검색 할 때 해시 함수를 집합처럼 사용한다. 대신, 파이썬 사용자는 if/elif/else를 사용하거나, 예시 코드처럼 딕셔너리 탐색을 사용한다. 
+
+- 2번: float보다 제한적인 자료형인 int를 먼저 반환하는 점에 주목하자. 
+
+- 3번: 자료형을 추론하기 위해 try/except문을 사용했다. 파이썬 스럽다. 
+
+- 4번: 이 부분은 꼭 필요한 부분이다. 코드는 werkzeug/routing.py에 있고, 파싱되는 문자열은 URL의 일부이기 때문이다. 
+
+- 5번: text_type은 문자열을 유니코드로 변환한다. 이때, 파이썬 2와 3에서 모두 호환되는 방식으로 변환된다. 
+
+#### Werkzeug 구조 예시
+
+#### 클래스기반 데코레이터(동적 타이핑의 파이썬스러운 사용)
+
+Werkzeug는 덕 타이핑을 사용하여 @cached_property 데코레이터를 만들었다. Tablib 프로젝트에서는 프로피티가 함수처럼 정의되었음을 떠올려보자. 대체로 데코레이터는 함수이다. 그러나 형식에 대한 제한이 없기 때문에, 호출 가능한 객체라면 얼마든지 데코레이터가 될 수 있다. 
+
+- 다음은 사용 예시이다. 
+
+```
+>>> from werkzeug.utils import cached_property
+>>> 
+>>> class foo(object):
+... 	@cached_property
+... 	def foo(self):
+... 		print("You have just called Foo.foo()!")
+... 		return 42
+...
+>>> bar = foo()
+>>> 
+>>> bar.foo
+You have just called Foo.foo():
+42
+>>> bar.foo
+42
+>>> bar.foo # 더이상 출력문이 작동하지 않음에 주의하자 
+42
+```
+
+#### Response.__call__
+
+Requests 라이브러리와 마찬가지로, Response 클래스는 BaseResponse에 여러 기능을 더하여 만들어졌다. 
+
+#### 믹스인(네임스페이스 못지 않게 대박 좋은 아이디어다)
+
+파이썬의 믹스인은 클래스에 특정 기능을 추가하기 위해 사용하는 클래스다. 파이썬은 자바와 달리, 다중 상속이 허용된다. 즉, 클래스는 만들 때 여러 개의 서로 다른 상위 클래스로부터 여러 가지 행동이나 특징을 상속받아 만들 수 있고, 여러 기능을 클래스별로 구분하여 모듈화 하는게 가능해진다. 일종의 '네임스페이스'라 볼 수 있겠다. 
+
+때때로 Werkzeug의 믹스인 메서드에 특정 속성이 필요할 수 있다. 이러한 요구사항은 대부분 믹스인 문서화 문자열에 설명되어 있다. 
+
+```
+# ... in werkzeug/wrappers.py
+
+class UserAgentMixin(object): # 1번
+
+    """Adds a `user_agent` attribute to the request object which contains the
+    parsed user agent of the browser that triggered the request as a
+    :class:`~werkzeug.useragents.UserAgent` object.
+    """
+
+    @cached_property
+	 def user_agent(self):
+    """The current user agent."""
+    from werkzeug.useragents import UserAgent
+    return UserAgent(self.environ) # 2번
+    
+    class Request (BaseRequest, AcceptMixin, ETagRequestMixin, 
+    					UserAgentMixin, AuthorizationMixin, # 3번
+    					CommonRequestDescriptorsMixin): 
+		"""Full featured request object implementing the following mixins: 
+		
+		- :class:`AcceptMixin` for accept header parsing 
+		- :class:`ETagRequestMixin` for etag and cache control handling 
+		- :class:`UserAgentMixin` for user agent introspection 
+		- :class:`AuthorizationMixin` for http auth handling 
+		- :class:`CommonRequestDescriptorsMixin`
+		"""
+		# 4번
+```
+
+- 1번: UserAgentMixin은 특별할 게 없다. 파이썬 3에서는 object를 상속하는 게 기본값이지만, 파이썬 2와의 호환성을 위해 명시하였다.
+
+- 2번: UserAgentMixin.user_agent는 self.environ 속성이 있다고 가정한다. 
+
+- 3번: Request를 위한 베이스 클래스 목록에 믹스인이 포함되면, Request(environ).user_agent를 통해 믹스인의 속성에 접근할 수 있다. 
+
+- 4번: 정말 별게 없다. Requests를 정의한 코드는 여기서 끝난다. 모든 기능은 베이스 클래스나 믹스인에서 제공된다. 
+
+### Flask 
+
+Flask는 Werkzeug와 Jinja2를 결합한 웹 마이크로 프레임워크다. 농담처럼 만들어져 2010년 만우절에 배포되었지만, 금새 파이썬에서 가장 인기 있는 웹 프레임워크 중 하나가 되었다. 
+
+#### 프레임워크 코드 읽기
+
+소프트웨어 프레임워크는 물리적인 프레임워크와 같다. Flask는 WSG 애플리케이션을 빌드하는 데 필요한 기반 구조를 제공하며, 라이브러리 사용자는 그 위에 Flask 애플리케이션이 작동하도록 컴포넌트를 쌓아 사용한다. 
+
+#### Flask 사용하기 
+
+#### Flask 코드 읽기
+
+Flask의 궁극적인 목적은 웹 애플리케이션을 만드는 것이다. 따라서 Diamond나 HowDoI와 같은 명령줄 애플리케이션과 그리 다르지 않다. 
+
+먼저 flaskr.py에 중단점을 추가해보면 코드가 실행되다가 중단점에 도달하면 대화형 세션에서 디버거에 진입한다. 
+
+```
+@app.route('/') 
+def show_entries():
+	import pdb ; pdb.set_trace() ## 중단점이 되는 코드
+	db = get_db() 
+	cur = db.execute('select title, text from entries order by id desc') 
+	entries = cur.fetchall()
+	return render_template('show_entries.html', entries = entries)
+```
+
+다음으로는 파일을 닫고 명령줄에 python을 입력하여 대화형 세션에 들어가자. 
+
+서버를 시작하기보다, Flask 내부 테스팅 유틸리티를 사용하여 HTTP GET 요청을 디버거가 위치한 /에 시뮬레이션하자. 
+
+```
+>>> import flaskr 
+>>> client = flaskr.app.test_client() 
+>>> client.get('/')
+> /[...truncated path ...]/flask/examples/flaskr/flaskr.py(74)show_entries()
+-> db = get_db()
+(Pdb)
+```
+
+#### Flask 스타일 예시 
+
+#### Flask의 라우팅 데코레이터(아름다움이 추함보다 좋다)
+
+Flask의 라우팅 데코레이터는 아래와 같이 대상 함수에 URL 라우팅을 추가한다. 
+
+```
+@app.route('/')
+def index():
+	pass
+```
+
+Flask 애플리케이션은 요청을 보낼 때 URL 라우팅을 사용하여 응답을 생성하는 함수가 올바른지 분별한다. 데코레이터 구문은 라우팅 코드 로직을 대상 함수에서 제외시킴으로써 함수 구조를 수평적으로 만드는 데 도움이 되며, 사용하기 쉽다. 
+
+다음은 flask/flask/app.py의 메인 Flask 클래스의 메서드 소스 코드이다!
+
+```
+class Flask(_PackageBoundObject): # 1번
+	"""The flask object implements a WSGI application ... 
+	... 문서화 문자열의 나머지 부분은 생략함 ... 
+	""" 
+	##~~ ... routing() 메서드를 제외한 나머지 생략.
+	
+	def route(self, rule, **options):
+		"""A decorator that is used to register a view function for a 
+		given URL rule. This does the same thing as :meth:`add_url_rule` 
+		but is intended for decorator usage:: 
+	
+	@app.route('/') 
+	def index(): 
+		return 'Hello World' 
+	
+	... 나머지 문서화 문자열 생략 ... 
+	""" 
+	def decorator(f): # 2번
+		endpoint = options.pop('endpoint', None) 
+		self.add_url_rule(rule, endpoint, f, **options) # 3번
+		return f 
+return decorator	
+```
+
+- 1번: _PackageBoundObject는 HTML 템플릿, 정적 파일 등을임포트하기 위한 파일 구조를 설정하며, 애플리케이션 모듈 위치에 대한 상대 경로를 특정 짓는 구성 값을 사용한다. 
+
+- 2번: 데코레이터니까 데코레이터라고 이름을 붙였다.
+
+- 3번: 모든 규칙을 담은 매핑에 URL을 추가하는 함수 부분이다. Flask.route의 유일한 목적은 라이브러리 사용자에게 편리한 데코레이터를 제공하는 것이다. 
+
+#### Flask 구조 예시
+
+Flask의 구조 예시 주제는 모듈성이다. Flask는 쉽게 확장하고 수정할 수 있게 설계되었다. 거의 모든 것이 쉽게 수정할 수 있으며, 여기서 거의 모든 것이란 JSON 문자열을 인코딩하고 디코딩하는 방법부터 URL을 라우팅하는 데 사용하는 클래스까지 다양하다.
+
+#### 애플리케이션 전용 기본 값(단순함이 복잡함보다 좋다)
+
+Flask와 Werkzeug 둘 다 wrapper.py 모듈을 가진다. Flask는 웹 애플리케이션 전용 프레임워크이며, Werkzeug는 WSGI 애플리케이션을 위한 보다 범용적인 유틸리티 라이브러리이다. Flask의 wrapper.py는 Werkzeug 위에 Flask 전용 기본 값을 추가하기 위해 존재한다. 이때, 웹 애플리케이션에 관한 특정 기능을 추가하기 위해 Werkzeug의 Request와 Response 객체를 상속한다. 예를 들어, flask/flask/wrappers.py의 Response 객체는 다음과 같이 생겼다. 
+
+```
+from werkzeug.wrappers import Request as RequestBase, Response as ResponseBase
+##~~ ... 나머지 코드 생략 ...
+
+class Response(ResponseBase):  # 1번
+    """The response object that is used by default in Flask.  Works like the
+    response object from Werkzeug but is set to have an HTML mimetype by
+    default.  Quite often you don't have to create this object yourself because
+    :meth:`~flask.Flask.make_response` will take care of that for you.
+
+    If you want to replace the response object used you can subclass this and
+    set :attr:`~flask.Flask.response_class` to your subclass. # 2번
+    """
+    default_mimetype = 'text/html' # 3번
+```
+
+- 1번: Werkzeug의 Response 클래스를 ResponseBase로 임포트하여 그 역할을 분명히 하고, Response라는 이름의 새로운 서브 클래스를 만들 수 있도록 했다. 멋진 스타일이다!
+
+- 2번: flask.wrappers.Response란 이름의 서브 클래스를 만들고 사용하는 방법이 문서화 문자열에 나와 있다. 이와 같은 기능을 구현할 때, 문서화를 잊지 말자. 문서가 없으면 사용자가 이를 사용할 가능성이 낮아 진다. 
+
+- 3번: Response 클래스에서 이 부분만 바뀌었다. Request 클래스에서는 더 많은 변경사항이 있지만, 설명이 너무 길어지니 생략한다. 
+
+#### 모듈성(네임스페이스 못지 않게 대박 좋은 아이디어다)
+
+flask.wrappers.Response의 문서화 문자열은 사용자로 하여금 Response 객체를 상속 받아 메인 Flask 객체 내에 사용자가 입맛에 맞는 새클래스를 정의하여 사용할 수 있도록 한다. 
 
 
 
