@@ -84,27 +84,27 @@ comments: True
 
 			- 파이썬에서는 try문을 사용하여 오류를 처리한다. 다음의 내용은 벤자민 글라이츠만의 HowDoI 패키기 코드 중 일부이며, 오류 앞에서 침묵해도 되는 상황이 언제인지 알 수 있다.
 			
-			```
-			def format_output(code, args):
-	  	   			if not args['color']:
-	  	   				return code
-	   				lexer = None
-	   				
-	   				# 스택오버플로 태그에서 렉서를 찾거나
-	   				# 쿼리 문자열로부터 렉서를 찾으려 시도
-	   				for keyword in args['query'].split() + args['tags']:
-	   					try:
-	   						lexer = get_lexer_by_name(keyword)
-	   						break
-						except ClassNotFound:
-							pass
-							
-					# 위에서 렉서를 찾지 못하면 렉서 추정 도구(guess_lexer)를 사용함
-					if not lexer:
-						lexer = guess_lexer(code)
-						
-					return highlight(code, lexer, TerminalFomatter(bg='dark'))
-			``` 			
+				```
+				def format_output(code, args):
+						if not args['color']:
+							return code
+						lexer = None
+
+						# 스택오버플로 태그에서 렉서를 찾거나
+						# 쿼리 문자열로부터 렉서를 찾으려 시도
+						for keyword in args['query'].split() + args['tags']:
+							try:
+								lexer = get_lexer_by_name(keyword)
+								break
+							except ClassNotFound:
+								pass
+
+						# 위에서 렉서를 찾지 못하면 렉서 추정 도구(guess_lexer)를 사용함
+						if not lexer:
+							lexer = guess_lexer(code)
+
+						return highlight(code, lexer, TerminalFomatter(bg='dark'))
+				``` 			
 			
 		- "함수 인자는 사용하기에 직관적이어야 한다"
 
