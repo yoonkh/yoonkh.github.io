@@ -110,15 +110,15 @@ comments: True
 
 			API 디자인에 따라 함수를 통해 소통하는 다운스트림 개발자의 경험이 달라진다. 인자는 다음과 같은 네 가지 방법으로 함수에 전달 될 수 있다.
 			
-				```
-				def func(positional, keyword=value, *args, **kwargs):
-					pass
-				```
+			```
+			def func(positional, keyword=value, *args, **kwargs):
+				pass
+			```
 				
-				1. 위치 인자(positional)은 필수이며 기본 값을 가지지 않는다.
-				2. 키워드 인자(keyword=value)는 선택 사항이며 기본 값을 가진다.
-				3. 가변 인자 리스트(*args)는 선택 사항이며 기본 값을 가진다. 
-				4. 가변 키워드 인자 딕셔너리(**kwargs)는 선택 사항이며 기본 값을 가진다. 
+			1. 위치 인자(positional)은 필수이며 기본 값을 가지지 않는다.
+			2. 키워드 인자(keyword=value)는 선택 사항이며 기본 값을 가진다.
+			3. 가변 인자 리스트(*args)는 선택 사항이며 기본 값을 가진다. 
+			4. 가변 키워드 인자 딕셔너리(**kwargs)는 선택 사항이며 기본 값을 가진다. 
 	
 		- "구현 결과를 설명하기 어렵다면, 그 아이디어는 나쁘다." 
 
