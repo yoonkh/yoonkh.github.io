@@ -239,10 +239,10 @@ IDLE은 실제로는 IDE지만, 이전 섹션에 포함되지 않았다. 대부�
       	   
    		- "오류 앞에서 절대 침묵하지 말지어다" 
 
-			파이썬에서는 try문을 사용하여 오류를 처리한다. 다음의 내용은 벤자민 글라이츠만의 HowDoI 패키기 코드 중 일부이며, 오류 앞에서 침묵해도 되는 상황이 언제인지 알 수 있다. 
+			파이썬에서는 try문을 사용하여 오류를 처리한다. 다음의 내용은 벤자민 글라이츠만의 HowDoI 패키기 코드 중 일부이며, 오류 앞에서 침묵해도 되는 상황이 언제인지 알 수 있다.
 			
-  	   			
-	  	   		def format_output(code, args):
+			```
+			def format_output(code, args):
 	  	   			if not args['color']:
 	  	   				return code
 	   				lexer = None
@@ -261,7 +261,7 @@ IDLE은 실제로는 IDE지만, 이전 섹션에 포함되지 않았다. 대부�
 						lexer = guess_lexer(code)
 						
 					return highlight(code, lexer, TerminalFomatter(bg='dark'))
-				
+			``` 			
 			
 		- "함수 인자는 사용하기에 직관적이어야 한다"
 
@@ -399,6 +399,14 @@ IDLE은 실제로는 IDE지만, 이전 섹션에 포함되지 않았다. 대부�
 			# 람다 표현식을 사용할 수도 있다
 			a = map(lambda i: i + 3, a)
 			```
+			
+
+
+
+
+
+
+
 			
 
 
