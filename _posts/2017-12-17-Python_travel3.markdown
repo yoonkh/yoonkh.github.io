@@ -62,23 +62,6 @@ comments: True
 
 - 다음은 몇가지 중요한 Jinja2 태그이다 
 
-	```
-	{# 해시와 중괄호 기호 때문에 주석을 이렇게 표시한다. #}
-
-	{# 변수 삽입을 하는 방법은 다음과 같다 #}
-	{{title}}
-
-	{# 이름을 가지는 블록은 다음과 같이 정의한다. 이는 자식 템플릿을 통해 대체할 수 있다. #}
-	{% block head %}
-	<h1>This is the default heading.</h1>
-	{% endblock %}
-
-	{# 아래는 반복문을 사용하는 방법이다 #}
-	{% for item in list %}
-	<li>{{ item }}</li>
-	{% endfor %}
-	```
-
 #### Chameleon
 
 Chameleon은 HTML/XML 템플릿 엔진이며, Template Attribute Language, Expression Syntax, Macro Expansion TAL 구문을 사용해 구현되었다. Chameleon은 페이지 템플릿을 파싱하여 파이썬 바이트코드로 '컴파일'하여 로딩 속도를 높인다. 또한 피라미드에 사용된 기본 렌더링 엔진 중 하나다.
