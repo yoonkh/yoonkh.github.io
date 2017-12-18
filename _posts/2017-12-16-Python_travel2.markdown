@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "파이썬을 여행하는 히치하이커를 위한 안내서 - 훌륭한 코드 배포하기"
+title:  "파이썬을 여행하는 히치하이커를 위한 안내서 - 훌륭한 코드 배포하기, 사용자와 상호작용"
 date:   2017-12-17
 author: Yoonkh
 categories: Python
