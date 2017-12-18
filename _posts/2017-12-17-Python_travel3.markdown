@@ -60,8 +60,6 @@ comments: True
 
 새로운 파이썬 웹 애플리케이션에 적용할 템플릿 라이브러리로 Jinja2를 추천한다. Flask의 기본 엔진이며, 파이썬 문서를 만드는 도구인 스핑크스의 기본 엔진이기도 하다. 장고, 피라미드, 토네이도에 사용할 수도 있다. 텍스트 기반 템플릿 언어로 사용 할 수 있으므로 HTML 뿐만 아니라 마크업 언어를 생성하는 데 사용할 수도 있다. 
 
-- 다음은 몇가지 중요한 Jinja2 태그이다 
-
 #### Chameleon
 
 Chameleon은 HTML/XML 템플릿 엔진이며, Template Attribute Language, Expression Syntax, Macro Expansion TAL 구문을 사용해 구현되었다. Chameleon은 페이지 템플릿을 파싱하여 파이썬 바이트코드로 '컴파일'하여 로딩 속도를 높인다. 또한 피라미드에 사용된 기본 렌더링 엔진 중 하나다.
