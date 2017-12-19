@@ -4,7 +4,7 @@ title:  "웹 엔지니어의 교과서"
 date:   2017-12-19
 author: Yoonkh
 categories: Web
-tags: [Web][Python][Flask]
+tags: [Web], [Python], [Flask]
 comments: True
 ---
 
