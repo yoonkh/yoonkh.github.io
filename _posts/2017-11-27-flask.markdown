@@ -5,8 +5,8 @@ date:   2017-11-27
 author: Yoonkh
 categories: Flask
 tags:	
-- Flasky
 - Flask
+- Flasky
 comments: True
 ---
 
