@@ -124,6 +124,7 @@ Blockchain은 창세기 블록 (실행 된 첫 번째 트랜잭션)에서 가장
 
 
 **원문**
+
 The blockchain is seen as the main technological innovation of Bitcoin because it stands as a “trustless” proof mechanism of all the transactions on the network. 
 Users can trust the system of the public ledger stored worldwide on many different decentralized nodes maintained by “miner-accountants,” as opposed to having to establish and maintain trust with the transaction counterparty (another person) or a third-party intermediary (like a bank). 
 The blockchain as the architecture for a new system of decentralized trustless transactions is the key innovation. 
@@ -142,6 +143,7 @@ BitCin은 네트워크상의 모든 트랜잭션을 "신뢰할 수없는"증명 
 
 
 **원문**
+
 The blockchain is like another application layer to run on the existing stack of Internet protocols, 
 adding an entire new tier to the Internet to enable economic transactions, both immediate digital currency payments (in a universally usable cryptocurrency) and longer-term, more complicated financial contracts. 
 Any currency, financial contract, or hard or soft asset may be transacted with a system like a blockchain. 
@@ -183,6 +185,7 @@ The economy that the blockchain enables is not merely the movement of money, how
 이는 정보의 이전과 인간 및 기업 규모의 경제에서 돈이 가능하게 한 자원의 효과적인 배분입니다.
 
 **원문**
+
 With revolutionary potential equal to that of the Internet, blockchain technology could be deployed and adopted much more quickly than the Internet was, given the network effects of current widespread global Internet and cellular connectivity.
 
 **번역**
@@ -193,6 +196,7 @@ With revolutionary potential equal to that of the Internet, blockchain technolog
 
 
 **원문**
+
 Just as the social-mobile functionality of Paradigm 4 has become an expected feature of technology properties, with mobile apps for everything and sociality as a website property (liking, commenting, friending, forum participation), so too could the blockchain of Paradigm 5 bring the pervasive expectation of value exchange functionality. 
 Paradigm 5 functionality could be the experience of a continuously connected, seamless, physical-world, multidevice computing layer, with a blockchain technology overlay for payments—not just basic payments, but micropayments, decentralized exchange, token earning and spending, digital asset invocation and transfer, and smart contract issuance and execution—as the economic layer the Web never had. 
 The world is already being prepared for more pervasive Internet-based money: Apple Pay (Apple’s token-based ewallet mobile app) and its competitors could be a critical intermediary step in moving to a full-fledged cryptocurrency world in which the blockchain becomes the seamless economic layer of the Web.
