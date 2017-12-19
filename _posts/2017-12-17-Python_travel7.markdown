@@ -4,7 +4,9 @@ title:  "파이썬을 여행하는 히치하이커를 위한 안내서 - 데이�
 date:   2017-12-17
 author: Yoonkh
 categories: Python
-tags:   Python
+tags:   
+- Python
+- Flask
 comments: True
 ---
 
