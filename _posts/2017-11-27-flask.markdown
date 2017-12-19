@@ -4,7 +4,9 @@ title:  "Flask Heroku(배포)"
 date:   2017-11-27
 author: Yoonkh
 categories: Flask
-tags:	Flasky
+tags:	
+- Flasky
+- Flask
 comments: True
 ---
 
