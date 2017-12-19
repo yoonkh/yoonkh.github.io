@@ -69,6 +69,7 @@ cryptocurrencies의 전체 개념을 언급하는 데 더 광범위하게 사용
 <br>
 
 **원문**
+
 Bitcoin was created in 2009 (released on January 9, 20096) by an unknown person or entity using the name Satoshi Nakamoto. 
 The concept and operational details are described in a concise and readable white paper, 
 “Bitcoin: A Peer-to-Peer Electronic Cash System.”7 Payments using the decentralized virtual currency are recorded in a public ledger that is stored on many—potentially all—Bitcoin users’ computers, and continuously viewable on the Internet. 
