@@ -68,6 +68,9 @@ descriptions:
     
   - cat: Algorithm
     desc: "알고리즘을 공부한 내용입니다"
+    
+  - cat: Blockchain
+    desc: "블록체인기술을 공부한 내용입니다"
 
 # Social icons and sharing options
 #
