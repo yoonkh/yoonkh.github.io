@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "블록체인기술의 개념"
+title:  "블록체인기술의 개념(O'reilly-blockchain)"
 date:   2017-12-19
 author: Yoonkh
 categories: Blockchain
