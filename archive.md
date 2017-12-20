@@ -5,7 +5,6 @@ permalink: /archive/
 ---
 <section>
 
-<!-- from http://www.mitsake.net/2012/04/archives-in-jekyll/ -->
 
 {% for post in site.posts %}
 {% capture month %}{{ post.date | date: '%m%Y' }}{% endcapture %}
@@ -19,4 +18,4 @@ permalink: /archive/
 {% endfor %}
 
 
-</section>
+
