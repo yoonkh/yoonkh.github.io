@@ -3,7 +3,7 @@ layout: page
 title: Archive
 permalink: /archive/
 ---
-<article>
+
     {% for post in site.posts %}
     {% capture month %}{{ post.date | date: '%m%Y' }}{% endcapture %}
     {% capture nmonth %}{{ post.next.date | date: '%m%Y' }}{% endcapture %}
@@ -13,4 +13,4 @@ permalink: /archive/
     {% endif %}
         <li> <a href="{{ post.url }}">{{ post.title }}</a>  <span class="date">{{ post.date | date: "%Y-%m-%d" }}</span></li>
     {% endfor %}
-</article>
+
