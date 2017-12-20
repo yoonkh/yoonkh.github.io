@@ -1,12 +1,20 @@
 ---
 layout: page
 title: Archive
-parameter: archive
+permalink: /archive/
 ---
+<article>
 
-{% for post in site.posts %} {% capture month %}{{ post.date | date: '%m%Y' }}{% endcapture %} {% capture nmonth %}{{ post.next.date | date: '%m%Y' }}{% endcapture %} {% if month != nmonth %} {% if forloop.index != 1 %}{% endif %}
-
-{{ post.date | date: '%Y년 %m월' }}
+{% for post in site.posts %}
+{% capture month %}{{ post.date | date: '%m%Y' }}{% endcapture %}
+{% capture nmonth %}{{ post.next.date | date: '%m%Y' }}{% endcapture %}
+{% if month != nmonth %}
+{% if forloop.index != 1 %}</ul>{% endif %}
+<h3>{{ post.date | date: '%Y년 %m월' }}</h3><ul>
 {% endif %}
-{{ post.title }} {{ post.date | date: "%Y-%m-%d" }}
+<li> <a href="{{ post.url }}">{{ post.title }}</a>  <span class="date">{{ post.date | date: "%Y-%m-%d" }}</span></li>
+ 
 {% endfor %}
+
+
+</article>
