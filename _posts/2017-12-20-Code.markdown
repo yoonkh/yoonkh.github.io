@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "문제풀이 - 다음입사문제"
+title:  "문제풀이 - 코딩도장"
 date:   2017-12-20
 author: Yoonkh
 categories: Code
