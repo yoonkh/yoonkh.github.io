@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "웹 엔지니어의 교과서 - 웹 엔지니어"
+title:  "웹 엔지니어 - 웹 엔지니어"
 date:   2017-12-19
 author: Yoonkh
 categories: Web
