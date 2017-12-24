@@ -1,0 +1,499 @@
+---
+layout: post
+title:  "웹 엔지니어 - Ruby on Rails"
+date:   2017-12-23
+author: Yoonkh
+categories: Web
+tags: 
+- Web
+- Python
+- Flask
+comments: True
+---
+
+## Ruby on Rails로 개발 
+
+### Ruby의 개요
+
+Ruby는 마츠모토 유키히로(통칭 Matz)가 개발한 일본산 객체 지향 프로그래밍 언어입니다. Smalltalk, Lisp, Perl, Python 등 다양한 언어에서 영향을 받아 1993년에 태어났습니다. 
+
+**루비의 배열**
+
+```
+list = [1, 'hi', 3.14, 1, 2]
+
+puts list[2] # 3.14
+puts list.reverse # [2, 1, 3.14, 'hi', 1]
+
+puts list.class # Array
+```
+
+**루비의 해시**
+
+```
+hash = { foo: 1, bar: 2 }
+puts hash[:foo] # 1
+
+hash.each do |key, value|
+	puts "#{key} : #{value}"
+end
+
+# foo : 1
+# bar : 2
+
+puts hash.class # Hash
+```
+
+### Ruby on Rails의 등장
+
+Rails는 애플리케이션 개발을 위한 라이브러리는 물론, 코드를 생성하는 도구의 동작을 확인하는 서버 등을 하나로 모은 풀 스택 프레임워크라는 특징이 있습니다. 
+
+#### Rails의 기본 이념
+
+Rails의 기본 이념은 다음 두가지 입니다. 
+
+- 같은 일을 반복하지 않는다.
+- 설정보다 규약이다. 
+
+각각을 좀 더 자세하게 알아보겠습니다. 
+
+##### 같은 일을 반복하지 않는다. 
+
+같은 코드나 설정을 여기저에 쓰지 않게 해서 전체 가독성을 높이고 유지 보수도 쉽게 하자는 발상입니다. 
+
+- 예를 들어, Rails에서는 DB의 스키마 정의를 설정 파일 등에 기술할 필요가 없습니다. DB에 테이블을 작성하기만 하면, 나머지는 Rails가 스키마 정의를 인식하여 임의의 칼럼에 액세스하는 메소드를 준비합니다.
+
+##### 설정보다 규약이다. 
+
+신중히 설계된 규약을 따라서 설정을 불필요하게 하거나 가볍게 한다는 발상입니다. 
+
+- 예를 들어, users 테이블이 있다면 모델은 User 모델에 자동으로 대응하는 등 Rails 스타일의 규약이 있습니다. 어떤 의미에서는 개발자에게 규약을 따를 것을 강제하는 것이지만, 그 결과로 테이블과 모델의 맵핑을 직접 명시할 필요가 없고 생산성이 높아집니다.
+
+#### RESTful API의 설계
+
+REST는 애플리케이션을 설계하는 방법 중 하나입니다. 조작 대상 리소스를 URL로 나타내고, HTTP 메소드인 GET, POST, DELETE, PUT을 사용하여 URL을 조작하는 방법입니다. 어떤 URL에 GET으로 액세스하면 결과를 목록으로 가져올 수 있고, 같은 URL에 POST로 액세스하면 새로 만들 수 있습니다. 
+
+### MVC(Model - View - Controller)
+
+Rails를 비롯한 요즘 웹 애플리케이션 프레임워크는 대부분 MVC 아키텍쳐를 사용합니다.
+
+#### 모델 
+
+먼저 모델입니다. 모델에서는 애플리케이션의 비즈니스 로직을 다룹니다. 데이터 입수와 저장 등을 담당하지만, 어떻게 표시할지는 뷰가 담당하므로 모델의 책임은 아닙니다. 어디까지나 데이터 처리만 담당합니다. 
+
+#### 뷰
+
+다음은 뷰 입니다. 뷰는 모델에서 받은 데이터를 적절히 가공해서 표시합니다. 보통은 데이터를 HTML 형식으로 반환하지만, API 서버에서는 데이터를 JSON 형식으로 출력하기도 합니다. 이것이 뷰의 역할입니다. 
+
+#### 컨트롤러
+
+마지막으로 컨트롤러 입니다. 컨트롤러는 브라우저나 커맨드라인의 요청을 받아 모델에 처리를 할당하고, 결과를 뷰에 전달합니다. 축구에서 말하는 사령탑과 역할이 같습니다. 컨트롤러는 편리한 존재로 임의의 처리를 기술할 수 있습니다. 하지만 뭐든지 다 컨트롤러에 적어 넣으면 이른바 Fat Controller 상태가 되므로 좋지 않습니다. 
+
+#### Concerns 디렉터리 
+
+컨트롤러에 처리를 기술하지 않고 모델에 모아 두면(Skinny Controller, Fat Model) 이번에는 모델 쪽 코드양이 늘어나서 보기에 좋지 않습니다. 이런 문제를 해결하고자 Rails4.0 부터는 Mixin용 모듈을 설치하는 디렉터리를 제공합니다. 
+
+- app/models/concerns
+- app/controllers/concerns
+
+다수의 모델과 컨트롤러에서 공통된 처리는 모듈로 나눠 Concerns 디렉터리에 저장하세요. 이곳에 처리를 나누고 Mixin으로 모델이나 컨트롤러에서 사용하는 형태로 정리하면 보기 좋습니다. 
+
+### Rails로 애플리케이션 개발 
+
+#### Rails 개발 환경 준비
+
+직접 Ruby나 Rails를 설치해도 되지만, 여기서는 rbenv Ruby 버전을 관리할 수 있는 도구를 사용하여 개발 환경을 준비합니다. 
+
+##### rbenv
+
+rbenv는 다양한 버전의 Ruby를 관리하는 도구입니다. 예를 들어, 다음처럼 요구한다고 합시다. 
+
+- 새로운 버전의 Ruby를 사용하고 싶다. 
+- 오래된 버전의 Ruby에서 동작을 확인하고 싶다. 
+- 애플리케이션별로 Ruby 버전을 변경하고 싶다. 
+
+요구마다 다른 버전의 Ruby를 설치하고 경로를 설정해야 한다면 아주 번거롭고 시간도 많이 걸립니다. 이때 rbenv를 사용해서 Ruby를 설치하면 쉽게 버전을 전환할 수 있습니다.
+
+다음처럼 rbenv를 사용하면 Ruby 버전을 전환할 수 있습니다. 
+
+```
+$ rbenv global 2.1.5 # 항상 2.1.5를 사용한다
+$ rbenv local 1.9.3 # 이 디렉터리 아래에서는 1.9.3을 사용한다
+$ rbenv shell 1.8.7 # 현재 셸에서는 1.8.7을 사용한다
+```
+
+##### Ruby 설치하기 
+
+먼저 필요한 라이브러리를 설치해야 합니다. 
+
+```
+$ sudo yum -y update && sudo yum -y install git gcc openssl-devel libyaml-devel readline-devel 
+zlib-devel splite-devel glibc-devel libffi-devel libxml2 libxslt libxml2-devel lixslt-devel
+```
+
+다음으로 git clone 하여 rbenv를 설치 합니다.
+
+마지막으로 rbenv 설정을 '.bash_profile'에 추가하고 설정을 반영합니다.
+
+```
+$ echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
+$ echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
+$ source ~/.bash_profile
+```
+
+#### Rails 다루기
+
+먼저 Rails를 설치합니다. Ruby 라이브러리는 RubyGems 사이트에 gem으로 저장되어 있습니다. 이 gem들을 설치하는 커맨드가 바로 gem install입니다. Rails에서는 의존 라이브러리가 많으므로 설치에 조금 시간이 걸립니다.
+
+```
+$ gem install rails --no-ri --no-rdoc
+```
+
+이번에는 만들 애플리케이션의 원형을 생성합니다. 이름은 아무것이나 상관없습니다.
+
+```
+$ rails 아무이름 -B -T
+```
+
+**rails new 커맨드의 주요 옵션**
+
+| **옵션**  | **단축 옵션**  | **설명**  |
+|---|---|---|
+| ```--skip-bundle```  | -B  | bundle install 커맨드를 실행하지 않는다.  |
+| ```--skip-test-unit```  | -T  | Test::Unit 파일을 만들지 않는다.  |
+| ```--database=DATABASE```  | -d  | 이용할 데이터베이스를 지정한다.<br>(mysql, oracle, postgresql, sqlite3 등, 기본은 sqlite3)  |
+
+Gemfile 파일에는 이 애플리케이션에서 사용할 gem 라이브러리가 기술되어 있습니다. Gemfile에는 therubyracer행이 주석으로 처리되어 있으므로 주석을 풀어주세요. therubyracer는 JavaScript 엔진인 v8을 Ruby에서 사용할 수 있게 하는 gem 입니다. 
+
+bundle install 커맨드를 실행하면 Gemfile에 기술된 gem 라이브러리를 실행합니다. 
+
+```
+$ vi Gemfile
+
+-- Gemfile 내용 중 --
+# gem 'therubyracer', platforms: :ruby
+# 다음처럼 수정하고 [:wq]로 저장한다
+gem 'therubyracer', platforms: :ruby
+
+$ bundle install --path vendor/bundler
+```
+
+vendor/bundler 아래에 각 gem 라이브러리가 설치되었습니다. 이 상태에서 rails server 커맨드로 테스트 서버를 시작하면, 3000번 포트로 애플리케이션에 액세스할 수 있습니다. 
+
+```
+$ rails server 
+...
+...
+
+# 다음처럼 IP와 Port를 지정하여 시작할 수도 있다
+$ rails s -p 3000 -b 192.0.0.1
+```
+
+지금은 Rails의 기본 톱페이지를 표시했습니다. 우선은 이 페이지를 독자적인 톱페이지로 변경해야 합니다.
+
+처음에는 rails generate controller 커맨드로 톱페이지용 컨트롤러를 작성합니다. 다음처럼 실행하면 'top' 컨트롤러를 만들어 그 안에 index 액션을 정의 합니다. 
+
+```
+$ rails generate controller top index
+```
+
+계속해서 config/routes.rb를 편집하여 톱페이지에 액세스할 때 이 'top' 컨트롤러의 index 액션을 호출하도록 설정합니다. 
+
+```
+Rails.application.routes.draw do
+	root 'top#index'
+end
+```
+
+이제 http://localhost:3000에 접속하면 조금 전에 만든 'top' 컨트롤러의 index 액션을 호출합니다. 
+
+'rails generate xxx' 커맨드로 만든 일련의 파일은 'rails destroy xxx'커맨드로 삭제할 수 있으니 기억해두자. 
+
+```
+$ rails destroy controller top index
+```
+
+#### OAuth 인증 사용
+
+Facebook 피드나 GitHub 액티비티 목록을 작성 중인 애플리케이션에 표시하거나 Facebook이나 GitHub 계정을 사용하여 작성 중인 애플리케이션에 로그인하는 처리를 생각해보겠습니다. 이때는 OAuth 인증을 사용하면 좋습니다. 
+
+OAuth 인증을 사용하지 않고 이런 처리를 구현하려면, Facebook이나 GitHub ID와 패스워드를 애플리케이션에서 입력 받아야만 합니다. 물론, 그렇게 해도 구현할 수는 있습니다. 하지만 애플리케이션 운영자가 사용자의 ID와 패스워드를 알 수 있으므로 나쁜 의도로 도용하는 등 위험이 있습니다. 
+
+이 문제를 해결하려고 제안한 것이 OAuth 인증입니다. 이것은 대상 사이트에서 토큰을 받아서 일정한 조작을 사용자 대신 할 수 있게 하는 구조 입니다. 어떤 조작을 허가할지 제한할 수 있고, 최소한의 조작만 애플리케이션에 허락하므로 안전합니다. 
+
+![](https://wiki.scn.sap.com/wiki/download/attachments/328468210/scenario.png?version=2&modificationDate=1366895529000&api=v2)
+
+#### OAuth 인증 구현
+
+OAuth 인증은 devise와 omniauth라는 gem을 사용하여 구현합니다. Gemfile에 필요한 gem을 추가하고  bundle install 커맨드를 실행합니다. 
+
+**Gemfile에 추가할 내용**
+
+- gem 'devise'
+- gem 'omniauth-facebook'
+- gem 'omniauth-github'
+
+필요한 파일을 추가로 설치 
+
+```
+$ bundle install --path vendor/bundler
+```
+
+devise의 초기 설정
+
+```
+rails generate devise:install 
+```
+
+다음은 User 모델을 만들고, 그곳에서 사용자를 관리합니다. provider, uid, name, token은 OAuth 인증에서 사용할 컬럼이 됩니다. 
+
+```
+$ rails generate devise user provider:string uid:string name:string token:string
+```
+
+rake db:migrate 커맨드로 migration 파일을 실행하고 users 테이블을 작성합니다. 
+
+```
+$ bundle exec rake db:migrate
+```
+
+또, User 모델에서 'omniauthable' 모듈을 추가합니다. devise에서는 기능이 모듈 단위로 나눠 있어 사용하고 싶은 모듈만 사용할 수 있습니다. 
+
+```
+class User < ActiveRecord::Base
+	devise :database_authenticatable, :registerable,
+		:recoverable, :rememberable, :trackable, :omniauthable
+end
+```
+
+라우팅을 확인하면 다양한 라우팅이 자동으로 설정되어 있습니다. rake를 bundler로 설치했기 때문에 커맨드 앞에 'bundle exec'를 붙여야 하므로 주의해야 합니다. 
+
+```
+$ bundle exec rake routes
+```
+
+라우팅이 많아 복잡하게 보이지만, OAuth 인증에 주로 관계된 것은 /users/auth/:provider와 /users/auth/:action/callback 2개 뿐입니다. 
+
+OAuth 인증은 먼저 /user/auth/:provider에 액세스하면, 'OAuth Server'로 리디렉션하는 과정으로 진행합니다. 예를 들어, Facebook은 URL로 리디렉션 됩니다. 
+
+app/views/top/index.html.erb를 변경하고 OAuth 인증용 링크를 준비합니다. 
+
+나머지는 사전에 작성 중인 애플리케이션을 OAuth Client로서 등록해야 합니다. 이것은 OAuth 인증을 할 수 있는 OAuth Client를 제한하기 위함입니다. 
+
+Facebook과 GitHub는 앱을 등록하기 위해서 ID와 Secret라는 값이 필요합니다. 
+
+취득한 해당값을 config/initializers/devise.rb에 설정합니다. 	
+로그인 인증용 gem인 devise의 secret key를 설정하지 않았다는 오류를 표시하면, 오류 메세지에 포함된 키를 복사해서 secret_key를 지정하거나 rake secret 커맨드를 생성하여 지정할 수 있습니다. 
+
+```
+$ vi config/initializers/devise.rb
+require 'devise'
+# User this hook to configure devise mailer, warden hooks and so forth.
+#Many of these configuration options can be set straight in your model.
+Devise.setup do |config|
+# 추가
+config.secret_key = '생성된 키'
+```
+
+파라미터로 client_id를 전달하면, 이 값으로 등록된 OAuth Client인지 확인하여 어느 OAuth Client의 요청인지 판별합니다. 
+
+한 번 인증하면 다음부터는 인증 페이지를 표시하지 않습니다. OAuth Server 쪽에서 인증된 애플리케이션으로 등록되어 있기 때문입니다. 인증된 애플리케이션 페이지에서 해당 애플리케이션을 삭제하면, 다시 인증 페이지를 표시합니다. 
+
+인증을 마치면 다시 애플리케이션으로 돌아옵니다. 이때 URL의 라우팅이 '/users/auth/:action/callback'이 됩니다. 
+
+콜백 URL로 돌아왔을 때 처리가 아직 없으므로 구현해 보면, 우선 'config/routes.rb'에서 콜백 처리를 'app/controllers/users/omniauth_callbacks_controller.rb'에서 받도록 합니다.
+
+'app/controllers/users/omniauth_callbacks_controller.rb'에서는 콜백 URL을 받아들여 Facebook으로 인증할 때는 Facebook 메소드가, GitHub 계정으로 인증 할 때는 github 메소드가 처리를 담당합니다. 
+
+데이터는 request.env['omniauth.auth']로 받을 수 있으므로 값을 단순히 저장합니다. 
+
+그런 다음, 다음의 커맨드를 실행하면 데이터가 등록된 것을 확인 할 수 있습니다. 
+
+```
+$ rails db
+```
+
+#### Gists 목록 가져오기 
+
+우선 octokit와 httparty gem을 Gemfile에 추가하고, bundle install 커맨드로 설치합니다. 이 gem을 사용해서 GitHub의 API를 호출합니다. 
+
+```
+gem 'octokit', '~> 3.0'
+gem 'httparty'
+```
+
+인증에 성공하면 Gists 목록을 그대로 가져옵니다. 
+
+```
+class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+	def facebook
+		# facebook으로 인증할 때 callback 처리는 이곳에 기술한다
+	end
+	
+	def github
+		auth = request.env['omniauth.auth']
+		@user User.find_by_provider_and_uid(auth['provider'], auth['uid']) ||
+			   User.create_with_omniauth(auth)
+			   
+	   octokit = Octokit::Client.new(access_token: @user.token)
+	   octokit.gitst.each do |gist|
+	   	unless Snippet.find_by(gist_id: gist[:id])
+	   		gist[:files].to_hash.each do |filename, gist_info|
+	   			language = gist[:files][filename][:language]
+	   			response = HTTParty.get(gist[:files][filename][:raw_url])
+	   			
+	   			snippet = Snippet.create(
+	   				gist_id: gist[:id],
+	   				gist_url: gist[:html_url],
+	   				language: language.try(:downcase),
+	   				plain_code: response.force_encoding('utf-8'),
+	   				user: @user
+   				)
+			end
+		end
+	end
+	
+	sign_in_and_redirect @user, event: :authentication
+end
+
+end
+```
+
+snippets 컨트롤러를 만들어 Gists 목록을 표시해 보겠습니다. 
+
+```
+$ rails generate controller snippets index
+```
+
+이어서 Snippet 모델을 준비하고 오리지널 코드를 보존하는 plain_code 칼럼과 신택스 하이라이트된 코드를 저장하는 highlighted_code 칼럼을 준비합니다. Gitsts의 ID와 URL을 저장하는 칼럼도 만들어 두면 편리합니다. 
+
+#### 비동기 처리
+
+이대로면 코드의 신택스 하이라이트가 없어서 보기에 불편합니다. 다음으로 코드의 신택스 하이라이트를 생각합니다. 코드의 신책스 하이라이트는 Pygments라는 외부 서비스를 이용하기로 합니다. Pygments API에 코드와 언어 종류를 POST 방식으로 전송합니다. 
+
+하지만 실제로 Pygments API를 사용할 때는 스니펫마다 5~6초 정도 기다려야 합니다. 또, Pygments API가 다운되면 응답이 돌아오지 않으므로 아무리 기다려도 화면이 나타나지 않을 수 있습니다. 
+
+이 문제를 피하려고 이번에는 Pygments API 호출을 비동기 처리로 하겠습니다. 비동기 처리를 하는 라이브러리로 sidekiq이라는 gem을 사용합니다. 
+
+Gemfile에 sidekiq을 추가하고 bundle install 커맨드를 실행
+
+```
+gem 'sidekiq'
+```
+
+비동기 처리는 app/workers 디렉터리 아래에 저장합니다. app/workers 디렉터리를 새로 만들고, 그 안에 pygments_worker.rb를 작성합니다. app/workers 디렉터리 아래에 저장하면 애플리케이션에 자동으로 로드 됩니다. 
+
+```
+class PygmentsWorker
+	include Sidekiq::Worker
+	
+	def perform(snippet_id)
+		snippet = Snippet.find(snippet_id)
+		uri = URI.parse('http://pygments.slmplabs.com/')
+		request = Net::HTTP.post_form(uri, {lang: snippet.language, code: snippet.plain_code})
+		snippet.update(highlighted_code: request.body}
+	end
+end
+```
+
+이제 비동기 처리를 실현했습니다. highlighted_code가 nil일 때만 PygmentsWorker를 호출하고, 비동기 처리로 큐에 등록합니다. 그 결과, 순식간에 페이지 응답이 돌아오도록 개선했습니다. 
+
+### 테스트하기 
+
+동작을 보증하는 테스트도 중요한데, 이번에는 RSpec gem을 사용하여 테스트를 실행합니다. 우선 Gemfile에 rspec_rails와 함께 factory_girl_rails라는 gem을 추가합니다. FactoryGirl이란 테스트용 데이터를 간편하게 준비해주는 gem입니다.
+
+```
+group :devlopment, :test do
+	gem 'rspec-rails', '~>3.1'
+	gem 'factory_girl_rails'
+end
+```
+
+bundle install 커맨드로 설치하고, 초기화 처리도 합니다. 
+
+이번에는 Devise를 사용하므로, rails_helper.rb 파일에 내용을 추가합니다. 
+
+#### 테스트 데이터의 통합 관리 
+
+테스트하기 전에 먼저 테스트 데이터를 준비하고 싶을 수도 있습니다. 물론, 테스트 중에도 ActiveRecord를 사용해서 테스트 데이터를 등록할 수 있습니다. 하지만 여러 테스트 케이스에서 같은 데이터를 사용할 때가 자주 있으므로, 테스트 데이터의 정의를 어딘가에서 통합해서 관리하고 싶을 것 입니다. 이때 FactoryGirl을 사용하면 테스트 데이터를 통합해서 관리할 수 있습니다. 
+
+#### 시간관련 테스트
+
+다음처럼 Helper를 작성합니다. 
+
+```
+module DateHelper
+	def date_format(date)
+		date.strtime("%Y년%m월%d일입니다")	
+	end
+end
+```
+
+이 테스트는 9월 15일에 실행하면 성공하지만, 9월 16일에 실행하면 실패합니다. 
+
+이때는 다음처럼 오늘이 아니라 특정 일자를 넘겨주는 방법이 좋지만, 여기서는 timecop이라는 gem을 사용해서 대처해 보겠습니다. 
+
+우선 Gemfile에 gem 'timecop'를 추가하고 bundle install 커맨드로 설치합니다. timecop은 테스트에서 시간을 다룰 때 사용할 수 있는 편리한 gem으로, Timecop, freeze나 Timecop.travel등 커맨드로 테스트 중 시간을 임의로 설정할 수 있습니다. 
+
+#### 목과 스텁 활용
+
+테스트를 작성할 때 빠뜨릴 수 없는 것이 목과 스텁의 존재입니다. 예를 들어, 모델과 API 등을 아직 구현하지 않아 테스트를 작성하려 해도 할 수 없을 때가 있습니다. 이때 테스트를 작성할 수 있게 하는 편리한 장치가 목과 스텁입니다. 용도에 따라 종류는 다음과 같습니다. 
+
+##### double
+
+double을 사용하면 '더미 오브젝트'를 작성할 수 있습니다. 
+
+```
+# 더미 오브젝틀르 만든다. 
+# 제1인수는 생략할 수 있지만, 오류가 발생하면 표시되므로 입력하면 좋다 
+book = double('book')
+
+# book.title을 호출하면 'karaage Book?'이 돌아오는 더미 오브젝트
+book = double('book', title: 'karaage Book?')
+```
+
+##### stub
+
+stub를 사용하면 '더미 메소드'를 작성할 수 있습니다. 
+
+```
+# 모두 book.title을 호출하면 'karaage Book?'을 반환하는 더미 메소드
+book.stub(:title) {'karaage Book?'}
+book.stub("title => 'karaage Book?')
+book.stub(:title).and_return('karaage Book?')
+
+#double로 만든 더미 오브젝트가 아니더라도 더미 메소드는 정의할 수 있다. 
+String.stub(:test).and_return('test')
+```
+
+##### mock
+
+mock을 사용하면 메소드의 행동을 평가하는 '더미 오브젝트'를 작성할 수 있습니다.
+
+```
+Book.should_receive(:find).with(:all).and_return([book])
+```
+
+### 편리한 gem 소개 
+
+Rails로 개발할 때 알아 두면 편리한 gem이 여럿 있습니다. 여기서는 이 편리한 gem의 일부를 소개합니다. 
+
+- Pry
+- Better Errors
+- MailCather
+
+#### Pry 
+
+Ruby에서 메소드의 움직임을 조사하거나 간단한 예제 코드를 실행할 때 편리한 것이 irb입니다. irb는 interactive ruby의 준말로, Ruby를 설치한 환경에서 사용할 수 있는 REPL(대화형 실행 환경)입니다. 
+
+#### Better Errors
+
+Better Errors를 사용하면 오류가 발생했을 때 화면에 손쉽게 보여 줍니다. 게다가 binding_of_caller라는 gem을 함께 사용하면 브라우저상에서 디버그할 수도 있습니다. 
+
+#### MailCatcher
+
+애플리케이션을 개발하다 보면 메일을 전송해야 할 때가 많습니다. 개발 중에 메일이 제대로 전송하는지 확인하고 싶지만, 일부러 개발용 메일 전송 환경을 만들기가 번거롭습니다. 또 잘못해서 테스트 메일을 실제 사용자에게 전송한다면 큰일이겠지요. 이 때 안전하게 메일전송을 확인할 수 있는 gem으로 MailCatcher가 있습니다. 
+
+### 정리
+
+Ruby의 개요 및 Ruby on Rails의 기본 이념부터 Rails를 사용하여 기능을 구현하거나 테스트를 작성하는 일련의 개발 프로세스를 소개했습니다. Rails는 규칙에 따라 처리를 구현하기에 매우 빠르고 안전하게 개발을 진행할 수 있는 프레임워크입니다. 
