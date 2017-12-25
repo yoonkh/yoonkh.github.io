@@ -11,7 +11,6 @@ tags:
 comments: True
 ---
 
-
 ## 프런트 엔드 구현
 
 ### 프런트 엔드 개발 
@@ -729,7 +728,6 @@ resource :users
 
 API 쪽 컨트롤러는 다음처럼 작성합니다. RESTful API로 되어 있습니다. index 액션으로 모든 사용자의 정보를 반환하고 show 액션으로 특정 사용자의 정보를 반환합니다. 또, create 액션에서는 주어진 파라미터를 이용하여 사용자를 새로 생성합니다.
 
-
 ```
 class UserController < ApplicationController
 	def index
@@ -767,20 +765,18 @@ app.config(["$httpProvider", function($httpProvider) {
 
 var MainCtrl = function($scope, $resource) {
 	var User = $resource("/users");
-
+	
 	$scope.users = User.query();
-
+	
 	$scope.addUser = function() {
 		User.save({name: $scope.userName}, function(user) {
 			$scope.users.push(user);
 		});
-
+		
 		$scope.userName = "";
 	};
 }
 ```
-
-
 
 **ngResource에서 사용할 수 있는 액션**
 
@@ -792,7 +788,7 @@ var MainCtrl = function($scope, $resource) {
 | delete  | DELETE  |
 | remove  | DELETE  |	
 
-
+
 ### 서비스 
 
 AngularJS에는 서비스라는 편리한 매커니즘이 있습니다. 서비스는 함수와 오브젝트 등을 AngularJS 애플리케이션 안에서 공유하는 매커니즘 입니다. 싱글톤으로 다루므로 컨틀로러 간 공유에도 이용할 수 있습니다. 다음은 대표적인 서비스 입니다. 
@@ -900,3 +896,4 @@ app.run(function() {
 	$rootScope.apiUrl = "http://exmaple.com/users";
 });
 ```
+
