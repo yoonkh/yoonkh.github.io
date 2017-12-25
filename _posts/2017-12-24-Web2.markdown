@@ -1,0 +1,402 @@
+---
+layout: post
+title:  "웹 엔지니어 - PHP"
+date:   2017-12-24
+author: Yoonkh
+categories: Web
+tags: 
+- Web
+- Python
+- Flask
+comments: True
+---
+
+## PHP
+
+### 최근 PHP
+
+5.0의 객체 지향 기능 강화, 5.3의 네임 스페이스와 익명 함수, 5.4의 트레이트, 5.5의 제너레이터 지원 등 PHP는 버전이 올라가면서 다양한 기능을 추가하고 있습니다. 
+
+또, 예전부터 보안 문제로 추천하지 않았던 기능, 함수 등은 하위 호환성을 버리면서 개량을 거듭하는 중으로, 예전 스타일의 작성법이나 현재는 권장하지 않는 오래된 정보가 많이 발견됩니다. 
+
+### PHP 프레임워크
+
+#### 풀 스택 프레임워크
+
+풀스택 프레임워크에서는 ORM이나 인증, 템플릿 등 웹 애플리케이션에 필요한 기능을 제공합니다. 주요 풀 스택 프레임워크는 다음과 같습니다.
+
+- Aura
+- CakePHP
+- FuelPHP
+- Laravel
+- Lithium
+- Phalcon
+- Symfony
+- Yii
+- Zend framework
+- CodeIgniter
+
+위의 항목중에서 Symfonu, laravel, phalcon 세 가지 프레임워크가 강력했습니다. 
+
+##### Symfony
+
+Symfony는 2005년부터 개발하여 현재 최신 버전은 2.6입니다. 원래 Ruby on Rails에 영향을 받아 만든 프레임워크였지만, 버전 2에서 설계부터 코드까지 완전히 다른 프레임워크로 다시 태어났습니다. 각 기능을 느슨하게 결합하도록 철저하게 설계되어 있고, 개발자는 프레임워크로 규칙, 제약을 그다지 받지 않은 채 아주 유연하게 개발할 수 있습니다. 
+
+##### Laravel
+
+Laravel(라라벨)은 2012년부터 개발한 비교적 새로운 프레임워크입니다. 해외에서는 2014년 가장 유망한 PHP 프레임워크로 뽑히는 등 상당히 인기가 있습니다. 
+
+Laravel은 앞선 기능을 많이 갖추고 있으며, 프레임워크 방식을 따르기에 Rails처럼 궤도에 오르는 느낌으로 개발할 수 있는 PHP 프레임워크입니다. 
+
+##### Phalcon
+
+Phalcon(팔콘) 공식 도큐먼트에 나온 것처럼 '중요한 것은 성능'이라는 견해를 바탕으로, 다른 프레임워크와는 달리 PHP 확장 모듈을 C언어로 구현했습니다. Phalcon은 PHP를 실행할 때 일어나는 구문 해석, Opcode 변환 단계를 날려 버려 뛰어난 성능과 압도적인 속도를 자랑합니다. 
+
+#### 마이크로 프레임워크
+
+- Silex
+- Slim
+
+풀스택 프레임워크와 달리 기본 기능은 한정되어 있지만 학습 비용이 낮아서 간단한 기능이나 소규모 개발에서는 마이크로 프레임워크를 선택하는 것도 좋은 방법입니다. 
+
+### PHP 실행 환경 구축
+
+#### PHP 설치
+
+rbenv처럼 PHP에도 버전을 관리하는 phpenv, 빌드와 인스톨을 담당하는 php-build 도구가 있으니 이를 사용해서 환경을 구축합니다. 
+
+우선은 가상 머신에 SSH로 로그인합니다.
+
+```
+$ vagrant ssh
+```
+
+PHP 빌드에 필요한 라이브러리를 미리 yum 커맨드로 설치
+
+```
+$ sudo yum install -y epel-release
+$ sudo yum install -y --enablerepo=epel libxml2-devel readline-devel libcurl-
+debel libjpeg-turbo-devel libpng-devel libmcrypt-devel libtidy-devel libxslt-devel re2c bison
+```
+
+phpenv 설치
+
+```
+$ curl https://raw.githubusercontent.com/CHH/phpenv/master/bin/phpenv-install.sh | sh
+```
+
+phpenv 사용에 필요한 설정을 .bash_profile에 추가하고 설정을 반영합니다 
+
+```
+$ echo 'export PATH="/home/vargrant/.phpenv/bin:$PATH"' >> ~/.bash_profile
+$ echo 'eval "$(phpenv init -)"' >> ~/.bash_profile
+$ source ~/.bash_profile
+```
+
+phpenv 버전의 확인
+
+```
+phpenv -v 
+```
+
+configure 옵션을 변경하지 않고, php-build의 기본 configure로 설치를 진행합니다.
+
+PHP 5.6.13의 설치
+
+```
+$ phpenv install 5.6.13
+```
+
+설치된 PHP버전 목록 확인 
+
+```
+phpenv versions
+```
+
+기본 버전의 지정 
+
+```
+phpenv install 5.6.13
+```
+
+php 커맨드의 사용
+
+```
+$ php -v
+```
+
+#### php.ini 설정
+
+```
+$ cd ~/.phpenv/versions/5.6.13/etc
+$ cp php.ini php.ini.old # 원본 파일 백업
+$ vi php.ini # php.ini 수정
+
+# 다음 변경된 부분을 참고하여 수정한다
+
+$ git diff --no-index php.ini.old php.ini
+```
+
+### Composer 사용
+
+Composer는 PHP 프로젝트의 의존관계를 관리하는 도구입니다. 프로젝트에 필요한 라이브러리의 이름과 버전을 정의하면, 다운로드부터 설치, 버전 관리, 클래스 자동 로딩 문제를 해결합니다. 
+
+#### Composer 설치
+
+Composer를 사용함녀 프로젝트에 필요한 라이브러리를 관리할 수 있고, PHP 개발 전반에 사용하는 커맨드라인 도구 등 라이브러리도 설치할 수 있습니다. 
+
+### PSR 알아보기
+
+PHP로 개발할 때 지켜야 할 규약으로 PSR(PHP Standard Recommendations)이 있습니다. PSR은 PHP의 다양한 프레임워크와 라이브러리 개발 커뮤니티인 PHP-FIG(PHP Framework interop Group)가 참여하여 제창한 표준 가이드라인입니다. 현재 PSR-0~PSR-4까지 공개되어 있습니다. 
+
+PSR은 이름 규칙과 디렉터리 구조, 코딩 스타일 같은 작성법을 비롯하여 로거처럼 필수적이고. 중요한 기능의 인터페이스 정의도 포함하여 표준화를 진행합니다. 
+
+### PHP 애플리케이션 개발 환경 구축
+
+#### 프로젝트 만들기
+
+Composer를 사용하여 Silex를 설치할 수 있습니다. '/vagrant' 디렉터리를 프로젝트 루트로 합니다. 
+
+- Composer.json에 라이브러리 정보를 기술합니다. require 부분에는 패키지 이름과 버전을 지정합니다. 
+
+```
+{ 
+	"require" : {
+		"silex/silex": "~1.2"
+	}
+}
+```
+
+composer install을 실행하면 composer.json의 내용을 바탕으로 Silex가 의존하는 모듈을 다운로드하기 시작합니다. 
+
+```
+$ composer install
+```
+
+설치가 끝나면 composer.lock 파일을 만들고, vendor 디렉터리 아래에는 설치한 라이브러리를 저장합니다. 
+
+Git 등으로 애플리케이션 버전을 관리할 때는 composer.json, composer.lock 파일 모두 커밋하도록 합니다. composer.lock 파일이 없으면 자신의 로컬 환경과 다른 팀 멤버의 환경, 실제 서비스 환경에서 설치하는 라이브러리 버전이 다를 수 있으므로 반드시 커밋.
+
+Silex 매뉴얼에 있는 'Hello World' 애플리케이션을 만들어 보자. 시작할 때 Composer가 생성한 'vendor/autoload.php'를 제일 먼저 읽어 들여 라이브러리를 자동으로 로딩 할 수 있다. 
+
+```
+<?php
+
+require_once __DIR__.'/vendor/autoload.php';
+
+$app = new Silex/Application();
+
+$app->get('/hello/{name]', function ($name) user ($app) {
+	return 'Hello' . $app->escape($name) . PHP_EOL;
+});
+
+$app->run();
+```
+
+#### API 만들기 
+
+```
+# 요청한 IP 주소를 반환한다
+$ curl -s http://httpbin.org/ip
+
+# 요청한 사용자 에이전트를 반환한다
+$ curl -s http://httpbin.org/user-agent
+
+# GET 요청에 HTTP 헤더, 요청 파라미터를 반환한다
+$ curl -s 'http://httpbin.org/get?foo=bar&baz=qux'
+```
+
+```
+<?php
+
+use Symfony\Componet\HttpFoundation\Request;
+
+require_once __DIR__.'/vendor/autoload.php';
+
+$app = new Silex/Application();
+
+$app->get('/ip', function (Request $request) use ($app) {
+	return $app->json([
+		'origin' => $request->getClientIp(),
+	]);
+});
+
+$app->get('/user-agent', fuction (Request $request) use ($app) {
+	return $app->json([
+		'user-agent' => $request->headers->get('User-Agent'),
+	]);
+});
+
+$app->get('/get', function (Request $request) use ($app) {
+
+	//헤더의 키를 '-'로 구분해 대문자로, user-agent -> User-Agent
+	$headers = [];
+	foreach ($request->headers->all() as $key => $value) {
+		$key = preg_replace_callback('/\w+/', function($matches) {
+			return ucfirst($matches[0]);
+		}, $key);
+		$headers[$key] = $value[0];
+	}
+	
+	return $app->json([
+		'args' => $request->query->all(),
+		'headers' => $headers,
+		'origin' => $request->getClientIp(),
+		'user-agent' => $request->headers->get('User-Agent'),
+		]);
+});
+
+$app->run();
+```
+
+### 개발에 편리한 도구
+
+#### REPL 
+
+Ruby의 Pry와 같은 REPL은 PHP에서는 그다지 활발하게 사용하지 않는 것 같습니다. php -a 옵션으로도 대화식 모드를 이용하여 PHP를 실행할 수 있지만, 아주 간단한 기능만 제공하므로 기능이 풍부한 PsySH를 도입해서 사용해보자.
+
+PsySH는 composer를 사용해서 환경 전체에 설치할 수 있다. 
+
+```
+$ composer global require psy/psysh:@stable
+```
+
+설치를 완료하면 psysh 커맨드로 Psy 셸을 사용할 수 있습니다. 
+
+```
+$ psysh
+```
+
+'~/.psysh' 아레에 사전 파일을 저장하면, PsySH 안에서 PHP 메뉴얼을 참조할 수 있습니다. 사전 파일은 다음과 같이 설치한다. 
+
+```
+$ curl -O http://psysh.org/manual/en/php_manual.sqlite
+$ mkdir ~/.psysh
+$ mv php_manual.sqlite ~/.psysh
+```
+
+이제 'doc 함수 이름'으로 PHP 메뉴얼의 함수 정의를 참조할 수 있습니다. 다시 한 번 doc 커맨드를 테스트하는 명령어.
+
+```
+$ psysh
+
+>>> $d = new Datetime
+...
+>>> doc $d->getOffser
+```
+
+PsySH를 시작할 때 autoload 파일을 지정하면, PsySH 안에서 프로젝트에서 이용하는 라이브러리에도 액세스할 수 있다.
+
+```
+$ cd /vendor
+$ psysh vendor/autoload.php
+```
+
+index.php 소스 코드에서 /get 시작 부분에 다음처럼 브레이크 포인트를 삽입한다. 
+
+```
+<?php
+
+user Symfony\Component\HttpFoundation\Request;
+
+... 중략 ...
+
+$app->get('/get', function (Request $request) user ($app) {
+
+	// 브레이크 포인트 
+	\Psy\Shell::debug(get_defined_vars());
+	
+	// 헤더의 키를 '-'로 구분하여 대문자로, user-agent -> User-Agent
+	$headers = [];
+	
+	... 중략 ...
+	
+});
+
+$app->run();
+```
+
+호스트 운영체제에서 HTTP 요청을 보내면, PHP 빌트인 웹 서버를 실행한 콘솔에서 PsySH를 시작한다. 
+
+#### 코딩 규칙 점검, 분석
+
+PHP Coding Standards Fixer는 PSR-0~2와 Symfony 코딩 규칙 등을 따르는지 분석하고, 규칙을 따르지 않는 코드를 수정합니다. 
+
+Composer로 설치할 수 있습니다. 
+
+```
+$ composer global require fabpot/php-cs-fixer
+```
+
+앞서 소개한 API를 PSR 규칙에 반하도록 수정해본다. 
+
+- PHP의 예약어를 대문자로 지정한다. 
+- 함수 정의 사이의 공백을 없앤다. 
+- 함수 이름과 () 사이에 공백을 넣는다. 
+
+
+```
+<?php
+
+user Symfony\Component\HttpFoundation\Request;
+
+require_once __DIR__.'/vendor/autoload.php';
+
+$app = NEW Silex/Application();
+	
+$app->get('/ip', function(Request $request)use($app){
+	return $app->json([
+		'origin' => $request->getClientIp(),
+	]);
+});
+
+$app->run();
+?>
+```
+
+
+php-cs-fixer는 기본적으로 Symfony의 코딩 규약으로 검사한다. 변경사항을 표시하려고 diff 옵션을 지정하고, 검사할 수준은 PSR-2로 지정하여 실행한다. 
+
+```
+$ php-cs-fixer fix index.php --diff --level=psr2
+```
+
+#### 나머지 도구
+
+이외에도 PHP 개발에는 Git의 커밋 전에 훅을 호출하거나 CI와 연계하면 편리한 정적 분석 도구가 있습니다. 
+
+##### PHPMD
+
+PHPMD는 정적으로 코드를 분석하여 거대한 클래스와 함수 등 복잡하고 버그가 생기기 쉬운 곳이나 개선하는 편이 나은 곳을 탐지하여 보고합니다.
+
+```
+$ composer global require phpmd/phpmd
+```
+
+
+##### PHPLOC
+
+PHPLOC는 코드의 행 개수나 클래스, 함수의 개수 등 프로젝트의 구성을 분석합니다. 
+
+```
+$ composer global require 'phploc/phploc=*'
+```
+
+
+##### PHPCPD
+
+PHPCPD는 복사하여 붙여 넣은 코드를 찾아서 보고합니다. 
+
+```
+$ composer global require 'sebastian/phpcpd=*'
+```
+
+### 정리
+
+Facebook이 HHVM이라는 PHP 실행 환경과 HHVM에서 동작하는 PHP 확장 언어인 Hack을 개발 중이다.
+
+HHVM에서 동작하는 Hack은 PHP에 없는 다음과 같은 강력한 기능을 추가하면서 기존 PHP 코드와 공존하여 동작시킬 수 있다. 
+
+- 정적 타입
+- 제네릭스
+- 비동기 처리
