@@ -761,7 +761,7 @@ app.config(["$httpProvider", function($httpProvider) {
 	$httpProvidr.defaults.headers.post['X-CSRF-Token'] = csrfToken
 	$httpProvidr.defaults.headers.put['X-CSRF-Token'] = csrfToken
 	$httpProvidr.defaults.headers.patch['X-CSRF-Token'] = csrfToken 
-}]);
+});
 
 var MainCtrl = function($scope, $resource) {
 	var User = $resource("/users");
