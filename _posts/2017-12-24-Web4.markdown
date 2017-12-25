@@ -753,30 +753,30 @@ end
 - 이제 index.html.erb에서 로드한 angular.js에 구체적인 처리를 구현합니다. 
 
 ```
-var app = angular.module("myApp", ["ngResource"]);
+	var app = angular.module("myApp", ["ngResource"]);
 
-// Rails의 CSRF Token 대책 
+	// Rails의 CSRF Token 대책 
 
-app.config(["$httpProvider", function($httpProvider) {
-	csrfToken = angular.element('meta[name=csrf-token]').attr('content')
-	$httpProvidr.defaults.headers.post['X-CSRF-Token'] = csrfToken
-	$httpProvidr.defaults.headers.put['X-CSRF-Token'] = csrfToken
-	$httpProvidr.defaults.headers.patch['X-CSRF-Token'] = csrfToken 
-}]);
+	app.config(["$httpProvider", function($httpProvider) {
+		csrfToken = angular.element('meta[name=csrf-token]').attr('content')
+		$httpProvidr.defaults.headers.post['X-CSRF-Token'] = csrfToken
+		$httpProvidr.defaults.headers.put['X-CSRF-Token'] = csrfToken
+		$httpProvidr.defaults.headers.patch['X-CSRF-Token'] = csrfToken 
+	}]);
 
-var MainCtrl = function($scope, $resource) {
-	var User = $resource("/users");
-	
-	$scope.users = User.query();
-	
-	$scope.addUser = function() {
-		User.save({name: $scope.userName}, function(user) {
-			$scope.users.push(user);
-		});
-		
-		$scope.userName = "";
-	};
-}
+	var MainCtrl = function($scope, $resource) {
+		var User = $resource("/users");
+
+		$scope.users = User.query();
+
+		$scope.addUser = function() {
+			User.save({name: $scope.userName}, function(user) {
+				$scope.users.push(user);
+			});
+
+			$scope.userName = "";
+		};
+	}
 ```
 
 **ngResource에서 사용할 수 있는 액션**
