@@ -719,9 +719,9 @@ resource :users
 		<input type="text" ng-model="userName" />
 		<button ng-click="addUser()">Add</button>
 		<ul>
-			<li ng-repeat="user in users">{{user.name}}</li>
+			<li ng-repeat="user in users">{{ user.name }}</li>
 		</ul>
-		<pre>{{users|json||</pre>
+		<pre>{{users|json|</pre>
 	</body>
 </html>
 ```
@@ -754,14 +754,13 @@ end
 ```
 var app = angular.module("myApp", ["ngResource"]);
 
-// Rails의 CSRF Token 대책 
-
+# Rails의 CSRF Token 대책
 app.config(["$httpProvider", function($httpProvider) {
 	csrfToken = angular.element('meta[name=csrf-token]').attr('content')
 	$httpProvidr.defaults.headers.post['X-CSRF-Token'] = csrfToken
 	$httpProvidr.defaults.headers.put['X-CSRF-Token'] = csrfToken
 	$httpProvidr.defaults.headers.patch['X-CSRF-Token'] = csrfToken 
-});
+}]);
 
 var MainCtrl = function($scope, $resource) {
 	var User = $resource("/users");
@@ -772,7 +771,7 @@ var MainCtrl = function($scope, $resource) {
 		User.save({name: $scope.userName}, function(user) {
 			$scope.users.push(user);
 		});
-		
+
 		$scope.userName = "";
 	};
 }
