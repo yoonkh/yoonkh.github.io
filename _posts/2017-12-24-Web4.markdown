@@ -705,26 +705,26 @@ resource :users
 
 - 뷰는 다음처럼 AngularJS를 사용하도록 설정합니다. 또, ngResource 모듈을 사용하므로 이 모듈을 뷰에서 로드합니다. 
 
-	```
-	<!DOCTYPE html>
-	<html ng-app="myApp">
-		<head>
-			<meta content="text/html" charset="UTF-8">
-			<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.29/angular.min.js"></script>
-			<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.29/angular-resource.min.js">				</script>
-			<script src="angular.js"></script>
-		</head>
+```
+<!DOCTYPE html>
+<html ng-app="myApp">
+	<head>
+		<meta content="text/html" charset="UTF-8">
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.29/angular.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.29/angular-resource.min.js></script>
+		<script src="angular.js"></script>
+	</head>
 
-		<body ng-controller="MainCtrl">
-			<input type="text" ng-model="userName" />
-			<button ng-click="addUser()">Add</button>
-			<ul>
-				<li ng-repeat="user in users">{{ user.name }}</li>
-			</ul>
-			<pre>{{users|json|</pre>
-		</body>
-	</html>
-	```
+	<body ng-controller="MainCtrl">
+		<input type="text" ng-model="userName" />
+		<button ng-click="addUser()">Add</button>
+		<ul>
+			<li ng-repeat="user in users">{{user.name}}</li>
+		</ul>
+		<pre>{{users|json}}</pre>
+	</body>
+</html>
+```
 
 API 쪽 컨트롤러는 다음처럼 작성합니다. RESTful API로 되어 있습니다. index 액션으로 모든 사용자의 정보를 반환하고 show 액션으로 특정 사용자의 정보를 반환합니다. 또, create 액션에서는 주어진 파라미터를 이용하여 사용자를 새로 생성합니다.
 
