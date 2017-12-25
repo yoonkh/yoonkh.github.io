@@ -1,0 +1,326 @@
+---
+layout: post
+title:  "웹 엔지니어 - 데이터 시각화"
+date:   2017-12-25
+author: Yoonkh
+categories: Web
+tags: 
+- Web
+- Python
+- Flask
+comments: True
+---
+
+## 데이터 시각화
+
+### 왜 구글 차트인가 
+
+구글 차트는 구글에서 제공하는 HTML5, SVG 기능을 이용한 그래프 라이브러리입니다. 구글 차트를 JavaScript에 삽입하면 쉽게 그래프를 그릴 수 있습니다. 
+
+### 막대 그래프
+
+#### 유스케이스
+
+막대 그래프를 사용하는 유스케이스 예는 다음과 같습니다. 
+
+- 작년 같은 달의 액세스 총수를 비교하고 싶다. 
+- 이번 달 시간별 상품 매출 비교를 지난달과 비교하고 싶다. 
+
+#### 예제 표시 
+
+```
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Year', 'Sales', 'Expenses', 'Profit'],
+          ['2014', 1000, 400, 200],
+          ['2015', 1170, 460, 250],
+          ['2016', 660, 1120, 300],
+          ['2017', 1030, 540, 350]
+        ]);
+
+        var options = {
+          chart: {
+            title: 'Company Performance',
+            subtitle: 'Sales, Expenses, and Profit: 2014-2017',
+          },
+          bars: 'horizontal' // Required for Material Bar Charts.
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('barchart_material'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+      }
+    </script>
+  </head>
+  <body>
+    <div id="barchart_material" style="width: 900px; height: 500px;"></div>
+  </body>
+</html>
+```
+
+##### jsapi를 읽어 온다
+
+```
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+```
+
+##### 사용하고 싶은 API를 호출한다
+
+```
+google.charts.load('current', {'packages':['bar']});
+```
+
+##### 페이지 그릴 때 값을 설정한다
+
+```
+google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Year', 'Sales', 'Expenses', 'Profit'],
+          ['2014', 1000, 400, 200],
+          ['2015', 1170, 460, 250],
+          ['2016', 660, 1120, 300],
+          ['2017', 1030, 540, 350]
+        ]
+```
+
+##### 임의의 ID 요소에 그린다
+
+```
+var chart = new google.charts.Bar(document.getElementById('barchart_material'));
+
+chart.draw(data, google.charts.Bar.convertOptions(options));
+```
+
+
+### 누적 막대 그래프
+
+#### 유스케이스 
+
+누적 막대 그래프를 사용하는 유스케이스 예는 다음과 같습니다. 
+
+- 월별 액세스 총수 중 PC, iPhone, Android 비교 
+- 월별 사용자의 남녀 비교 
+
+누적 막대 그래프는 시계열로 비교하고 싶을 때 주로 사용합니다. 
+
+#### 예제 표시
+
+```
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+	        ['Genre', 'Fantasy & Sci Fi', 'Romance', 'Mystery/Crime', 'General',
+	         'Western', 'Literature', { role: 'annotation' } ],
+	        ['2010', 10, 24, 20, 32, 18, 5, ''],
+	        ['2020', 16, 22, 23, 30, 16, 9, ''],
+	        ['2030', 28, 19, 29, 30, 12, 13, '']
+      ]);
+
+     	 var options = {
+	        width: 600,
+	        height: 400,
+	        legend: { position: 'top', maxLines: 3 },
+	        bar: { groupWidth: '75%' },
+	        isStacked: true,
+      };
+
+        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+      }
+    </script>
+  </head>
+  <body>
+    <div id="columnchart_material" style="width: 800px; height: 500px;"></div>
+  </body>
+</html>
+```
+
+### 꺾은선 그래프
+
+#### 유스케이스 
+
+꺾은선 그래프를 사용하는 유스케이스 예는 다음과 같습니다. 
+
+- 전월과 비교했을 때 당월 계정 증가율 
+- 전월과 비교했을 때 당월 매출 증가율
+
+#### 예제 표시
+
+```
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Year', 'Sales', 'Expenses'],
+          ['2004',  1000,      400],
+          ['2005',  1170,      460],
+          ['2006',  660,       1120],
+          ['2007',  1030,      540]
+        ]);
+
+        var options = {
+          title: 'Company Performance',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+  </head>
+  <body>
+    <div id="curve_chart" style="width: 900px; height: 500px"></div>
+  </body>
+</html>
+```
+
+### 산포도 
+
+#### 유스케이스 
+
+산포도를 사용하는 유스케이스 예는 다음과 같습니다. 
+
+- 계정별 매출과 매매 횟수의 상관
+- 계정별 로그인 횟수와 매출 금액의 상관
+
+#### 예제 표시
+
+```
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Age', 'Weight'],
+          [ 8,      12],
+          [ 4,      5.5],
+          [ 11,     14],
+          [ 4,      5],
+          [ 3,      3.5],
+          [ 6.5,    7]
+        ]);
+
+        var options = {
+          title: 'Age vs. Weight comparison',
+          hAxis: {title: 'Age', minValue: 0, maxValue: 15},
+          vAxis: {title: 'Weight', minValue: 0, maxValue: 15},
+          legend: 'none'
+        };
+
+        var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
+
+        chart.draw(data, options);
+      }
+    </script>
+  </head>
+  <body>
+    <div id="chart_div" style="width: 900px; height: 500px;"></div>
+  </body>
+</html>
+```
+
+### 외부 JSON 파일과 URL 읽기
+
+#### JSON 데이터 작성
+
+```
+{
+  "cols": [
+        {"id":"","label":"Topping","pattern":"","type":"string"},
+        {"id":"","label":"Slices","pattern":"","type":"number"}
+      ],
+  "rows": [
+        {"c":[{"v":"Mushrooms","f":null},{"v":3,"f":null}]},
+        {"c":[{"v":"Onions","f":null},{"v":1,"f":null}]},
+        {"c":[{"v":"Olives","f":null},{"v":1,"f":null}]},
+        {"c":[{"v":"Zucchini","f":null},{"v":1,"f":null}]},
+        {"c":[{"v":"Pepperoni","f":null},{"v":2,"f":null}]}
+      ]
+}
+```
+
+#### JSON 데이터 구조 확인
+
+JSON 데이터의 구조는 다음과 같습니다. 
+
+| **배열 이름**  | **설명**  |
+|---|---|
+| cols  | 열(데이터 이름 등을 지정)  |
+| rows  | 행(이름과 관련된 값을 저장)  |
+| c  | 셀  |
+
+#### JSON 파일로 HTML 파일 만들기 
+
+```
+<html>
+  <head>
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript">
+    
+    // Load the Visualization API and the piechart package.
+    google.charts.load('current', {'packages':['corechart']});
+      
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.charts.setOnLoadCallback(drawChart);
+      
+    function drawChart() {
+      var jsonData = $.ajax({
+          url: "./colmn-example.json", # <!-- 여기서 앞에서 만든 JSON 파일을 저장 -->
+          dataType: "json",
+          async: false
+          }).responseText;
+          
+      // Create our data table out of JSON data loaded from server.
+      var data = new google.visualization.DataTable(jsonData);
+
+      // Instantiate and draw our chart, passing in some options.
+      var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+      chart.draw(data, {width: 400, height: 240});
+    }
+
+    </script>
+  </head>
+
+  <body>
+    <!--Div that will hold the pie chart-->
+    <div id="chart_div"></div>
+  </body>
+</html>
+```
+
+jQuery라는 JavaScript 라이브러리를 사용합니다. 
+
+```
+<script type="text/javascript"
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+</script>
+```
