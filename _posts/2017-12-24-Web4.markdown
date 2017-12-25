@@ -789,7 +789,7 @@ var MainCtrl = function($scope, $resource) {
 | delete  | DELETE  |
 | remove  | DELETE  |	
 
-
+
 ### 서비스 
 
 AngularJS에는 서비스라는 편리한 매커니즘이 있습니다. 서비스는 함수와 오브젝트 등을 AngularJS 애플리케이션 안에서 공유하는 매커니즘 입니다. 싱글톤으로 다루므로 컨틀로러 간 공유에도 이용할 수 있습니다. 다음은 대표적인 서비스 입니다. 
