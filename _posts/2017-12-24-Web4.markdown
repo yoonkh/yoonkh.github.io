@@ -681,14 +681,14 @@ var todoCtrl = function($scope) {
 $ rails new angular-sample --skip-bundle
 ```
 
-- 다음으로 bundle install 커맨드로 필요한 gem을 설치합니다
+다음으로 bundle install 커맨드로 필요한 gem을 설치합니다
 
 ```
 $ cd angular-sample
 $ bundle install --path=vendor/bundle
 ```
 
-- 이번에는 User 정보를 다루는 API를 준비합니다. Users 컨트롤러와 User 모델이 필요합니다. 
+이번에는 User 정보를 다루는 API를 준비합니다. Users 컨트롤러와 User 모델이 필요합니다. 
 
 ```
 $ rails g controller users
@@ -697,14 +697,14 @@ $ rake db:migrate
 $ rails generate controller top index
 ```
 
-- TOP 페이지는 Top 컨트롤러의 index 액션을 담당하게 합시다. config/routes.rb를 다음처럼 작성합니다. 
+TOP 페이지는 Top 컨트롤러의 index 액션을 담당하게 합시다. config/routes.rb를 다음처럼 작성합니다. 
 
 ```
 root 'top#index'
 resource :users
 ```
 
-- 뷰는 다음처럼 AngularJS를 사용하도록 설정합니다. 또, ngResource 모듈을 사용하므로 이 모듈을 뷰에서 로드합니다. 
+뷰는 다음처럼 AngularJS를 사용하도록 설정합니다. 또, ngResource 모듈을 사용하므로 이 모듈을 뷰에서 로드합니다. 
 
 ```
 <!DOCTYPE html>
@@ -727,7 +727,7 @@ resource :users
 </html>
 ```
 
-- API 쪽 컨트롤러는 다음처럼 작성합니다. RESTful API로 되어 있습니다. index 액션으로 모든 사용자의 정보를 반환하고 show 액션으로 특정 사용자의 정보를 반환합니다. 또, create 액션에서는 주어진 파라미터를 이용하여 사용자를 새로 생성합니다.
+API 쪽 컨트롤러는 다음처럼 작성합니다. RESTful API로 되어 있습니다. index 액션으로 모든 사용자의 정보를 반환하고 show 액션으로 특정 사용자의 정보를 반환합니다. 또, create 액션에서는 주어진 파라미터를 이용하여 사용자를 새로 생성합니다.
 
 ```
 class UserController < ApplicationController
@@ -750,9 +750,9 @@ class UserController < ApplicationController
 end	
 ```
 
-- 이제 index.html.erb에서 로드한 angular.js에 구체적인 처리를 구현합니다. 
+이제 index.html.erb에서 로드한 angular.js에 구체적인 처리를 구현합니다. 
 
-```
+	```
 	var app = angular.module("myApp", ["ngResource"]);
 
 	// Rails의 CSRF Token 대책 
@@ -777,7 +777,7 @@ end
 			$scope.userName = "";
 		};
 	}
-```
+	```
 
 **ngResource에서 사용할 수 있는 액션**
 
