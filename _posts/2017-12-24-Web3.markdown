@@ -1,0 +1,319 @@
+---
+layout: post
+title:  "웹 엔지니어 - 데이터베이스"
+date:   2017-12-24
+author: Yoonkh
+categories: Web
+tags: 
+- Web
+- Python
+- Flask
+comments: True
+---
+
+### NoSQL 데이터베이스와 관계형 데이터베이스의 차이
+
+#### 관계형 데이터베이스의 특징
+
+SQL을 사용하면 누구나 똑같이 데이터를 조작할 수 있으므로, 현재는 사실상 데이터 저장소 표준이 되었습니다. 
+
+#### 관계형 데이터베이스의 강점 
+
+- 데이터의 일관성을 보증할 수 있다(트랜잭션)
+- 정규화를 전제로 하므로 갱신 비용이 적다
+- JOIN이나 복잡한 검색 조건으로 검색할 수 있다
+- 오래된 기술이라 실적과 노하우가 축적되어 있다. 
+
+#### 관계형 데이터베이스의 약점
+
+- 단순하고 빠르게 결과를 반환한다
+- 대량의 데이터를 저장하여 처리한다 
+- 갱신이 발생하는 테이블에서 인덱스를 작성하고 스키마를 변경한다
+- 칼럼을 결정하기 어렵다
+
+### Redis 
+
+Redis는 이탈리아의 살바토레 산필리포가 개발한 오픈 소스 소프트웨어입니다. Key-Value 저장소라는 의미에서 맴캐시드와 비슷하지만, 메모리 기반으로 휘발성이면서 영속성을 지원하는 특징이 있습니다. 
+
+#### Redis를 사용하는 이유 
+
+- **영속화 기능이 있다** 
+  
+   - 메모리에서 데이터의 스냅샷을 임의의 조건에서 파일로 저장합니다. 기본으로 15분에 1개 이상, 5분에 10개 이상, 1분에 1만개 이상 Key를 변경할 때는 파일로 저장하는데, 저장 조건은 자유롭게 변경할 수 있습니다. 
+  
+- **다양한 형식의 데이터를 다룰 수 있다**
+
+	- Redis에서는 문자열형, 리스트형, 세트형, 정렬된 세트형, 해시형 같은 다양한 데이터형이 준비되어 있어 용도에 맞게 이용할 수 있습니다.
+	
+- **아토믹하게 처리할 수 있다**
+
+	- 이것은 간단하게 말해 '일련의 처리를 한 번의 명령으로 처리'하는 것입니다. 
+
+	
+#### Redis 설치
+
+```
+$ sudo su - 
+$ yum -y install redis
+```
+
+#### Redis-cli 사용
+
+Redis에는 redis-cli 커맨드라인 클라이언트가 있습니다. redis-cli를 사용해서 데이터를 저장하거나 읽을 수 있습니다. 
+
+```
+$ redis-cli
+```
+
+#### Ruby에서 Redis 사용
+
+redis gem의 사용
+
+```
+$ gem install redis
+```
+
+- 통째로 저장하기
+
+```
+require 'rubygems'
+require 'redis'
+
+redis = Redis.new
+
+redis.set 'bar',[1,2,3]
+p redis.get 'bar'
+
+# => "[1,2,3]"
+```
+
+- json 저장하기
+
+```
+require 'rubygems'
+require 'redis'
+require 'json'
+
+redis = Redis.new
+
+redis.set 'foo',[1,2,3].to_json
+p JSON.parse(redis.get('foo'))
+
+# => [1,2,3]
+```
+
+#### 순위 정보 다루기 
+
+특정 사용자나 특정 상품이 지금 몇 번째 순위인지 나타내고 싶을 때는 번거롭습니다. 순위 목록을 가져온 후 특정 사용자나 상품이 어디에 있는지 몇 번이고 루프를 돌려서 찾아내는 끈기가 필요합니다. 
+
+반면에 Redis의 정렬된 세트형을 사용하면 간단하고 빠르게 순위 정보를 알 수 있으므로 편리합니다. 
+
+```
+require 'rubygems'
+require 'redis'
+
+redis = Redis.new
+
+(1..10).each do |user_id|
+		redis.zadd('ranking', rand(100), user_id)
+end
+```
+
+##### redis-commander
+
+Redis안에 실제로는 어떻게 데이터가 존재하는지 확인해보고 싶을때 사용합니다. 
+
+npm 커맨드를 사용할 수 있는 상태라면 다음과 같이 설치가 가능합니다.
+
+
+```
+$ sudo yum -y install npm 
+$ npm install -g redis-commander
+```
+
+##### 각 요소의 순위 반환 
+
+다음의 코드는 임의의 키 중에서 각 요소의 내림차순 순위를 반환합니다. 순위는 0부터 시작합니다. 가장 스코어가 높은 요소가 0이 되므로 1을 더하고 있습니다. 
+
+```
+require 'rubygems'
+require 'redis'
+
+redis = Redis.new
+
+p redis.zerevrank('ranking', 4) + 1
+
+# => 3
+```
+
+##### 각 요소의 스코어 반환
+
+```
+require 'rubygems'
+require 'redis'
+
+redis = Redis.new
+
+p redis.zscore('ranking', 4)
+
+# => 67.0
+```
+
+##### 순위 반환 
+
+```
+require 'rubygems'
+require 'redis'
+
+redis = Redis.new
+
+p redis.zrevrange('ranking', 0, 9)
+
+# => ["1", "2", "4", "5", "7", "10", "9", "3", "8", "6"]
+```
+
+##### 순위 갱신
+
+```
+activities.each do |activity|
+	redis.zadd('ranking_tmp', activity.score, activity.user_id)
+end
+redis.rename('ranking_tmp', 'ranking')
+```
+
+- 정렬된 세트형 조작 커맨드 
+
+| **커맨드**  | **설명**  |
+|---|---|
+| zadd  | 각 요소를 등록한다.  |
+| zrevrank  | 각 요소의 순위를 반환한다.  |
+| zscore  | 각 요소의 스코어를 반환한다.  |
+| zrevrange  | 지정한 범위의 요소를 반환한다.  |
+
+	
+### MongoDB
+
+MongoDB는 10gen에서 개발한 고성능과 확장성이 특징인 오픈 소스 소프트웨어입니다. 도큐먼트 지향 데이터베이스라고도 합니다. 
+
+#### MongoDB를 사용하는 이유
+
+- MongoDB의 장점
+
+	- 스키마를 고정하지 않아도 된다
+	- 검색을 유연하게 할 수 있다
+
+##### 스키마를 고정하지 않아도 된다 
+
+MongoDB는 데이터를 저장할 때 데이터 구조를 포함하여 통째로 BSON(JSON을 바이너리화 한 것)형식으로 저장하고, 그 데이터를 특정 키와 연결합니다. 이런 설계 덕분에 스키마를 정의할 필요가 없습니다. 다만, 데이터 처리 방법이 다르므로 표현하는 용어도 다릅니다. 관계형 데이터베이스의 테이블을 MongoDB에서는 컬렉션, 관계형 데이터베이스의 레코드를 MongoDB에서는 도큐먼트라고 합니다. 
+
+##### 검색을 유연하게 할 수 있다
+
+스키마는 정의하지 않지만, 임의의 키에서 관계형 데이터베이스처럼 검색도 유연하게 할 수 있습니다. 정규식 표현 검색과 배열 중 특정 값이 포함되어 있는지 다양한 조건으로 검색할 수 있습니다. 이런 검색의 유연성을 MongoDB의 매우 편리한 점입니다. 
+
+
+#### MongoDB의 설치
+
+```
+$ vi /etc/yum.repos.d/mongodb-org-3.0.repo
+# 다음 내용으로 저장소를 추가한다
+[mongodb-org-3.0]
+name=MongoDB Repository
+baseurl=http://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/3.0/x86_64/
+gpgcheck=0
+enabled=1
+
+# 다음 커맨드로 mongoDB를 설치한다
+$ yum -y install mongodb-org
+```
+
+#### mongo 셸 사용
+
+MongoDB를 작동한 상태에서 mongo 커맨드를 실행하면 mongo 셸이 시작합니다. mongo 셸을 사용해서 기본적인 처리를 테스트해봅니다.
+
+```
+$ mongo
+MongoDB shell version: 3.0.6
+connecting to: test # 인수를 지정하지 않으면 test 데이터베이스에 접속한다
+Welcome to the MongoDB shell
+
+> show dbs
+> local 0.078GB
+> show collections
+```
+
+데이터를 저장하기
+
+```
+> db.users.save({name: "yoon"})
+WriteResult({ "nInserted" : 1 })
+> show dbs
+local 0.078GB
+test  0.078GB
+> show collections
+system.indexes
+users
+```
+
+#### Ruby로 MongoDB 사용
+
+mongo-ruby-driver gem을 사용해보기
+
+```
+$ gem install mongo
+```
+
+이 gem을 사용해서 간단하지만 컬렉션 목록을 표시하고 데이터베이스에 쓰기, 읽기 등 처리를 테스트해보기
+
+```
+require 'rubygems'
+require 'mongo'
+
+# mydb 데이터베이스에 접속한다
+connection = Mongo::Client.new([ '123.0.0.1:222' ], :database => 'mydb')
+db = connection.database
+
+# 아직 이 시점에서는 컬렉션이 없다
+p db.collection_names
+# => []
+
+
+users = db.collection('users')
+
+(201..300).each do |i|
+	users.insert_one(name:"yoon"#{i}")
+end
+
+p db.collection_names
+# => ["users", "system.indexes"]
+p users.count
+# => 100
+
+# name이 yoon299인 데이터를 추출한다
+
+users.find(name: 'yoon299').each { |row| p row }
+# => {"_id"=>BSON::ObjectId('2345234534346344'), "name"=>"yoon299"}
+
+# name의 맨 끝이 0인 데이터를 5개 추출한다 
+users.find(name: /0$/).limit(5).each { |row| p row }
+```
+
+#### 로그 기록
+
+사용자 ID와 액세스한 경로, 등록 일시, 액세스 IP를 기록한다고 가정하면, 코드는 다음과 같습니다. 
+
+```
+require 'rubygems'
+require 'mongo'
+
+connection = Mongo::Client.new([ '127.0.0.1:1111' ], :database => 'mydb')
+db = connection.database
+
+logs = db.collection('logs')
+
+logs.insert_many([
+{user_id: user.id},
+{path: '/users/12/books?type=comic'},
+{registered_at: user.registered_at}, 
+{ip_address: '192.168.33.1'}
+])
+```
