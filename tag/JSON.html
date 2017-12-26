@@ -1,0 +1,9 @@
+---
+layout: page
+---
+<strong>"JSON"</strong> 태그가 포함된 글들:
+<ul>
+	{% for post in site.tags.JSON %}
+	<li><a href="{{ post.url }}">{{ post.title }}</a></li>
+	{% endfor %}
+</ul>
