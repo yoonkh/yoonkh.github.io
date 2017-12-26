@@ -4,7 +4,9 @@ title:  "웹 엔지니어 - 프론트엔드의 구현"
 date:   2017-12-24
 author: Yoonkh
 categories: Web
-tags: 
+tags:
+- AngularJS
+- jQuery
 - Web
 - Python
 - Flask
