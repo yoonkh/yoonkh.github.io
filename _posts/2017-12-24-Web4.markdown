@@ -8,8 +8,7 @@ tags:
 - AngularJS
 - jQuery
 - Web
-- Python
-- Flask
+- JavaScript
 comments: True
 ---
 
