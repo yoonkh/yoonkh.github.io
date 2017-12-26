@@ -1,0 +1,9 @@
+---
+layout: page
+---
+<strong>"PHP"</strong> 태그가 포함된 글들:
+<ul>
+	{% for post in site.tags.PHP %}
+	<li><a href="{{ post.url }}">{{ post.title }}</a></li>
+	{% endfor %}
+</ul>
