@@ -6,8 +6,8 @@ author: Yoonkh
 categories: Web
 tags: 
 - Web
-- Python
-- Flask
+- Ruby
+- OAuth
 comments: True
 ---
 
