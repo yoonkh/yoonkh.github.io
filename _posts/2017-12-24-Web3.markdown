@@ -6,9 +6,10 @@ author: Yoonkh
 categories: Web
 tags: 
 - Web
-- Python
-- Flask
+- NoSQL
+- Redis
 - MongoDB
+- Ruby
 comments: True
 ---
 
