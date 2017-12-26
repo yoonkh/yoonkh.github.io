@@ -6,8 +6,6 @@ author: Yoonkh
 categories: Web
 tags: 
 - Web
-- Python
-- Flask
 comments: True
 ---
 
