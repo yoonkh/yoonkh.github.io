@@ -7,7 +7,6 @@ categories: Python
 tags: 
 - Python
 - Django
-- Flask
 - Code
 comments: True
 ---
