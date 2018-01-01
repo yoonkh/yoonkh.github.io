@@ -7,7 +7,7 @@ categories: Python
 tags: 
 - Python
 - Django
-- Code
+- RESTfulAPI
 comments: True
 ---
 
