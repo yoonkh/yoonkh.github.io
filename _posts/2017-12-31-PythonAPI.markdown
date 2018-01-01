@@ -66,3 +66,162 @@ id 또는 기본 키가 지정된 숫자 값과 일치하는 게임을 제거하
 ```
 DELETE http://localhost:8000/games/{id}/
 ```
+
+### 경량 가상 환경에서의 작업
+
+먼저, 가상 환경을 위한 대상 폴더 또는 디렉터리를 선택해야 한다. 
+
+```
+~/PythonREST/Django
+```
+
+터미널을 열고, 다음 명령을 실행해 가상 환경을 만든다. 
+
+```
+python3 -m venv ~/PythonREST/Django01
+```
+
+맥 OS 또는 리눅스에서 bash 셸을 사용하게 터미널을 구성한 경우, 다음 명령을실행해 가상 환경을 활성화해야한다. 
+
+```
+source ~/PythonREST/Django01/bin/activate
+```
+
+가상환경이 활성화 되면 ```Yoon-MacBook-Pro:~ project$``` 에서 ```(Django) Yoon-MacBook-Pro:~ project$```으로 프롬프트가 변경된다.
+
+### 장고 레스트 프레임워크에서의 가상 환경 설정
+
+이제 다음의 명령을 실행해 장고 웹 프레임워크를 설치해야 한다.
+
+```
+pip install Django
+```
+
+장고 웹 프레임워크를 설치했으므로 장고 레스트 프레임워크를 설치할 수 있다. 
+
+```
+pip install djangorestframework
+```
+
+이제 다음 명령을 실행해 gamesapi라는 새 장고 프로젝트를 만든다. 
+
+```
+django-admin.py startproject gamesapi
+```
+
+그리고 나서 다음 명령을 실행해 gamesapi 장고 프로젝트 내에 games라는 새 장고 앱을 만든다. 
+
+```
+python manage.py startapp games
+```
+
+위의 명령으로 다음 파일들이 들어간 새 gamesapi/games 서브 폴더가 생성되었다. 
+
+- ```__init__.py```
+- ```admin.py```
+- ```apps.py```
+- ```models.py```
+- ```tests.py```
+- ```views.py```
+
+```apps.py```파일의 파이썬 코드 ex)
+
+```
+From django.apps import AppConfig
+
+Class GamesConfig(AppConfig):
+	name='games'
+```
+
+이제 gamesapi/settings.py 파일을 열고 설치된 앱 선언의 문자열 리스트를 지정하는 행인 INSTALLED_APPS행을 찾아 다음의 내용을 추가한다. 
+
+- 'rest_framework'
+- 'games.app.GamesConfig'
+
+### 모델 제작
+
+```games/models.py``` 파일을 연다. 아래 행은 이 파일의 초기 코드를 보여주는데, 하나의 import문과 모델을 생성해야 함을 나타내는 주석이 있다. 
+
+아래 행은 Game 클래스, 특히 ```games/models.py``` 파일에 있는 Game 모델을 만들기 위한 새 코드를 보여준다. 
+
+```
+From django.db import models 
+
+Class Game(models.Model):
+	Created = models.DateTimeField(auto_now_add=True)
+	Name = models.CharField(max_length=200, blank=True, default='')
+	release_date = models.DateTimeField()
+	game_category = models.CharField(max_length=200, blank=True, default='')
+	played = models.BooleanField(default=False)
+	
+	class Meta:
+		ordering = ('name',)
+```
+
+다음으로는 새 Game 모델의 초기 마이그레이션을 만들어야 한다. 
+장고는 SQLite 데이터베이스를 사용한다. 
+
+```
+python manage.py makemigrations games
+```
+
+이제 생성된 마이그레이션을 적용하기 위해 다음 파이썬 스크립트를 실행한다. 
+
+```
+python manage.py migrate
+```
+
+위의 명령을 실행하면 gamesapi 프로젝트의 루트 폴더에 db.sqlite3 파일이 생긴 것을 볼 수 있다. 장고가 생성한 테이블을 보려면 SQLite 명령 행 또는 SQLite 데이터베이스의 테이블을 쉽게 점검할 수 있게 해주는 애플리케이션을 사용하면 된다. 
+
+다음의 명령을 실행해 생성된 테이블을 나열해 볼 수 있다. 
+
+```
+sqlite3 db.sqlite3 '.tables'
+```
+
+SQLite 데이터베이스 엔진과 데이터베이스 파일 이름은 ```gamesapi/settings.py``` 파이썬 파일에 지정돼 있다. 다음 행은 장고가 사용하는 모든 데이터베이스에 대한 설정을 담고 있는 DATABASE 딕셔너리의 선언을 보여준다. 
+
+```
+DATABASES = {
+	'default': {
+		'ENGINE': 'django.db.backends.sqlite3',
+		'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+	}
+}
+```
+
+마이그레이션을 실행한 후, SQLite 데이터베이스에는 다음 테이블이 생겼을 것이다. 
+
+- auth_group
+- auth_group_permissions
+- auth_permission auth_user
+- auth_user_groups
+- auth_user_groups_permissions
+- django_admin_log
+- django_content_type
+- django_migrations
+- django_session
+- games_game
+- sqlitesequence
+
+```games_game``` 테이블에는 SQLite 형식의 다음 행(필드라고도 함)이 있으며, 그 중 모두가 null 값도 가능한 것은 아니다. 
+
+- id: The integer primary key, an autoincrement row
+- created: datetime
+- name: varchar(200)
+- release_date: datetime
+- game_category: varchar(200)
+- played: bool
+
+다음 행은 우리가 마이그레이션을 실행했을 때 장고가 생성한 SQL 생성 스크립트다. 
+
+```
+CREATE TABLE "games_game" {
+	"id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+	"created" datetime NOT NULL,
+	"name" varchar(200) NOT NULL,
+	"release_date" datetime NOT NULL,
+	"game_category" varchar(200) NOT NULL,
+	"played" bool NOT NULL
+}
+```
