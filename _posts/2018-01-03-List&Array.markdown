@@ -19,10 +19,10 @@ comments: True
 List는 배열의 index라는 장점을 버리고, 빈틈없는 데이터의 적재라는 장점을 취한 자료구조이다. 
 
 배열에 데이터를 추가하려면 기존에 있는 데이터 혹은 인덱스와 매핑된 자리에만 데이터를 삽입할 수 있다. 
-()[http://cfile10.uf.tistory.com/image/2216FE4D562AD89B1B38BE]
+![](http://cfile10.uf.tistory.com/image/2216FE4D562AD89B1B38BE)
 
 리스트의 경우,
-()[http://cfile3.uf.tistory.com/image/23555F3F562AD89D277968]
+![](http://cfile3.uf.tistory.com/image/23555F3F562AD89D277968)
 
 
 인덱스가 하나씩 밀리면서 순서를 유지한다. 
