@@ -8,6 +8,7 @@ tags:
 - Python
 - Code
 - Algorithm
+- Array
 comments: True
 ---
 
