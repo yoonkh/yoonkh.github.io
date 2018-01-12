@@ -26,7 +26,7 @@ layout: default
       <div class="post-date">{{ post.date | date: "%B %-d, %Y" }}</div>
       <div class="post-tags">{% if post.tags.size > 0 %}in {% for cat in post.tags %}
 	      {% if site.jekyll-archives %}
-	      <li><a href="{{ site.baseurl }}/tags/{{ cat }}">{{ post.title }}</a></li>{% endfor %}{% endif %}{% endif %}</div>
+	      <li><a href="{{ site.baseurl }}/tags/{{ cat }}">{{ post.tags }}</a></li>{% endfor %}{% endif %}{% endif %}</div>
       <div class="post-categories">
       {% if post.categories.size > 0 %}in {% for cat in post.categories %}
         {% if site.jekyll-archives %}
