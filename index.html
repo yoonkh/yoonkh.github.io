@@ -24,7 +24,9 @@ layout: default
     </section>
     <section class="post-meta">
       <div class="post-date">{{ post.date | date: "%B %-d, %Y" }}</div>
-      <div class="post-tags"><a href="{{ site.baseurl }}/tag/{{ post.tags }}">{{ post.tags }}</a></div>
+      <div class="post-tags"><a href="{{ site.baseurl }}/tag/{{ post.tags }}">
+	      {% assign tag_words = site_tags | split:',' | sort %}
+		{{ post.tags }}</a></div>
       <div class="post-categories">
       {% if post.categories.size > 0 %}in {% for cat in post.categories %}
         {% if site.jekyll-archives %}
