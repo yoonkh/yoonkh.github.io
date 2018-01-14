@@ -30,7 +30,7 @@ layout: default
 		  <!--<h1>Tags</h1>-->
 		  <ul class="tag-box inline">
 		  {% for item in (0..post.tags.size) %}{% unless forloop.last %}
-		    {% capture this_word %}{{ tag_words[item] | strip_newlines }}{% endcapture %}
+<!-- 		    {% capture this_word %}{{ tag_words[item] | strip_newlines }}{% endcapture %} -->
 		    <li><a href="/tag/{{ this_word | cgi_escape }}">{{ this_word }} <span>{{ post.tags[this_word].size }}</span></a></li>
 		  {% endunless %}{% endfor %}
 		  </ul>
