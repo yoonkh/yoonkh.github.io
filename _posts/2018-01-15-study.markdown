@@ -352,7 +352,7 @@ if __name__ == '__main__':
 ```
 curl -iX POST -H "Content-Type: application/json" -d '{"message": "Welcome to IoT", "duration": 10, "message_category": "Information"}' :5000/api/messages/
 ```
-![](https://github.com/yoonkh/yoonkh.github.io/blob/master/assets/api.png)
+![](https://github.com/yoonkh/yoonkh.github.io/blob/master/assets/api.png?raw=true)
    
 위의 요청은 /api/messages/를 지정하므로 '/api/messages/'를 적용해 MessageList, post 메서드를 실행합니다. URL 경로에 매개 변수가 없기 때문에 이 메서드는 인자를 받지 않습니다. 요청에 대한 HTTP 동사가 POST이므로 플라스크는 post 메서드를 호출합니다. 새 MessageModel이 딕셔너리에 성공적으로 유지되면, 이 함수는 HTTP 201 Created 상태 코드와 함께 응답 본문에 JSON으로 직렬화된 최근 유지된 MessageModel을 반환합니다. 
 
@@ -364,7 +364,7 @@ curl -iX POST -H "Content-Type: application/json" -d '{"message": "Welcome to Io
 curl -iX GET -H :5000/api/messages/
 ```
 
-![](https://github.com/yoonkh/yoonkh.github.io/blob/master/assets/api2.png)
+![](https://github.com/yoonkh/yoonkh.github.io/blob/master/assets/api2.png?raw=true)
 
 ##### 404 Not Found
 
@@ -374,7 +374,7 @@ curl -iX GET -H :5000/api/messages/
 curl -iX GET :5000/api/messages/800
 ```
 
-![](https://github.com/yoonkh/yoonkh.github.io/blob/master/assets/api4.png)
+![](https://github.com/yoonkh/yoonkh.github.io/blob/master/assets/api4.png?raw=true)
 
 서버는 id 인자 값으로 800을 사용해서 Message.get 메서드를 실행합니다. 이 메서드는 인자로 받은 id값과 일치하는 id의 MessageModel 객체를 얻는 코드를 실행하게 됩니다. 하지만 지정된 id값을 가진 메시지가 없기 때문에 MessageList.get 메서드의 첫 번째 행은 딕셔너리 키에서 id를 찾지 못하는 abort_if_message_doesnt_exist 메서드를 호출하고 flask_restful.abort 함수가 실행될 것입니다. 따라서 코드는 HTTP 404 Not Found 상태 코드를 반환합니다. 
 
@@ -387,7 +387,7 @@ curl -iX GET :5000/api/messages/800
 curl -iX PATCH -H "Content-Type: application/json" -d '{"printed_once": "true", "printed_times": 1}' :5000/api/messages/2
 ```
 
-![](https://github.com/yoonkh/yoonkh.github.io/blob/master/assets/api3.png)
+![](https://github.com/yoonkh/yoonkh.github.io/blob/master/assets/api3.png?raw=true)
 
 지정된 id를 가진 MessageModel 인스턴스가 존재하고 성공적으로 업데이트된다면, 이 메서드 호출은 HTTP 200 OK 상태 코드와 함께 응답 본문 속에 JSON으로 직렬화시킨 최근 업데이트의 MessageModel 인스턴스를 반환합니다. 
 
@@ -399,7 +399,7 @@ curl -iX PATCH -H "Content-Type: application/json" -d '{"printed_once": "true", 
 ```
 curl -iX DELETE :5000/api/message/2
 ```
-![](https://github.com/yoonkh/yoonkh.github.io/blob/master/assets/api5.png)
+![](https://github.com/yoonkh/yoonkh.github.io/blob/master/assets/api5.png?raw=true)
 
 이 요청은 /api/messages/ 뒤에 숫자가 있으므로, '/api/messages/<int:id>'가 적용돼 Message.delete 메서드, 즉 Message 클래스의 delete 메서드를 실행합니다. 지정된 id를 가진 MessageModel 인스턴스가 존재하고 성공적으로 삭제됐다면, 이 메서드 호출은 HTTP 204 No Content 상태 코드를 반환합니다. 
 
