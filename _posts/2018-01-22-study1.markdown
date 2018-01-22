@@ -1,3 +1,14 @@
+---
+layout: post
+title:  "재미그래밍 - 투스쿱장고"
+date:   2018-01-22
+author: Yoonkh
+categories: Python
+tags: 
+- Django
+comments: True
+---
+
 # 재미그래밍 180122
 
 ## Two Scoop of Django
