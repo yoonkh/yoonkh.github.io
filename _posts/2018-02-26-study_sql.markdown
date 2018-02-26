@@ -1,0 +1,135 @@
+---
+layout: post
+title:  "재미그래밍 - PostgreSQL vs MySQL"
+date:   2018-02-26
+author: Yoonkh
+categories: Code
+tags: Code
+comments: True
+---
+
+# 180226 
+
+## PostgreSQL vs MySQL
+
+### open source 
+
+- PostgreSQL
+
+PostgreSQL 은 PostgreSQL 글로벌 개발그룹에 의해 개발되고 있으며, 여러 회사와 개인적 기여자들로 이루어진 다양한 그룹이 존재합니다. 자유 오픈소스 소프트웨어이며 PostgreSQL은 PostgreSQL 라이선스로 릴리즈 되었습니다. BSD나 MIT 와 비슷한 매우 자유로운 라이선스입니다.
+
+- MySQL
+
+지금은 오라클 소유이며, 여러 사용료를 지불해야하는 특정 에디션도 제공합니다.
+
+### ACID Compliance 
+
+- PostgreSQL
+
+PostgreSQL은 처음부터 ACID(원자성, 일관성, 고립성, 지속성)를 지향했으며 모든 요구사항을 만족합니다.
+
+- MySQL
+
+MySQL는 InnoDB 와 NDB Cluster Storage engines 를 사용 했을 때만 준수하고 있습니다.
+
+### SQL Compliance
+
+- PostgreSQL
+
+PostgreSQL은 SQL을 폭넓게 준수하고 있습니다
+
+- MySQL
+
+MySQL는 일부만 준수합니다. 
+
+### Replication
+
+- PostgreSQL
+
+PostgreSQL은 Master-Standby 복제를 지원하며 대기 서버에 거의 실시간 복제 및 대기 대기 기능을 제공하는 매우 빠른 WAL(Write Ahead Log, 마스터 서버의 로그) 처리 기능을 제공합니다.
+
+- MySQL
+
+MySQL은 Master-Standby 복제를 지원합니다.
+
+### Performance
+
+- PostgreSQL
+
+PostgreSQL은 읽기 및 쓰기 속도가 중요하고 데이터 검증이 필요한 대형 시스템에서 널리 사용됩니다. 또한 지형 공간 데이터 지원, 읽기 잠금이없는 동시성 (예 : Oracle, SQL Server)과 같은 상용 솔루션에서만 사용할 수있는 다양한 성능 최적화를 지원합니다.
+
+전반적으로 PostgreSQL 성능은 복잡한 쿼리를 실행해야하는 시스템에서 가장 잘 활용됩니다.
+
+PostgreSQL은 읽기 / 쓰기 속도가 필요하고 광범위한 데이터 분석이 필요할 때 OLTP(온라인 트랜잭션 처리) / OLAP(DB내에 저장된 자료를 분석하는 작업) 시스템에서 잘 수행됩니다.
+
+PostgreSQL은 비즈니스 인텔리전스 응용 프로그램에서도 잘 작동하지만 빠른 읽기 / 쓰기 속도가 필요한 데이터웨어 하우징 및 데이터 분석 응용 프로그램에 더 적합합니다.
+
+- MySQL
+
+MySQL은 단순한 데이터 트랜잭션을 위해 데이터베이스가 필요한 웹 기반 프로젝트를 위해 널리 선택됩니다. 하지만 MySQL이 과부하로 인해 어려움을 겪거나 복잡한 쿼리를 완료하려고 시도 할 때 성능이 저조하기는 일반적입니다.
+
+MySQL은 OLAP / OLTP 시스템에서 읽기 속도 만 필요할 때 잘 수행됩니다.
+
+MySQL + InnoDB는 OLTP 시나리오에 대해 아주 좋은 읽기 / 쓰기 속도를 제공합니다. 전반적으로, MySQL은 높은 동시성 시나리오에서 잘 수행됩니다.
+
+MySQL은 비즈니스 인텔리전스 애플리케이션이 일반적으로 읽기가 무거 우기 때문에 안정적이며 비즈니스 인텔리전스 애플리케이션과 잘 작동합니다.
+
+### Security
+
+- PostgreSQL
+
+PostgreSQL은 권한을 설정하고 유지하기 위해 ROLES와 상속 된 역할을 가지고 있습니다. PostgreSQL은 클라이언트 / 서버 통신을 암호화하기위한 연결을위한 기본 SSL 지원을 제공합니다. 또한 행 레벨 보안 기능도 있습니다.
+
+- MySQL
+
+MySQL은 사용자가 수행하려고 시도 할 수있는 모든 연결, 쿼리 및 기타 작업에 대해 액세스 제어 목록 (ACL)을 기반으로 보안을 구현합니다. 또한 MySQL 클라이언트와 서버간에 SSL 암호화 연결을 지원합니다.
+
+### Cloud Hosting
+
+- PostgreSQL
+
+Amazon, Google, Microsoft를 포함한 모든 주요 클라우드 서비스 제공 업체가 지원합니다.
+
+- MySQL
+
+Amazon, Google, Microsoft를 포함한 모든 주요 클라우드 서비스 제공 업체가 지원합니다.
+
+### Community Support
+
+- PostgreSQL
+
+PostgreSQL은 기존 기능을 지속적으로 개선하는 매우 강력하고 활발한 커뮤니티를 보유하고 있지만 혁신적인 커미터는 새로운 첨단 기능과 보안 기능을 갖춘 가장 진보 된 데이터베이스로 유지하려고 노력하고 있습니다.
+
+- MySQL
+
+MySQL은 특히 오라클의 인수에 이어 가끔씩 등장하는 몇 가지 새로운 기능으로 기존 기능을 유지하는 데 초점을 맞춘 대규모 기여자 커뮤니티를 보유하고 있습니다.
+
+### Concurrency Support
+
+- PostgreSQL
+
+PostgreSQL은 매우 높은 수준의 동시성을 구현하는 MVCC(다중 버전 동시성 제어) 구현을 통해 효율적으로 동시성을 처리합니다.
+
+- MySQL
+
+MySQL에는 JSON 데이터 유형이 지원되지만 다른 NoSQL 기능은 없습니다. JSON에 대한 색인 생성을 지원하지 않습니다.
+
+### Programming Languages Support
+
+- PostgreSQL
+
+PostgreSQL은 C / C ++, Java, JavaScript, .Net, R, Perl, Python, Ruby, Tcl 등 다양한 프로그래밍 언어를 지원합니다. 별도의 프로세스 (즉, 배경 작업자로 실행)에서 사용자 제공 코드를 실행할 수도 있습니다.
+
+- MySQL
+
+일부는 확장 성이없는 단일 언어로 서버 측 프로그래밍을 지원합니다.
+
+### Extensible Type System
+
+- PostgreSQL
+
+PostgreSQL에는 확장 성을위한 몇 가지 기능이 있습니다. 새로운 타입, 새로운 함수, 새로운 인덱스 타입 등을 추가하는 것이 가능합니다.
+
+- MySQL
+
+확장성에 대한 지원이 없습니다.
