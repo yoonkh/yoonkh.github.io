@@ -4,7 +4,7 @@ title:  "재미그래밍 - google cloud platform"
 date:   2018-02-19
 author: Yoonkh
 categories: Code
-tags: Code
+tags: Code, Cloud
 comments: True
 ---
 
