@@ -4,7 +4,7 @@ title: About
 permalink: /about/
 ---
 
-<img src="{{ site.baseurl }}/assets/profile.jpeg" title="Profile Picture" class="profile">
+<img src="{{ site.baseurl }}/assets/main@2x.png" title="Profile Picture" class="profile">
 
 ## 안녕하세요. 
 ### 백엔드 개발자 윤경한입니다.
